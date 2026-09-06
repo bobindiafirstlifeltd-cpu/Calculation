@@ -3,212 +3,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BA Earning Simulator | IndiaFirst Life x Bank of Baroda</title>
+<title>Insurance Earning Simulator | IndiaFirst Life × Bank of Baroda</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
-  :root{
-    --gold-1:#fdf3d8;
-    --gold-2:#f6e2a4;
-    --gold-3:#e8c568;
-    --gold-deep:#c8952f;
-    --gold-dark:#8a611c;
-    --navy:#0b2447;
-    --blue:#1565c0;
-    --maroon:#8b1a1a;
-    --bob-orange:#f47820;
-    --text:#241c08;
-    --muted:#6b5a30;
-    --card:#fffdf5;
-    --good:#1b7d4d;
-    --bad:#a01818;
-    --radius:16px;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:
-      radial-gradient(circle at 15% 0%, rgba(255,255,255,.35), transparent 40%),
-      radial-gradient(circle at 85% 10%, rgba(255,255,255,.25), transparent 45%),
-      linear-gradient(160deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 100%);
-    color:var(--text);
-    padding-bottom:70px;
-  }
-  .wrap{max-width:820px;margin:0 auto;padding:0 16px;}
 
-  /* ===== BRAND HEADER ===== */
-  .brandbar{
-    background:linear-gradient(90deg,var(--navy),#123a6b 60%,var(--navy));
-    padding:10px 16px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:18px;
-    flex-wrap:wrap;
-    border-bottom:3px solid var(--gold-deep);
-  }
-  .logo-chip{
-    background:#fff;
-    border-radius:8px;
-    padding:6px 14px;
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-weight:800;
-    font-size:14px;
-    box-shadow:0 2px 8px rgba(0,0,0,.25);
-  }
-  .logo-chip.bob{color:var(--bob-orange);}
-  .logo-chip.bob span{color:var(--maroon);}
-  .logo-chip.ifl{color:var(--blue);}
-  .logo-chip.ifl span{color:var(--bob-orange);}
-  .brand-x{color:var(--gold-2);font-weight:400;font-size:16px;}
 
-  header.hero{
-    text-align:center;
-    padding:26px 16px 22px;
-    background:linear-gradient(180deg,var(--navy) 0%, #163e73 100%);
-    color:#fff;
-    position:relative;
-    overflow:hidden;
-  }
-  header.hero::before{
-    content:"";
-    position:absolute;inset:0;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(232,197,104,.18), transparent 35%),
-      radial-gradient(circle at 80% 80%, rgba(232,197,104,.14), transparent 40%);
-  }
-  header.hero h1{
-    margin:0 0 6px;
-    font-size:28px;
-    letter-spacing:.4px;
-    position:relative;
-    background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-  }
-  header.hero p{
-    margin:0;
-    font-size:13px;
-    color:var(--gold-2);
-    position:relative;
-  }
+/* ===== Unified shell (new) ===== */
+:root{
+  --gold-1:#fdf3d8;--gold-2:#f6e2a4;--gold-3:#e8c568;
+  --gold-deep:#c8952f;--gold-dark:#8a611c;
+  --navy:#0b2447;--blue:#1565c0;--maroon:#8b1a1a;
+  --bob:#f47820;--bob-orange:#f47820;
+  --text:#241c08;--muted:#6b5a30;--card:#fffdf5;
+  --good:#1b7d4d;--bad:#a01818;--radius:15px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+.sim-product{--radius:14px;}
+.sim-team{--radius:16px;}
+@keyframes shimmer{0%{background-position:-300% 0}100%{background-position:300% 0}}
+@keyframes glow{0%,100%{box-shadow:0 0 12px rgba(232,197,104,.3)}50%{box-shadow:0 0 26px rgba(232,197,104,.6)}}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255,255,255,.35), transparent 40%),
+    radial-gradient(circle at 85% 10%, rgba(255,255,255,.25), transparent 45%),
+    linear-gradient(150deg,#fdf3d8 0%,#f6e2a4 50%,#e8c568 100%);
+  min-height:100vh;color:var(--text);padding-bottom:70px;
+}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px;}
 
-  /* ===== CARD ===== */
-  .card{
-    background:var(--card);
-    border-radius:var(--radius);
-    padding:22px;
-    margin-top:22px;
-    border:1.5px solid var(--gold-3);
-    box-shadow:0 10px 26px rgba(138,97,28,.18);
-    position:relative;
-  }
-  .card::before{
-    content:"";
-    position:absolute;top:0;left:0;right:0;height:5px;
-    border-radius:var(--radius) var(--radius) 0 0;
-    background:linear-gradient(90deg,var(--gold-deep),var(--gold-3),var(--gold-deep));
-  }
-  .card h2{
-    font-size:18px;
-    margin:6px 0 4px;
-    color:var(--navy);
-    display:flex;
-    align-items:center;
-    gap:9px;
-  }
-  .card h2 .num{
-    background:linear-gradient(135deg,var(--gold-deep),var(--gold-3));
-    color:#fff;
-    width:26px;height:26px;
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-size:13px;font-weight:800;
-    box-shadow:0 2px 6px rgba(138,97,28,.4);
-  }
-  .card .sub{
-    font-size:12.5px;
-    color:var(--muted);
-    margin:0 0 16px;
-  }
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
-  .row.single{grid-template-columns:1fr;}
-  label{font-size:12.5px;font-weight:700;color:var(--gold-dark);display:block;margin-bottom:5px;}
-  input[type=number], input[type=date], select{
-    width:100%;padding:10px 11px;border:1.5px solid var(--gold-3);
-    border-radius:9px;font-size:14.5px;background:#fffef9;color:var(--text);
-  }
-  input:focus, select:focus{outline:none;border-color:var(--gold-deep);background:#fff;}
-  .toggle-group{display:flex;gap:8px;flex-wrap:wrap;}
-  .toggle-group button{
-    flex:1;min-width:70px;padding:9px 6px;border-radius:9px;
-    border:1.5px solid var(--gold-3);background:#fffef9;font-size:12.5px;font-weight:700;
-    color:var(--muted);cursor:pointer;transition:.15s;
-  }
-  .toggle-group button.active{border-color:var(--gold-deep);background:var(--gold-1);color:var(--gold-dark);}
-  .checkbox-row{display:flex;align-items:center;gap:8px;margin:10px 0 4px;font-size:13px;}
-  .checkbox-row input{width:16px;height:16px;}
-  .calc-btn{
-    width:100%;margin-top:16px;padding:14px;border:none;border-radius:12px;
-    background:linear-gradient(135deg,var(--gold-deep),var(--gold-dark));
-    color:#fff;font-size:15px;font-weight:800;letter-spacing:.3px;cursor:pointer;
-    box-shadow:0 6px 16px rgba(138,97,28,.35);
-  }
-  .calc-btn:active{transform:translateY(1px);}
-  .results{margin-top:18px;display:none;}
-  .results.show{display:block;}
-  .line{display:flex;justify-content:space-between;font-size:13.5px;padding:7px 0;border-bottom:1px dashed var(--gold-2);}
-  .line:last-child{border-bottom:none;}
-  .line .val{font-weight:800;color:var(--navy);}
-  .line.muted{color:var(--muted);font-size:12px;}
-  .banner{
-    padding:12px 14px;border-radius:10px;font-size:13px;font-weight:700;margin-top:14px;
-  }
-  .banner.ok{background:#e6f5ec;color:var(--good);border:1px solid #b3e0c4;}
-  .banner.no{background:#fbe9e9;color:var(--bad);border:1px solid #f0c2c2;}
-  .banner.warn{background:#fff7e0;color:var(--gold-dark);border:1px solid var(--gold-3);}
+/* ===== Unified sticky bar (single page — shows FYC + Team Monthly together) ===== */
+#stickyShell{
+  position:sticky;top:0;z-index:999;
+  background:linear-gradient(135deg,#0b2447,#0a1b33);
+  border-bottom:2px solid var(--gold-deep);
+  padding:10px 16px;
+  box-shadow:0 4px 18px rgba(11,36,71,.5);
+}
+.sr-only-vals{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+.section-title{
+  font-size:15px;font-weight:900;color:var(--navy);
+  margin:8px 0 16px;padding-bottom:8px;
+  border-bottom:2px solid var(--gold-3);
+  display:flex;align-items:center;gap:8px;
+}
 
-  .gate-locked{opacity:.4;pointer-events:none;filter:grayscale(60%);}
+/* ===== Page hero ===== */
+.page-hero{text-align:center;padding:26px 16px 14px;}
+.page-hero h1{font-size:27px;font-weight:900;color:var(--navy);}
+.page-hero h1 .g{
+  background:linear-gradient(90deg,var(--gold-dark),var(--gold-deep),#e8c568,var(--gold-dark));
+  background-size:300% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 5s linear infinite;
+}
+.page-hero p{font-size:12.5px;color:var(--muted);font-weight:700;margin-top:5px;}
 
-  .total-card{
-    background:linear-gradient(135deg,var(--navy),#0a1b33);
-    color:#fff;border-radius:var(--radius);padding:26px 20px;text-align:center;
-    margin-top:26px;
-    box-shadow:0 14px 34px rgba(11,36,71,.35);
-    border:1.5px solid var(--gold-3);
-  }
-  .total-card .label{font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--gold-2);margin-bottom:6px;}
-  .total-card .amount{font-size:36px;font-weight:900;
-    background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .total-card .breakdown{margin-top:12px;font-size:12px;color:#dbe6f5;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
-  .note{font-size:11.3px;color:var(--muted);margin-top:14px;line-height:1.55;background:#fffaf0;border:1px solid var(--gold-2);padding:10px 12px;border-radius:9px;}
+/* ===== Tabs ===== */
+.tabs{display:flex;gap:8px;margin:6px 0 18px;flex-wrap:wrap;}
+.tab-btn{
+  flex:1;min-width:200px;padding:13px 14px;border-radius:12px;
+  border:1.5px solid var(--gold-deep);background:#fff;
+  color:var(--navy);font-weight:800;font-size:14px;cursor:pointer;transition:.15s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.tab-btn.active{
+  background:linear-gradient(135deg,var(--navy),#123a6b);
+  color:var(--gold-3);border-color:var(--navy);
+  box-shadow:0 4px 14px rgba(11,36,71,.35);
+}
+.tab-btn:hover{transform:translateY(-1px);}
 
-  .designation-banner{
-    background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
-    border:1.5px solid var(--gold-deep);
-    border-radius:var(--radius);
-    padding:16px 20px;
-    margin-top:22px;
-    text-align:center;
-  }
-  .designation-banner label{color:var(--gold-dark);font-size:13px;}
-  .designation-banner select{max-width:320px;margin:6px auto 0;font-weight:700;}
+/* ===== Section D: Combined Projected Earnings ===== */
+.grand-summary{
+  display:none;
+  background:linear-gradient(135deg,var(--navy),#0a1b33);
+  color:#fff;border-radius:16px;padding:22px 20px;margin:22px 0;
+  border:1.5px solid var(--gold-3);box-shadow:0 14px 34px rgba(11,36,71,.35);
+}
+.grand-summary h2{font-size:16px;color:var(--gold-3);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.gs-row{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+  padding:12px 0;border-bottom:1px dashed rgba(232,197,104,.3);
+}
+.gs-row:last-child{border-bottom:none;}
+.gs-row .gs-label{font-size:12px;color:#dbe6f5;font-weight:700;}
+.gs-row .gs-vals{display:flex;gap:18px;flex-wrap:wrap;}
+.gs-row .gs-vals span{font-size:11.5px;color:var(--gold-2);}
+.gs-row .gs-vals b{
+  display:block;font-size:19px;font-weight:900;
+  background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
 
-  .footer-credit{
-    text-align:center;
-    margin-top:30px;
-    padding:18px 16px;
-    color:var(--gold-dark);
-  }
-  .footer-credit .name{font-weight:800;font-size:14px;color:var(--navy);}
-  .footer-credit .role{font-size:12px;}
+/* ===== Action row (Calculate / Report / WhatsApp) ===== */
+.action-row{display:flex;flex-direction:column;gap:12px;margin:22px 0 10px;}
+.action-btn{
+  width:100%;padding:16px;border-radius:13px;border:2px solid transparent;
+  font-size:15.5px;font-weight:900;cursor:pointer;letter-spacing:.2px;
+  display:flex;align-items:center;justify-content:center;gap:10px;transition:.15s;
+}
+.action-btn:active{transform:translateY(1px);}
+.action-btn:disabled{opacity:.5;cursor:not-allowed;}
+#btnCalculateAll{
+  background:linear-gradient(135deg,var(--navy),#1a3a70);border-color:var(--gold-3);
+  color:var(--gold-3);animation:glow 3s ease-in-out infinite;
+}
+#btnFetchReport{background:linear-gradient(135deg,var(--gold-deep),var(--gold-dark));color:#fff;}
+#btnWhatsapp{background:#25D366;color:#06301a;}
 
-  /* ===== STICKY TOTAL (pinned at top, never scrolls away) ===== */
-  .sticky-total{
+.validation-note{
+  display:none;background:#fff7e0;border:1px solid var(--gold-3);color:var(--gold-dark);
+  border-radius:10px;padding:12px 14px;font-size:12.5px;font-weight:700;margin:14px 0;line-height:1.6;
+}
+.report-status{
+  display:none;background:rgba(21,101,192,.08);border-left:3px solid #1565c0;
+  border-radius:8px;padding:10px 12px;font-size:12px;color:var(--navy);margin:10px 0;
+}
+
+/* ===== Shell-level card (Expense Ratio card, Report Preview) — simple + attractive ===== */
+.shell-card{
+  background:var(--card);border:1.5px solid rgba(200,149,47,.4);
+  border-radius:16px;padding:20px;margin:20px 0;
+  box-shadow:0 8px 22px rgba(11,36,71,.1);
+}
+.shell-card h2{font-size:15px;color:var(--navy);display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.shell-card .sub{font-size:11.5px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+.shell-card label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;}
+.shell-card input[type=number]{
+  width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(200,149,47,.4);
+  font-size:15px;font-weight:700;color:var(--text);background:#fff;
+}
+.shell-card input[type=number]:focus{outline:none;border-color:var(--gold-deep);}
+.exp-btn{
+  width:100%;margin-top:14px;padding:14px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,var(--gold-deep),var(--gold-dark));color:#fff;
+  font-size:14.5px;font-weight:900;cursor:pointer;letter-spacing:.2px;transition:.15s;
+}
+.exp-btn:active{transform:translateY(1px);}
+.net-earning-box{
+  display:none;margin-top:18px;text-align:center;padding:20px;border-radius:14px;
+  background:linear-gradient(135deg,var(--navy),#0a1b33);color:#fff;
+  border:1.5px solid var(--gold-3);box-shadow:0 10px 26px rgba(11,36,71,.3);
+}
+.net-earning-box .ne-summary{
+  text-align:left;margin-bottom:16px;padding-bottom:14px;border-bottom:1px dashed rgba(232,197,104,.35);
+}
+.net-earning-box .ne-summary-row{
+  display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:#dbe6f5;padding:5px 0;
+}
+.net-earning-box .ne-summary-row b{color:var(--gold-2);font-weight:800;}
+.net-earning-box .ne-label{font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--gold-2);margin-bottom:6px;}
+.net-earning-box .ne-amount{
+  font-size:38px;font-weight:900;
+  background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.net-earning-box .ne-breakdown{margin-top:10px;font-size:12px;color:#dbe6f5;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+.net-earning-box .ne-formula{margin-top:12px;font-size:11px;color:var(--gold-2);opacity:.85;font-style:italic;}
+
+.shared-footer{max-width:900px;margin:26px auto 0;padding:16px;text-align:center;}
+.shared-footer .credit{font-size:12px;color:var(--muted);}
+
+
+/* ===== Global chrome reused from Product app (brandbar, hero, product sticky) ===== */
+@keyframes shimmer{0%{background-position:-300% 0}100%{background-position:300% 0}}
+@keyframes glow{0%,100%{box-shadow:0 0 12px rgba(232,197,104,.3)}50%{box-shadow:0 0 26px rgba(232,197,104,.6)}}
+.brandbar{
+  background:linear-gradient(90deg,#0b2447,#1a4a8a,#0b2447);
+  padding:10px 16px;display:flex;align-items:center;justify-content:center;
+  gap:16px;flex-wrap:wrap;border-bottom:3px solid var(--gold-deep);
+  box-shadow:0 3px 18px rgba(232,197,104,.45);
+}
+.chip{background:#fff;border-radius:8px;padding:6px 14px;font-weight:900;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.25);}
+.chip.bob{color:var(--bob)}
+.chip.bob span{color:var(--navy)}
+.chip.ifl{color:var(--navy)}
+.chip.ifl span{color:var(--bob)}
+.bx{color:var(--gold-3);font-weight:900;font-size:20px;}
+.sticky{
+  position:sticky;top:0;z-index:999;
+  background:linear-gradient(135deg,#0b2447,#0a1b33);
+  border-bottom:2px solid var(--gold-deep);
+  padding:10px 16px;
+  box-shadow:0 4px 18px rgba(11,36,71,.5);
+}
+.sticky-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.s-block .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--gold-2);}
+.s-val{
+  font-size:22px;font-weight:900;
+  background:linear-gradient(90deg,#fff8e0,var(--gold-3),#e8c568,#fff8e0);
+  background-size:300% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 4s linear infinite;
+}
+.hero{text-align:center;padding:24px 16px 10px;}
+.hero h1{font-size:26px;font-weight:900;color:var(--navy);}
+.hero .g{
+  background:linear-gradient(90deg,var(--gold-dark),var(--gold-deep),#e8c568,var(--gold-dark));
+  background-size:300% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 5s linear infinite;
+}
+.hero p{font-size:12.5px;color:var(--muted);font-weight:700;margin-top:4px;}
+
+/* ===== Global chrome reused from Team app (team sticky) ===== */
+.sticky-total{
     position:sticky;
     top:0;
     z-index:200;
@@ -218,19 +218,227 @@
     box-shadow:0 4px 14px rgba(11,36,71,.4);
     border-bottom:2px solid var(--gold-3);
   }
-  .st-inner{
+.st-inner{
     max-width:820px;margin:0 auto;
     display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
   }
-  .st-label{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--gold-2);}
-  .st-amount{
+.st-label{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--gold-2);}
+.st-amount{
     font-size:21px;font-weight:900;
     background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  .st-breakdown{font-size:10.5px;color:#c9d7ea;display:flex;gap:10px;flex-wrap:wrap;}
-  .shortfall-line{color:var(--gold-dark);font-weight:700;}
-  .projected{
+.st-breakdown{font-size:10.5px;color:#c9d7ea;display:flex;gap:10px;flex-wrap:wrap;}
+
+/* ===== Product Commission tab (scoped, unmodified from original calculator) ===== */
+.sim-product *{box-sizing:border-box;margin:0;padding:0;}
+.sim-product .card{
+  background:var(--card);border:1.5px solid rgba(200,149,47,.4);
+  border-radius:var(--radius);padding:18px;margin:12px 0;
+  box-shadow:0 6px 20px rgba(11,36,71,.09);
+  transition:box-shadow .2s;
+}
+.sim-product .card:hover{box-shadow:0 8px 26px rgba(200,149,47,.25);}
+.sim-product .card.off{opacity:.4;pointer-events:none;}
+.sim-product .card h2{font-size:14.5px;color:var(--navy);display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.sim-product .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;border-radius:50%;flex:0 0 auto;
+  background:linear-gradient(135deg,var(--gold-deep),var(--gold-3));
+  color:#fff;font-size:12px;font-weight:900;
+  box-shadow:0 2px 8px rgba(200,149,47,.5);
+}
+.sim-product .trow{display:flex;gap:8px;flex-wrap:wrap;}
+.sim-product .trow button{
+  flex:1;min-width:120px;padding:10px 12px;border-radius:10px;
+  border:1.5px solid var(--gold-deep);background:#fff;
+  color:var(--navy);font-weight:700;font-size:13px;cursor:pointer;transition:.15s;
+}
+.sim-product .trow button.on{
+  background:linear-gradient(135deg,var(--gold-deep),var(--gold-3));
+  color:#fff;border-color:var(--gold-dark);
+  box-shadow:0 4px 12px rgba(200,149,47,.45);
+}
+.sim-product .trow button:hover{transform:translateY(-1px);}
+.sim-product .fl{display:block;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin:10px 0 4px;}
+.sim-product select, .sim-product input{
+  width:100%;padding:11px 12px;border-radius:10px;
+  border:1.5px solid rgba(200,149,47,.5);background:#fff;
+  font-size:14px;color:#241c08;font-weight:600;
+}
+.sim-product select:focus, .sim-product input:focus{outline:2px solid var(--gold-deep);}
+.sim-product .hint{font-size:11.5px;color:var(--muted);margin-top:6px;}
+.sim-product .note-special{
+  background:rgba(200,149,47,.12);border-left:3px solid var(--gold-deep);
+  border-radius:8px;padding:10px 12px;font-size:12px;color:var(--navy);margin-top:10px;display:none;
+}
+.sim-product .cbtn{
+  display:block;width:100%;padding:15px;margin:16px 0;
+  border:2px solid var(--gold-3);border-radius:13px;
+  background:linear-gradient(135deg,var(--navy),#1a3a70);
+  color:var(--gold-3);font-size:16px;font-weight:900;cursor:pointer;
+  animation:glow 3s ease-in-out infinite;letter-spacing:.3px;
+}
+.sim-product .cbtn:disabled{opacity:.45;cursor:not-allowed;animation:none;}
+.sim-product .cbtn:hover:not(:disabled){filter:brightness(1.15);transform:translateY(-1px);}
+.sim-product .res{display:none;}
+.sim-product .res.show{display:block;}
+.sim-product .fyc-row{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
+  border:2px solid var(--gold-deep);border-radius:12px;
+  padding:15px 18px;margin-bottom:14px;
+  box-shadow:0 4px 16px rgba(200,149,47,.22),inset 0 1px 0 rgba(255,255,255,.6);
+}
+.sim-product .fyc-row .lb{font-size:11.5px;font-weight:800;color:var(--gold-dark);text-transform:uppercase;letter-spacing:.4px;}
+.sim-product .fyc-row .vl{
+  font-size:26px;font-weight:900;
+  background:linear-gradient(90deg,var(--gold-dark),var(--gold-deep),var(--gold-3),var(--gold-dark));
+  background-size:300% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 4.5s linear infinite;
+}
+.sim-product table{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0;}
+.sim-product thead th{
+  background:linear-gradient(90deg,var(--navy),#1a3a70);
+  color:var(--gold-3);padding:9px 10px;text-align:left;
+  font-size:11px;text-transform:uppercase;letter-spacing:.3px;
+}
+.sim-product tbody tr:nth-child(even){background:rgba(232,197,104,.13);}
+.sim-product tbody td{padding:9px 10px;border-bottom:1px solid rgba(200,149,47,.22);}
+.sim-product tbody td.amt{
+  font-weight:800;
+  background:linear-gradient(90deg,var(--gold-dark),var(--gold-deep));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sim-product .tot-row{background:linear-gradient(90deg,rgba(232,197,104,.2),rgba(232,197,104,.05)) !important;}
+.sim-product .tot-row td{border-top:2.5px solid var(--gold-deep);font-weight:900;font-size:15px;padding-top:12px;}
+.sim-product .tot-row td.amt{
+  background:linear-gradient(90deg,var(--good),#2fa66b);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sim-product .nbox{
+  background:rgba(21,101,192,.08);border-left:3px solid #1565c0;
+  border-radius:8px;padding:10px 12px;font-size:12px;color:var(--navy);margin-top:12px;
+}
+.sim-product footer{max-width:860px;margin:24px auto 0;padding:16px 14px 6px;text-align:center;}
+.sim-product .fc{font-size:13.5px;font-weight:900;color:var(--navy);margin-bottom:10px;}
+.sim-product .fc .g{
+  background:linear-gradient(90deg,var(--gold-dark),var(--gold-deep),var(--gold-3));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sim-product .legal{font-size:10.5px;line-height:1.65;color:var(--muted);border-top:1px solid rgba(200,149,47,.35);padding-top:12px;}
+
+/* ===== Team / Overwrite tab (scoped, unmodified from original calculator) ===== */
+.sim-team *{box-sizing:border-box;}
+.sim-team .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:22px;
+    margin-top:22px;
+    border:1.5px solid var(--gold-3);
+    box-shadow:0 10px 26px rgba(138,97,28,.18);
+    position:relative;
+  }
+.sim-team .card::before{
+    content:"";
+    position:absolute;top:0;left:0;right:0;height:5px;
+    border-radius:var(--radius) var(--radius) 0 0;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold-3),var(--gold-deep));
+  }
+.sim-team .card h2{
+    font-size:18px;
+    margin:6px 0 4px;
+    color:var(--navy);
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+.sim-team .card h2 .num{
+    background:linear-gradient(135deg,var(--gold-deep),var(--gold-3));
+    color:#fff;
+    width:26px;height:26px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:800;
+    box-shadow:0 2px 6px rgba(138,97,28,.4);
+  }
+.sim-team .card .sub{
+    font-size:12.5px;
+    color:var(--muted);
+    margin:0 0 16px;
+  }
+.sim-team .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.sim-team .row.single{grid-template-columns:1fr;}
+.sim-team label{font-size:12.5px;font-weight:700;color:var(--gold-dark);display:block;margin-bottom:5px;}
+.sim-team input[type=number], .sim-team input[type=date], .sim-team select{
+    width:100%;padding:10px 11px;border:1.5px solid var(--gold-3);
+    border-radius:9px;font-size:14.5px;background:#fffef9;color:var(--text);
+  }
+.sim-team input:focus, .sim-team select:focus{outline:none;border-color:var(--gold-deep);background:#fff;}
+.sim-team .toggle-group{display:flex;gap:8px;flex-wrap:wrap;}
+.sim-team .toggle-group button{
+    flex:1;min-width:70px;padding:9px 6px;border-radius:9px;
+    border:1.5px solid var(--gold-3);background:#fffef9;font-size:12.5px;font-weight:700;
+    color:var(--muted);cursor:pointer;transition:.15s;
+  }
+.sim-team .toggle-group button.active{border-color:var(--gold-deep);background:var(--gold-1);color:var(--gold-dark);}
+.sim-team .checkbox-row{display:flex;align-items:center;gap:8px;margin:10px 0 4px;font-size:13px;}
+.sim-team .checkbox-row input{width:16px;height:16px;}
+.sim-team .calc-btn{
+    width:100%;margin-top:16px;padding:14px;border:none;border-radius:12px;
+    background:linear-gradient(135deg,var(--gold-deep),var(--gold-dark));
+    color:#fff;font-size:15px;font-weight:800;letter-spacing:.3px;cursor:pointer;
+    box-shadow:0 6px 16px rgba(138,97,28,.35);
+  }
+.sim-team .calc-btn:active{transform:translateY(1px);}
+.sim-team .results{margin-top:18px;display:none;}
+.sim-team .results.show{display:block;}
+.sim-team .line{display:flex;justify-content:space-between;font-size:13.5px;padding:7px 0;border-bottom:1px dashed var(--gold-2);}
+.sim-team .line:last-child{border-bottom:none;}
+.sim-team .line .val{font-weight:800;color:var(--navy);}
+.sim-team .line.muted{color:var(--muted);font-size:12px;}
+.sim-team .banner{
+    padding:12px 14px;border-radius:10px;font-size:13px;font-weight:700;margin-top:14px;
+  }
+.sim-team .banner.ok{background:#e6f5ec;color:var(--good);border:1px solid #b3e0c4;}
+.sim-team .banner.no{background:#fbe9e9;color:var(--bad);border:1px solid #f0c2c2;}
+.sim-team .banner.warn{background:#fff7e0;color:var(--gold-dark);border:1px solid var(--gold-3);}
+.sim-team .gate-locked{opacity:.4;pointer-events:none;filter:grayscale(60%);}
+.sim-team .total-card{
+    background:linear-gradient(135deg,var(--navy),#0a1b33);
+    color:#fff;border-radius:var(--radius);padding:26px 20px;text-align:center;
+    margin-top:26px;
+    box-shadow:0 14px 34px rgba(11,36,71,.35);
+    border:1.5px solid var(--gold-3);
+  }
+.sim-team .total-card .label{font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--gold-2);margin-bottom:6px;}
+.sim-team .total-card .amount{font-size:36px;font-weight:900;
+    background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+.sim-team .total-card .breakdown{margin-top:12px;font-size:12px;color:#dbe6f5;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+.sim-team .note{font-size:11.3px;color:var(--muted);margin-top:14px;line-height:1.55;background:#fffaf0;border:1px solid var(--gold-2);padding:10px 12px;border-radius:9px;}
+.sim-team .designation-banner{
+    background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
+    border:1.5px solid var(--gold-deep);
+    border-radius:var(--radius);
+    padding:16px 20px;
+    margin-top:22px;
+    text-align:center;
+  }
+.sim-team .designation-banner label{color:var(--gold-dark);font-size:13px;}
+.sim-team .designation-banner select{max-width:320px;margin:6px auto 0;font-weight:700;}
+.sim-team .footer-credit{
+    text-align:center;
+    margin-top:30px;
+    padding:18px 16px;
+    color:var(--gold-dark);
+  }
+.sim-team .footer-credit .name{font-weight:800;font-size:14px;color:var(--navy);}
+.sim-team .footer-credit .role{font-size:12px;}
+.sim-team .shortfall-line{color:var(--gold-dark);font-weight:700;}
+.sim-team .projected{
     display:block;
     margin-top:3px;
     color:var(--good);
@@ -238,155 +446,157 @@
     font-size:12px;
   }
 
-  /* ===================================================== */
-  /* ============ BA BUSINESS / ADVISOR MODULE ============ */
-  /* ===================================================== */
-  .section-divider{
-    max-width:820px;margin:38px auto 0;padding:0 16px;
-  }
-  .section-divider .divider-line{
-    display:flex;align-items:center;gap:12px;color:var(--gold-dark);
-    font-weight:800;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
-    margin-bottom:2px;
-  }
-  .section-divider .divider-line::before,
-  .section-divider .divider-line::after{
-    content:"";flex:1;height:2px;
-    background:linear-gradient(90deg,transparent,var(--gold-3),transparent);
-  }
-  .biz-card{ background:linear-gradient(180deg,var(--card),#fffef8); }
-  .biz-card h2{ color:var(--maroon); }
-  .biz-card h2 .num{ background:linear-gradient(135deg,var(--maroon),#b23a3a); }
-
-  .mode-toggle{display:flex;gap:8px;margin-bottom:10px;}
-  .mode-toggle button{
-    flex:1;padding:8px 6px;border-radius:9px;border:1.5px solid var(--gold-3);
-    background:#fffef9;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;
-  }
-  .mode-toggle button.active{border-color:var(--maroon);background:#fbeaea;color:var(--maroon);}
-
-  .biz-table-wrap{overflow-x:auto;margin-top:10px;border-radius:12px;border:1.5px solid var(--gold-3);}
-  table.biz-table{width:100%;border-collapse:collapse;min-width:640px;font-size:12.5px;}
-  table.biz-table th{
-    background:var(--navy);color:#fff;padding:9px 8px;text-align:left;font-size:11.5px;
-    letter-spacing:.2px;position:sticky;top:0;
-  }
-  table.biz-table td{padding:7px 8px;border-bottom:1px solid var(--gold-1);white-space:nowrap;}
-  table.biz-table tr:nth-child(even){background:#fffaf0;}
-  table.biz-table tr.total-row{background:var(--gold-1);font-weight:800;}
-  table.biz-table input[type=number]{width:100px;padding:6px 7px;font-size:12.5px;}
-
-  .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
-  .kpi{
-    background:#fffef9;border:1.5px solid var(--gold-3);border-radius:12px;
-    padding:12px 14px;text-align:center;
-  }
-  .kpi .kpi-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
-  .kpi .kpi-val{font-size:19px;font-weight:900;color:var(--navy);margin-top:4px;}
-  .kpi.highlight{background:linear-gradient(135deg,var(--gold-1),var(--gold-2));border-color:var(--gold-deep);}
-  .kpi.heldback .kpi-val{color:var(--gold-dark);}
-  .kpi.heldback .kpi-tag{
-    display:inline-block;margin-top:4px;font-size:10px;font-weight:700;color:#fff;
-    background:var(--gold-deep);padding:2px 8px;border-radius:10px;
-  }
-
-  .twin-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
-  .twin-card{border-radius:14px;padding:16px;border:1.5px solid var(--gold-3);}
-  .twin-card.ba{background:linear-gradient(160deg,#eef6ff,#e2eefc);border-color:var(--blue);}
-  .twin-card.advisor{background:linear-gradient(160deg,#fdeef0,#fbe2e6);border-color:var(--maroon);}
-  .twin-card h3{margin:0 0 10px;font-size:14px;}
-  .twin-card.ba h3{color:var(--blue);}
-  .twin-card.advisor h3{color:var(--maroon);}
-
-  .grand-total-final{
-    background:linear-gradient(135deg,var(--maroon),#5c1010);
-    color:#fff;border-radius:var(--radius);padding:26px 20px;text-align:center;
-    margin-top:26px;box-shadow:0 14px 34px rgba(139,26,26,.35);border:1.5px solid var(--gold-3);
-  }
-  .grand-total-final .label{font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--gold-2);margin-bottom:6px;}
-  .grand-total-final .amount{font-size:38px;font-weight:900;
-    background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .grand-total-final .breakdown{margin-top:14px;font-size:12px;color:#f7dede;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
-
-  .field-hint{font-size:10.8px;color:var(--muted);margin:-6px 0 10px;}
-  .report-btn{
-    width:100%;margin-top:18px;padding:16px;border:none;border-radius:12px;
-    background:linear-gradient(135deg,var(--navy),#123a6b);color:#fff;font-size:16px;font-weight:800;
-    cursor:pointer;box-shadow:0 8px 20px rgba(11,36,71,.4);
-  }
-  .action-row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
-  .action-row button{
-    flex:1;min-width:140px;padding:12px 10px;border-radius:10px;border:none;
-    font-size:13px;font-weight:800;cursor:pointer;color:#fff;
-  }
-  .btn-download{background:linear-gradient(135deg,#1b7d4d,#155e39);}
-  .btn-whatsapp{background:linear-gradient(135deg,#25D366,#1aa851);}
-  .btn-share{background:linear-gradient(135deg,var(--blue),#0d47a1);}
-  .btn-close{background:linear-gradient(135deg,#6b5a30,#4a3d1f);}
-  .validation-msg{
-    font-size:12px;font-weight:700;color:var(--bad);margin-top:6px;min-height:14px;
-  }
-
-  /* ===== Report Modal ===== */
-  .modal-overlay{
-    display:none;position:fixed;inset:0;background:rgba(11,36,71,.55);
-    z-index:500;align-items:flex-start;justify-content:center;padding:20px 12px;overflow-y:auto;
-  }
-  .modal-overlay.show{display:flex;}
-  .modal-box{
-    background:#fffef9;border-radius:16px;max-width:720px;width:100%;
-    padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.4);margin-top:10px;
-  }
-  .modal-box h2{color:var(--navy);margin-top:0;font-size:18px;}
-  #reportPreviewBody{
-    background:#fff;border:1px solid #ddd;border-radius:10px;padding:16px;
-    max-height:60vh;overflow-y:auto;font-size:12.5px;color:var(--text);
-  }
-  #reportPreviewBody h3{color:var(--navy);border-bottom:2px solid var(--gold-3);padding-bottom:4px;margin-top:18px;}
-  #reportPreviewBody table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:8px;}
-  #reportPreviewBody table th{background:var(--navy);color:#fff;padding:6px;text-align:left;}
-  #reportPreviewBody table td{padding:6px;border-bottom:1px solid #eee;}
-  #reportPreviewBody .rp-total{font-size:16px;font-weight:900;color:var(--maroon);}
-
-  @media (max-width:600px){
-    .kpi-grid{grid-template-columns:1fr 1fr;}
-    .twin-cards{grid-template-columns:1fr;}
-    .row{grid-template-columns:1fr;}
-  }
+/* ===== Mobile screen tuning (single continuous scrolling page) ===== */
+@media (max-width:600px){
+  .wrap{padding:0 10px;}
+  .tab-btn{min-width:100%;font-size:13px;padding:11px 12px;}
+  .gs-row{flex-direction:column;align-items:flex-start;}
+  .brandbar{gap:8px;padding:8px 10px;}
+  .chip{font-size:12px;padding:5px 10px;}
+  .bx{font-size:16px;}
+  .page-hero, .hero{padding:18px 10px 10px;}
+  .page-hero h1, .hero h1{font-size:20px;}
+  .page-hero p, .hero p{font-size:11px;}
+  .sticky-inner, .st-inner{gap:6px 16px;}
+  .s-val, .st-amount{font-size:17px;}
+  .lbl, .st-label{font-size:9.5px;}
+  .sim-product .card, .sim-team .card{padding:14px;}
+  .shell-card{padding:14px;}
+  .sim-team .row{grid-template-columns:1fr;gap:10px;}
+  .sim-product .trow button{min-width:100px;font-size:12px;padding:9px 8px;}
+  .sim-product .fyc-row .vl{font-size:21px;}
+  .sim-product table{font-size:12px;}
+  .sim-product thead th{font-size:9px;padding:7px 5px;}
+  .sim-product tbody td{padding:7px 5px;}
+  #resCard, #reportPreviewBody{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .sim-team .total-card{padding:20px 14px;}
+  .sim-team .total-card .amount{font-size:28px;}
+  .net-earning-box{padding:16px;}
+  .net-earning-box .ne-amount{font-size:28px;}
+  .action-btn{font-size:14px;padding:14px 10px;}
+  .designation-banner select{max-width:100%;}
+}
 </style>
 </head>
 <body>
 
 <div class="brandbar">
-  <div class="logo-chip bob">Bank <span>of Baroda</span></div>
-  <div class="brand-x">×</div>
-  <div class="logo-chip ifl">India<span>First</span> Life</div>
+  <div class="chip bob">Bank <span>of Baroda</span></div>
+  <div class="bx">×</div>
+  <div class="chip ifl">India<span>First</span> Life</div>
 </div>
 
-<div class="sticky-total">
-  <div class="st-inner">
-    <span class="st-label">Total Est. Monthly Earnings</span>
-    <span class="st-amount" id="stickyAmount">₹0</span>
-    <span class="st-breakdown">
-      <span>MPB DT: <b id="st-mpb">₹0</b></span>
-      <span>MPB IDT: <b id="st-idt">₹0</b></span>
-      <span>DBB: <b id="st-dbb">₹0</b></span>
-      <span>Consistency: <b id="st-cons">₹0</b></span>
-      <span>Salary+BDA: <b id="st-bda">₹0</b></span>
-    </span>
+<div id="stickyShell">
+  <div class="sticky-inner">
+    <div class="s-block">
+      <div class="lbl">FYC — Year 1</div>
+      <div class="s-val" id="sFyc">₹0</div>
+    </div>
+    <div class="s-block">
+      <div class="lbl">Team Monthly Earning</div>
+      <div class="s-val" id="stickyAmount">₹0</div>
+    </div>
+  </div>
+  <!-- kept in the DOM so existing calculation code can keep writing to these ids;
+       their values are already shown in full elsewhere on the page (Product results
+       card + BA Grand Total card), so they're not duplicated in the compact sticky bar -->
+  <div class="sr-only-vals" aria-hidden="true">
+    <span id="sTotal"></span><span id="st-mpb"></span><span id="st-idt"></span>
+    <span id="st-dbb"></span><span id="st-cons"></span><span id="st-bda"></span>
   </div>
 </div>
 
-<header class="hero">
-  <h1>BA Earning Simulator</h1>
-  <p>FY27 Q1 Construct · Effective 1 May 2026 · Individual BAs</p>
-</header>
+<div class="page-hero">
+  <h1>Insurance <span class="g">Earning Simulator</span></h1>
+  <p>Advisor Business &amp; FW Overwrite / Earning Projection — IndiaFirst Life × Bank of Baroda</p>
+</div>
 
 <div class="wrap">
 
-  <!-- ================= DESIGNATION SELECTOR (used by BDA & Progression) ================= -->
+  <div class="tabs" id="quickNav">
+    <button type="button" class="tab-btn active" id="tabBtnProduct" data-target="tab-product">💰 Product Commission (FYC)</button>
+    <button type="button" class="tab-btn" id="tabBtnTeam" data-target="tab-team">🤝 Team / BA Overwrite &amp; Bonuses</button>
+  </div>
+  <p class="hint" style="text-align:center;margin:-10px 0 14px;">👆 Tap to jump — everything is on this one scrolling page.</p>
+
+  <section id="tab-product" class="sim-product">
+<div class="section-title">💰 Product Commission (FYC)</div>
+<div class="card" id="c1">
+  <h2><span class="num">1</span> Are you an MDRT Advisor?</h2>
+  <div class="trow" id="tMdrt">
+    <button data-v="yes">✅ Yes — MDRT</button>
+    <button data-v="no">Non-MDRT</button>
+  </div>
+  <p class="hint">MDRT status applies only to Top Products (LGIP / AIM / Smart Pay / Fortune Plus). All other products have a single rate.</p>
+</div>
+
+<div class="card off" id="c2">
+  <h2><span class="num">2</span> Select Product Category</h2>
+  <div class="trow" id="tCat">
+    <button data-v="top">⭐ Top Products</button>
+    <button data-v="nonpar">Non-Par Plans</button>
+    <button data-v="par">Par Plans</button>
+    <button data-v="ulip">ULIP Plans</button>
+    <button data-v="term">Protection / Term</button>
+    <button data-v="annuity">Annuity / Pension</button>
+  </div>
+</div>
+
+<div class="card off" id="c3">
+  <h2><span class="num">3</span> Select Plan</h2>
+  <label class="fl">Plan</label>
+  <select id="selProd"><option value="">— Select category first —</option></select>
+</div>
+
+<div class="card off" id="c4">
+  <h2><span class="num">4</span> Select PPT / Variant</h2>
+  <label class="fl">Premium Payment Term / Mode</label>
+  <select id="selVar"><option value="">— Select plan first —</option></select>
+  <div class="note-special" id="noteSpecial"></div>
+</div>
+
+<div class="card off" id="c5">
+  <h2><span class="num">5</span> Enter Business Amount</h2>
+  <label class="fl">Annual Premium (₹)</label>
+  <input type="text" id="inAmt" placeholder="e.g. 1,00,000" inputmode="numeric">
+  <p class="hint">Enter annual premium. Commission each year = this amount × that year's rate from the Commission Master.</p>
+</div>
+
+<button class="cbtn" id="btnCalc" disabled>⚡ Calculate My Earnings</button>
+
+<div class="card res" id="resCard">
+  <h2>📊 Projected Earnings Breakdown</h2>
+  <div class="fyc-row">
+    <div><div class="lb">First Year Commission (FYC)</div><div class="vl" id="rFyc">₹0</div></div>
+    <div><div class="lb">Total Earning (Full Policy Term)</div><div class="vl" id="rTotal">₹0</div></div>
+  </div>
+  <table>
+    <thead><tr><th>Policy Year</th><th>Commission Rate</th><th>Your Commission</th></tr></thead>
+    <tbody id="tBody"></tbody>
+  </table>
+  <div class="nbox" id="nbox"></div>
+</div>
+
+<footer>
+  <div class="fc">Designed by <span class="g">ABH Pradeep</span> &nbsp;|&nbsp; Branch: <span class="g">Rajendra Place</span></div>
+  <div class="legal">
+    This simulator is for authorised IndiaFirst Life advisors only, built strictly from the official
+    "Commission Master (Agency Channel)" document. Top Product rates apply to policies issued from
+    1st November 2025 onward. All figures are net of GST. The Guaranteed Benefit Plan (IndiaFirst Life
+    Guaranteed Benefit Plan, 143N056V08) has a dual Lumpsum + Income commission structure — this tool
+    shows the Lumpsum component; please refer to the official Commission Master for the Income Benefit
+    component. IndiaFirst Life Smart Retirement Plan (143L076V01) LP/RP Years 2–11 commission is
+    0.51% on average fund value per year (not on premium) — this tool displays the Year 1 % only;
+    actual renewal commission depends on fund value. All payouts subject to policy issuance,
+    persistency, regulatory guidelines, and any revisions to the Commission Master. Not for external
+    distribution. © IndiaFirst Life. For internal circulation only.
+  </div>
+</footer>
+  </section>
+
+  <section id="tab-team" class="sim-team">
+<div class="section-title">🤝 Team / BA Overwrite &amp; Bonuses</div>
+<!-- ================= DESIGNATION SELECTOR (used by BDA & Progression) ================= -->
   <div class="designation-banner">
     <label for="designation">Select your current designation (needed for Salary/BDA and Progression)</label>
     <select id="designation">
@@ -427,6 +637,7 @@
       <div>
         <label>Total WRP Achieved Within Month (₹)</label>
         <input type="number" id="wrp" placeholder="e.g. 1000000" min="0">
+        <p class="hint" id="wrpSyncHint" style="margin-top:4px;">🔗 Auto-filled from the Annual Premium entered in the Product Commission section above. Edit here any time to override.</p>
       </div>
       <div>
         <label>Assumed Commission Rate on FYC (%)</label>
@@ -756,212 +967,505 @@
     Figures are indicative estimates based on the FY27 Q1 BA Proposition construct (effective 1 May 2026). Actual payouts also depend on gate criteria (LEAP induction completion, no net recovery/negative premium at payout, etc.), payout cycle timing (Green/Non-Green channel), and management discretion as per the plan document.
   </div>
 
-  <!-- ================================================================= -->
-  <!-- ===============  NEW: BA VARIABLE AGENCY BUSINESS  =============== -->
-  <!-- ===============  & ADVISOR EARNINGS MODULE (added) =============== -->
-  <!-- ================================================================= -->
-  <div class="section-divider">
-    <div class="divider-line">BA Variable Agency · Business &amp; Earnings Projection</div>
+  </section>
+
+  <!-- ================= EXPENSE RATIO & NET MONTHLY EARNING (combined) ================= -->
+  <div class="shell-card" id="expenseCard">
+    <h2>💹 Net Total Earning</h2>
+    <p class="sub">Combined Gross Earning = Advisor/FPA FYC + BA Monthly Earning. Expense is calculated only on your Total Business (Annual Premium / WRP entered above) — never on FYC, BA, WRP or the combined earning. (The Advisor Earning card in Step 5 and the BA Grand Total above are never altered — this is an additional, connected view.)</p>
+    <label for="expenseRatio">Expense Ratio (% of Total Business)</label>
+    <input type="number" id="expenseRatio" placeholder="e.g. 5" min="0" max="100" step="0.01">
+    <button class="exp-btn" id="btnCalcExpense" onclick="calcExpenseNet()">Calculate Net Total Earning</button>
+
+    <div class="net-earning-box" id="netEarningBox">
+      <div class="ne-summary">
+        <div class="ne-summary-row"><span>Total Business</span><b id="r-exp-business">₹0</b></div>
+        <div class="ne-summary-row"><span>Advisor / FPA FYC Earning</span><b id="r-exp-prod">₹0</b></div>
+        <div class="ne-summary-row"><span>BA Monthly Earning</span><b id="r-exp-team">₹0</b></div>
+        <div class="ne-summary-row"><span>Combined Gross Earning</span><b id="r-exp-combined">₹0</b></div>
+        <div class="ne-summary-row"><span>Expense Ratio</span><b id="r-exp-ratio">0%</b></div>
+        <div class="ne-summary-row"><span>Expense Amount (on Total Business)</span><b id="r-exp-amount">₹0</b></div>
+      </div>
+      <div class="ne-label">Net Total Earning</div>
+      <div class="ne-amount" id="r-exp-net">₹0</div>
+      <div class="ne-formula">Net Total Earning = Advisor/FPA FYC + BA Monthly Earning − Expense on Total Business</div>
+    </div>
   </div>
 
-  <!-- ============ BA BUSINESS & PROJECTED EARNINGS ============ -->
-  <div class="card biz-card">
-    <h2><span class="num">7</span>BA Business &amp; Projected Earnings</h2>
-    <p class="sub">Manual business inputs — independent of the FY27 modules above. Used to project multi-year BA commission earnings, TDS, and held-back amounts.</p>
-
-    <div class="row">
-      <div>
-        <label>Annual Business / Premium (₹)</label>
-        <input type="number" id="bizAnnualBusiness" placeholder="e.g. 1000000" min="0">
-      </div>
-      <div>
-        <label>Number of Years to Project</label>
-        <input type="number" id="bizYears" value="3" min="1" max="15" step="1">
+  <div class="grand-summary" id="grandSummary">
+    <h2>📊 Projected Earnings — Combined View</h2>
+    <div class="gs-row" id="gsProdRow" style="display:none;">
+      <div class="gs-label">Product Commission</div>
+      <div class="gs-vals">
+        <span>FYC (Year 1)<b id="gsProdFyc">₹0</b></span>
+        <span>Total (Full Policy Term)<b id="gsProdTotal">₹0</b></span>
       </div>
     </div>
-
-    <label>Advisor Commission — choose entry mode</label>
-    <div class="mode-toggle" id="bizCommModeGroup">
-      <button type="button" data-val="pct" class="active">Use Commission %</button>
-      <button type="button" data-val="amt">Use Commission Amount (₹)</button>
-    </div>
-    <div class="row">
-      <div id="bizCommPctWrap">
-        <label>Advisor Commission (%)</label>
-        <input type="number" id="bizCommPct" value="30" min="0" max="100" step="0.01">
-      </div>
-      <div id="bizCommAmtWrap" style="display:none;">
-        <label>Advisor Commission Amount (₹, per year)</label>
-        <input type="number" id="bizCommAmt" placeholder="e.g. 300000" min="0">
-      </div>
-      <div>
-        <label>TDS (%)</label>
-        <input type="number" id="bizTds" value="10" min="0" max="100" step="0.01">
+    <div class="gs-row" id="gsTeamRow" style="display:none;">
+      <div class="gs-label">Team / Overwrite &amp; Bonuses</div>
+      <div class="gs-vals">
+        <span>Monthly (current)<b id="gsTeamMonthly">₹0</b></span>
+        <span>Yearly Projection<b id="gsTeamYearly">₹0</b></span>
       </div>
     </div>
-    <div class="row single">
-      <div>
-        <label>Held Back (%)</label>
-        <input type="number" id="bizHeldPct" placeholder="e.g. 20" min="0" max="100" step="0.01">
-        <p class="field-hint">Manual entry — enter the held-back percentage applicable to your business model. Held Back Amount is always released <b>after 12 months</b>.</p>
-      </div>
-    </div>
-
-    <button class="calc-btn" style="background:linear-gradient(135deg,var(--maroon),#5c1010);" onclick="generateBizYearRows()">Generate Year-wise Table</button>
-    <div class="validation-msg" id="bizValidation"></div>
-
-    <div class="biz-table-wrap" style="display:none;" id="bizTableWrap">
-      <table class="biz-table" id="bizTable">
-        <thead>
-          <tr>
-            <th>Year</th><th>Business (₹)</th><th>Commission</th><th>TDS</th>
-            <th>Current Earnings</th><th>Held Back</th><th>Held Back Release</th>
-          </tr>
-        </thead>
-        <tbody id="bizTableBody"></tbody>
-      </table>
-    </div>
-
-    <button class="calc-btn" id="bizCalcBtn" style="display:none;" onclick="calcBizProjection()">Calculate Projection</button>
-
-    <div class="results" id="bizResults">
-      <h3 style="font-size:14px;color:var(--navy);margin:18px 0 4px;">Projected Earnings (Total across selected years)</h3>
-      <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-label">Total Annual Business</div><div class="kpi-val" id="kpi-biz-business">₹0</div></div>
-        <div class="kpi"><div class="kpi-label">Advisor Commission</div><div class="kpi-val" id="kpi-biz-comm">₹0</div></div>
-        <div class="kpi"><div class="kpi-label">TDS Deduction</div><div class="kpi-val" id="kpi-biz-tds">₹0</div></div>
-        <div class="kpi"><div class="kpi-label">Net Advisor Earnings</div><div class="kpi-val" id="kpi-biz-net">₹0</div></div>
-        <div class="kpi highlight"><div class="kpi-label">Current / Immediate Earnings</div><div class="kpi-val" id="kpi-biz-current">₹0</div></div>
-        <div class="kpi heldback">
-          <div class="kpi-label">Held Back Amount</div>
-          <div class="kpi-val" id="kpi-biz-held">₹0</div>
-          <div class="kpi-tag">After 12 Months</div>
-        </div>
-      </div>
-      <div class="kpi highlight" style="margin-top:12px;">
-        <div class="kpi-label">Total Projected Earnings (Current + Held Back)</div>
-        <div class="kpi-val" id="kpi-biz-total" style="font-size:24px;">₹0</div>
+    <div class="gs-row" id="gsExpRow" style="display:none;">
+      <div class="gs-label">Net Total Earning (Combined Gross − Expense)</div>
+      <div class="gs-vals">
+        <span>Combined Gross Earning<b id="gsExpGross">₹0</b></span>
+        <span>Expense Amount<b id="gsExpAmt">₹0</b></span>
+        <span>Net Total Earning<b id="gsExpNet">₹0</b></span>
       </div>
     </div>
   </div>
 
-  <!-- ============ BA EARNINGS vs ADVISOR EARNINGS ============ -->
-  <div class="card biz-card">
-    <h2><span class="num">8</span>BA Earnings vs Advisor Earnings</h2>
-    <p class="sub">Kept as two clearly separate cards so BA/Agency earnings are never confused with Advisor earnings.</p>
+  <div class="validation-note" id="validationNote"></div>
 
-    <div class="row single">
-      <div>
-        <label>Advisor's Own Business Figure (₹) <span style="font-weight:400;">(defaults to Annual Business above if left blank)</span></label>
-        <input type="number" id="advBusiness" placeholder="defaults to Annual Business above" min="0">
-      </div>
-    </div>
-    <label>Advisor Commission — choose entry mode</label>
-    <div class="mode-toggle" id="advCommModeGroup">
-      <button type="button" data-val="pct" class="active">Use Commission %</button>
-      <button type="button" data-val="amt">Use Commission Amount (₹)</button>
-    </div>
-    <div class="row">
-      <div id="advCommPctWrap">
-        <label>Advisor Commission (%)</label>
-        <input type="number" id="advCommPct" value="30" min="0" max="100" step="0.01">
-      </div>
-      <div id="advCommAmtWrap" style="display:none;">
-        <label>Advisor Commission Amount (₹)</label>
-        <input type="number" id="advCommAmt" placeholder="e.g. 300000" min="0">
-      </div>
-      <div>
-        <label>TDS (%)</label>
-        <input type="number" id="advTds" value="10" min="0" max="100" step="0.01">
-      </div>
-    </div>
-    <button class="calc-btn" style="background:linear-gradient(135deg,var(--maroon),#5c1010);" onclick="calcAdvisorEarnings()">Calculate Advisor Earnings</button>
-    <div class="validation-msg" id="advValidation"></div>
+  <div class="action-row">
+    <button type="button" class="action-btn" id="btnCalculateAll">⚡ CALCULATE EARNINGS</button>
+    <button type="button" class="action-btn" id="btnFetchReport">📄 VIEW &amp; DOWNLOAD REPORT</button>
+    <button type="button" class="action-btn" id="btnWhatsapp" disabled>📲 Share on WhatsApp</button>
+  </div>
+  <div class="report-status" id="reportStatus"></div>
 
-    <div class="twin-cards" id="twinResults" style="display:none;">
-      <div class="twin-card ba">
-        <h3>BA / Agency Projected Earnings</h3>
-        <div class="line"><span>Current Earnings</span><span class="val" id="tw-ba-current">₹0</span></div>
-        <div class="line"><span>Held Back Earnings <span style="font-weight:400;">(after 12 months)</span></span><span class="val" id="tw-ba-held">₹0</span></div>
-        <div class="line"><span><b>Total BA Earnings</b></span><span class="val" id="tw-ba-total">₹0</span></div>
-      </div>
-      <div class="twin-card advisor">
-        <h3>Advisor Earnings</h3>
-        <div class="line"><span>Gross Commission</span><span class="val" id="tw-adv-gross">₹0</span></div>
-        <div class="line"><span>TDS</span><span class="val" id="tw-adv-tds">₹0</span></div>
-        <div class="line"><span><b>Net Advisor Earnings</b></span><span class="val" id="tw-adv-net">₹0</span></div>
-      </div>
-    </div>
+  <!-- ================= ON-SCREEN REPORT (accurate, single source shared with the PDF) ================= -->
+  <div class="shell-card" id="reportPreview" style="display:none;margin-top:18px;">
+    <h2>📊 Report Preview <span style="font-size:11px;font-weight:700;color:var(--good);">SOURCE VERIFIED — matches PDF exactly</span></h2>
+    <div id="reportPreviewBody" style="font-size:13.5px;"></div>
   </div>
 
-  <!-- ============ TOTAL PROJECTED EARNING ============ -->
-  <div class="grand-total-final">
-    <div class="label">Total Projected Earning (BA Business Module)</div>
-    <div class="amount" id="finalGrandTotal">₹0</div>
-    <div class="breakdown">
-      <span>Total BA: <b id="ft-ba">₹0</b></span>
-      <span>Total Advisor: <b id="ft-adv">₹0</b></span>
-      <span>Total TDS: <b id="ft-tds">₹0</b></span>
-      <span>Total Held Back: <b id="ft-held">₹0</b></span>
-    </div>
-    <button class="calc-btn" style="margin-top:16px;max-width:320px;margin-left:auto;margin-right:auto;background:linear-gradient(135deg,var(--gold-deep),var(--gold-dark));" onclick="calcFinalTotal()">Recalculate Total</button>
-  </div>
+</div><!-- wrap -->
 
-  <!-- ============ REPORT GENERATION ============ -->
-  <div class="card biz-card">
-    <h2><span class="num">9</span>Generate Professional Report</h2>
-    <p class="sub">Optional details for the report header (not used in any calculation).</p>
-    <div class="row">
-      <div><label>Client / Prospect Name</label><input type="text" id="rptClientName" placeholder="Optional"></div>
-      <div><label>Advisor Name</label><input type="text" id="rptAdvisorName" placeholder="Optional"></div>
-    </div>
-    <div class="row">
-      <div><label>BA Name</label><input type="text" id="rptBaName" placeholder="Optional"></div>
-      <div><label>Branch</label><input type="text" id="rptBranch" placeholder="Optional"></div>
-    </div>
-    <div class="row">
-      <div><label>Mobile Number</label><input type="text" id="rptMobile" placeholder="Optional"></div>
-      <div><label>Report Period</label><input type="text" id="rptPeriod" placeholder="e.g. FY27"></div>
-    </div>
-
-    <button class="report-btn" onclick="generateReport()">📊 GENERATE REPORT</button>
-    <div class="validation-msg" id="reportValidation"></div>
-    <button class="calc-btn" style="background:#6b5a30;margin-top:10px;" onclick="resetBizModule()">↺ Reset BA / Advisor / Report Module</button>
-  </div>
-
-  <div class="footer-credit">
-    <div class="name">Designed by ABH Pradeep</div>
-    <div class="role">Branch: Rajendra Place</div>
-  </div>
-
+<div class="shared-footer">
+  <div class="credit">Designed by <strong>ABH Pradeep</strong> &nbsp;|&nbsp; Branch: <strong>Rajendra Place</strong></div>
 </div>
 
-<!-- ============ REPORT PREVIEW MODAL ============ -->
-<div class="modal-overlay" id="reportModal">
-  <div class="modal-box">
-    <h2>📄 Report Preview</h2>
-    <div id="reportPreviewBody"></div>
-    <div class="action-row">
-      <button class="btn-download" onclick="downloadReportPdf()">⬇️ Download PDF</button>
-      <button class="btn-share" onclick="sharePdfNative()">📤 Share</button>
-      <button class="btn-whatsapp" onclick="shareOnWhatsapp()">📱 WhatsApp</button>
-      <button class="btn-close" onclick="closeReportModal()">Close</button>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
-// ============ Shared helpers ============
-function inr(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); }
-// Reusable Indian currency formatter for the new BA Business / Advisor / Report module.
-// Kept separate from inr() so the original calculator's behaviour is never touched.
-function formatINR(value){
-  value = Number(value);
-  if(!isFinite(value)) value = 0;
-  return '₹' + Math.round(value).toLocaleString('en-IN');
+
+// ============================================================
+// COMPLETE DATA — transcribed from Commission Master (Agency Channel) v2
+// Every rate is % of annual premium, net of GST
+// Array index 0 = Year 1 (FYC), index 1 = Year 2, ...
+// 0 in array = nil commission that year
+// ============================================================
+
+// ---- TOP PRODUCTS (MDRT / Non-MDRT split) ----
+// For PPTs > 5, years 6..PPT use the 6plus flat rate
+const TOP = {
+  LGIP:{label:'IndiaFirst Life LGIP',v:{
+    5: {m:[9.3,2.5,1.7,1.7,0.8],m6:0,  nm:[8.5,3.4,1.7,1.7,0.8],nm6:0},
+    6: {m:[11.9,2.5,1.7,1.7,0.8],m6:0.8, nm:[10.2,3.4,2.5,1.7,0.8],nm6:0.8},
+    7: {m:[15.3,3.4,2.5,1.7,0.8],m6:0.8, nm:[13.6,4.2,3.4,1.7,0.8],nm6:0.8},
+    8: {m:[20.3,4.2,3.4,1.7,0.8],m6:0.8, nm:[17.8,5.1,3.4,2.5,1.7],nm6:0.8},
+    10:{m:[28.8,5.1,4.2,1.7,1.7],m6:0.8, nm:[24.6,6.8,5.1,3.4,1.7],nm6:0.8},
+    12:{m:[38.1,6.8,5.1,2.5,1.7],m6:0.8, nm:[33.1,8.5,5.9,4.2,2.5],nm6:0.8},
+  }},
+  AIM:{label:'IndiaFirst Life AIM',v:{
+    6: {m:[15.3,4.2,3.4,1.7,0.8],m6:0.8, nm:[11.9,5.1,4.2,2.5,1.7],nm6:0.8},
+    8: {m:[20.3,4.2,3.4,1.7,0.8],m6:0.8, nm:[16.1,5.9,4.2,2.5,1.7],nm6:0.8},
+    10:{m:[25.4,4.2,3.4,1.7,0.8],m6:0.8, nm:[20.3,5.9,4.2,3.4,1.7],nm6:0.8},
+    12:{m:[30.5,4.2,3.4,1.7,0.8],m6:0.8, nm:[24.6,6.8,5.1,2.5,1.7],nm6:0.8},
+  }},
+  SMARTPAY:{label:'IndiaFirst Life Smart Pay',v:{
+    5: {m:[9.3,2.5,1.7,1.7,0.8],m6:0,   nm:[8.5,3.4,1.7,1.7,0.8],nm6:0},
+    6: {m:[11.9,2.5,1.7,1.7,0.8],m6:0.8, nm:[10.2,3.4,2.5,1.7,0.8],nm6:0.8},
+    7: {m:[15.3,3.4,2.5,1.7,0.8],m6:0.8, nm:[13.6,4.2,3.4,1.7,0.8],nm6:0.8},
+    8: {m:[20.3,4.2,3.4,1.7,0.8],m6:0.8, nm:[17.8,5.1,3.4,2.5,1.7],nm6:0.8},
+    10:{m:[28.8,5.1,4.2,1.7,1.7],m6:0.8, nm:[24.6,6.8,5.1,3.4,1.7],nm6:0.8},
+    12:{m:[38.1,6.8,5.1,2.5,1.7],m6:0.8, nm:[33.1,8.5,5.9,4.2,2.5],nm6:0.8},
+    15:{m:[38.1,6.8,5.1,2.5,1.7],m6:0.8, nm:[33.1,8.5,6.8,3.4,2.5],nm6:0.8},
+    17:{m:[38.1,6.8,5.1,2.5,1.7],m6:0.8, nm:[33.1,8.5,6.8,3.4,2.5],nm6:0.8},
+    20:{m:[38.1,6.8,5.1,2.5,1.7],m6:0.8, nm:[33.1,8.5,6.8,3.4,2.5],nm6:0.8},
+  }},
+  FORTUNE:{label:'IndiaFirst Life Fortune Plus Plan',v:{
+    6: {m:[11.9,2.5,1.7,1.7,0.8],m6:0.8, nm:[10.2,3.4,2.5,1.7,0.8],nm6:0.8},
+    7: {m:[15.3,3.4,2.5,1.7,0.8],m6:0.8, nm:[13.6,4.2,3.4,1.7,0.8],nm6:0.8},
+    8: {m:[20.3,4.2,3.4,1.7,0.8],m6:0.8, nm:[17.8,5.1,3.4,2.5,1.7],nm6:0.8},
+    9: {m:[22.9,4.2,3.4,1.7,0.8],m6:0.8, nm:[19.5,5.9,4.2,2.5,1.7],nm6:0.8},
+    10:{m:[28.8,5.1,4.2,1.7,1.7],m6:0.8, nm:[24.6,6.8,5.1,3.4,1.7],nm6:0.8},
+    11:{m:[38.1,5.9,5.1,2.5,1.7],m6:0.8, nm:[33.1,8.5,5.9,3.4,1.7],nm6:0.8},
+    12:{m:[38.1,6.8,5.1,2.5,1.7],m6:0.8, nm:[33.1,8.5,5.9,4.2,2.5],nm6:0.8},
+  }},
+};
+
+// ---- OTHER PRODUCTS (single rate, no MDRT split) ----
+// Each variant: array of 11 values (Year1..Year11+), 0 = no commission that year
+// Special notes stored as note property
+const OTHER = {
+  // NON-PAR
+  CASHBACK:{cat:'nonpar',label:'IndiaFirst Life Cash Back Plan (Non-POS)',uin:'143N024V05',
+    vlabel:k=>({5:'PPT 5 yrs',7:'PPT 7 yrs',10:'PPT 10 yrs',12:'PPT 12 yrs'}[k]),
+    v:{
+      5: [12.71,4.24,4.24,1.69,1.69,0,0,0,0,0,0],
+      7: [17.80,4.24,4.24,1.69,1.69,1.69,1.69,0,0,0,0],
+      10:[25.42,4.24,4.24,1.69,1.69,1.69,1.69,1.69,1.69,1.69,0],
+      12:[30.51,4.24,4.24,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69],
+    }
+  },
+  GBP:{cat:'nonpar',label:'IndiaFirst Life Guaranteed Benefit Plan',uin:'143N056V08',
+    note:'Dual commission: Lumpsum Benefit (shown) + Income Benefit (2.54% pa on income component). See Commission Master for income benefit breakdown.',
+    vlabel:k=>`PPT ${k} yrs`,
+    v:{
+      5: [12.71,1.69,1.69,1.69,1.69,0,0,0,0,0,0],
+      6: [15.25,1.69,1.69,1.69,1.69,1.69,0,0,0,0,0],
+      7: [17.80,2.54,2.54,1.69,1.69,0.85,0.85,0,0,0,0],
+      8: [20.34,2.54,2.54,1.69,1.69,0.85,0.85,0.85,0,0,0],
+      10:[25.42,6.36,6.36,4.24,4.24,1.69,1.69,0.85,0.85,0.85,0],
+      12:[30.51,6.36,6.36,4.24,4.24,1.69,1.69,1.69,1.69,0.85,0.85],
+    }
+  },
+  GOLDREAMS:{cat:'nonpar',label:'IndiaFirst Life Guarantee Of Life Dreams Plan',uin:'143N080V03',
+    note:'PT 20 years: Yrs 2–5 = 2.54%, Yrs 6–10 = 0.85%. PT 30/40 years: Yrs 2–3 = 4.24%, Yrs 4–5 = 2.54%, Yrs 6–10 = 0.85%.',
+    vlabel:k=>({
+      '6_20':'PPT 6 yrs — PT 20 yrs','8_20':'PPT 8 yrs — PT 20 yrs','10_20':'PPT 10 yrs — PT 20 yrs',
+      '6_3040':'PPT 6 yrs — PT 30/40 yrs','8_3040':'PPT 8 yrs — PT 30/40 yrs','10_3040':'PPT 10 yrs — PT 30/40 yrs',
+    }[k]),
+    v:{
+      '6_20': [15.25,2.54,2.54,2.54,2.54,0.85,0.85,0.85,0.85,0.85,0],
+      '8_20': [20.34,2.54,2.54,2.54,2.54,0.85,0.85,0.85,0.85,0.85,0],
+      '10_20':[25.42,2.54,2.54,2.54,2.54,0.85,0.85,0.85,0.85,0.85,0],
+      '6_3040': [15.25,4.24,4.24,2.54,2.54,0.85,0.85,0.85,0.85,0.85,0],
+      '8_3040': [20.34,4.24,4.24,2.54,2.54,0.85,0.85,0.85,0.85,0.85,0],
+      '10_3040':[25.42,4.24,4.24,2.54,2.54,0.85,0.85,0.85,0.85,0.85,0],
+    }
+  },
+  SARALBACHAT:{cat:'nonpar',label:'IndiaFirst Life Saral Bachat Bima Plan',uin:'143N063V02',
+    vlabel:k=>({5:'PPT 5 yrs',7:'PPT 7 yrs',10:'PPT 10 yrs'}[k]),
+    v:{
+      5: [12.71,2.54,2.54,2.54,2.54,0,0,0,0,0,0],
+      7: [17.80,2.54,2.54,2.54,2.54,2.54,2.54,0,0,0,0],
+      10:[25.42,2.54,2.54,2.54,2.54,2.54,2.54,2.54,2.54,2.54,0],
+    }
+  },
+  GSPP:{cat:'nonpar',label:'IndiaFirst Life Guaranteed Single Premium Plan',uin:'143N068V04',
+    vlabel:()=>'Single Premium (All Policy Terms)',
+    v:{SP:[0.85,0,0,0,0,0,0,0,0,0,0]}
+  },
+  SARALJEEVAN:{cat:'nonpar',label:'IndiaFirst Life Saral Jeevan Bima Plan',uin:'143N061V01',
+    vlabel:k=>({RegLtd:'Regular / Limited Premium',Single:'Single Premium'}[k]),
+    v:{
+      RegLtd:[33.90,8.47,8.47,8.47,8.47,0.85,0.85,0.85,0.85,0.85,0.85],
+      Single:[6.36,0,0,0,0,0,0,0,0,0,0],
+    }
+  },
+  // PAR
+  MAHAJEEVAN:{cat:'par',label:'IndiaFirst Life Mahajeevan Plus Plan',uin:'143N059V03',
+    vlabel:()=>'PPT 12 yrs — PT 15/20 yrs',
+    v:{12:[30.51,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85]}
+  },
+  LITTLECHAMP:{cat:'par',label:'IndiaFirst Life Little Champ Plan',uin:'143N035V02',
+    vlabel:k=>`PPT ${k} yrs (All Policy Terms)`,
+    v:{
+      7: [17.80,1.69,1.69,1.69,1.69,1.69,1.69,0,0,0,0],
+      8: [20.34,1.69,1.69,1.69,1.69,1.69,1.69,1.69,0,0,0],
+      9: [22.88,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,0,0],
+      10:[25.42,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,0],
+      11:[27.97,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69],
+      12:[30.51,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69],
+      13:[33.05,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69],
+      14:[35.59,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69],
+    }
+  },
+  MICROBACHAT:{cat:'par',label:'IndiaFirst Life Micro Bachat Plan',uin:'143N052V03',
+    vlabel:k=>`PPT ${k} yrs (All Policy Terms)`,
+    v:{
+      5: [12.71,4.24,4.24,4.24,4.24,0,0,0,0,0,0],
+      7: [17.80,4.24,4.24,4.24,4.24,4.24,4.24,0,0,0,0],
+      10:[25.42,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0],
+    }
+  },
+  GRPLAN:{cat:'par',label:'IndiaFirst Life Guaranteed Retirement Plan',uin:'143N026V02',
+    vlabel:k=>({RP:'Regular / Limited Pay (RP/LP)',SP:'Single Premium'}[k]),
+    v:{
+      RP:[6.36,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69],
+      SP:[1.69,0,0,0,0,0,0,0,0,0,0],
+    }
+  },
+  // ULIP
+  MONEYBALANCE:{cat:'ulip',label:'IndiaFirst Life Money Balance Plan',uin:'143L017V07',
+    vlabel:k=>({LPRP:'LP / RP',SP:'Single Premium'}[k]),
+    v:{
+      LPRP:[6.36,2.54,1.69,1.69,0.85,0.85,0.85,0.85,0.85,0.85,0.85],
+      SP:[1.69,0,0,0,0,0,0,0,0,0,0],
+    }
+  },
+  WEALTHMAX:{cat:'ulip',label:'IndiaFirst Life Wealth Maximizer Plan',uin:'143L029V05',
+    vlabel:k=>({LPRP:'LP / RP',SP:'Single Premium'}[k]),
+    v:{
+      LPRP:[6.36,0.85,0.85,0.85,0.85,0,0,0,0,0,0],
+      SP:[1.69,0,0,0,0,0,0,0,0,0,0],
+    }
+  },
+  TERMULIP:{cat:'ulip',label:'IndiaFirst Life Term With ULIP PLUS',uin:'143L073V02',
+    vlabel:k=>`PPT ${k} yrs (All Policy Terms)`,
+    v:{
+      5: [10.59,0.85,0.85,0.85,0.85,0,0,0,0,0,0],
+      6: [10.59,0.85,0.85,0.85,0.85,0.85,0,0,0,0,0],
+      7: [10.59,0.85,0.85,0.85,0.85,0.85,0.85,0,0,0,0],
+      8: [10.59,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0,0,0],
+      9: [10.59,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0,0],
+      10:[10.59,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0],
+    }
+  },
+  SMARTRET:{cat:'ulip',label:'IndiaFirst Life Smart Retirement Plan',uin:'143L076V01',
+    note:'Year 1 LP/RP = 0.85%. Years 2–11: 0.51% on average fund value per year (not on premium). Displayed here as Year 1 only; renewal commission depends on fund value.',
+    vlabel:k=>({LPRP:'LP / RP',SP:'Single Premium'}[k]),
+    v:{
+      LPRP:[0.85,0,0,0,0,0,0,0,0,0,0],
+      SP:[1.69,0,0,0,0,0,0,0,0,0,0],
+    }
+  },
+  // PROTECTION/TERM
+  IFLPLAN:{cat:'term',label:'IndiaFirst Life Plan (Super Endowment / Term)',uin:'143N007V03',
+    vlabel:k=>k==='SP'?'Single Premium':(`PPT ${k} yrs (All Policy Terms)`),
+    v:{
+      5: [16.10,4.24,4.24,4.24,4.24,0,0,0,0,0,0],
+      6: [18.64,4.24,4.24,4.24,4.24,4.24,0,0,0,0,0],
+      7: [21.19,4.24,4.24,4.24,4.24,4.24,4.24,0,0,0,0],
+      8: [23.73,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0,0,0],
+      9: [26.27,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0,0],
+      10:[28.81,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0],
+      11:[31.36,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0.85],
+      12:[33.90,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0.85],
+      13:[36.44,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0.85],
+      14:[38.98,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0.85],
+      15:[41.53,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0.85],
+      16:[44.07,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0.85],
+      17:[46.61,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0.85],
+      18:[49.15,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0.85],
+      '19+':[50.85,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,4.24,0.85],
+      SP:[1.69,0,0,0,0,0,0,0,0,0,0],
+    }
+  },
+  ELITETERM:{cat:'term',label:'IndiaFirst Elite Term Plan',uin:'143N070V01',
+    vlabel:k=>({RP:'Regular Pay (All PTs)','SP_Life':'Single Premium — Life Option','SP_ROP':'Single Premium — ROP Option'}[k]),
+    v:{
+      RP:[21.19,0.85,0.85,0.85,0.85,0,0,0,0,0,0],
+      SP_Life:[8.47,0,0,0,0,0,0,0,0,0,0],
+      SP_ROP:[1.69,0,0,0,0,0,0,0,0,0,0],
+    }
+  },
+  SUPERPROTECT:{cat:'term',label:'IndiaFirst Life Super Protection Plan',uin:'143N075V01',
+    vlabel:k=>k==='12+'?'PPT 12 yrs and above':(`PPT ${k} yrs (All Policy Terms)`),
+    v:{
+      5: [12.71,1.69,1.69,1.69,1.69,0,0,0,0,0,0],
+      6: [15.25,1.69,1.69,1.69,1.69,1.69,0,0,0,0,0],
+      7: [17.80,1.69,1.69,1.69,1.69,1.69,1.69,0,0,0,0],
+      8: [20.34,1.69,1.69,1.69,1.69,1.69,1.69,1.69,0,0,0],
+      9: [22.88,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,0,0],
+      10:[25.42,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,0],
+      11:[27.97,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69],
+      '12+':[29.66,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69,1.69],
+    }
+  },
+  // ANNUITY
+  GPP:{cat:'annuity',label:'IndiaFirst Life Guaranteed Pension Plan',uin:'143N066V04',
+    vlabel:k=>`PPT ${k} yrs`,
+    v:{
+      7: [17.80,1.69,1.69,0.85,0.85,0.85,0.85,0,0,0,0],
+      8: [20.34,1.69,1.69,0.85,0.85,0.85,0.85,0.85,0,0,0],
+      9: [22.88,1.69,1.69,0.85,0.85,0.85,0.85,0.85,0.85,0,0],
+      10:[25.42,1.69,1.69,0.85,0.85,0.85,0.85,0.85,0.85,0.85,0],
+    }
+  },
+  IMMANNUITY:{cat:'annuity',label:'IndiaFirst Life Immediate Annuity Plan',uin:'143N027V02',
+    vlabel:()=>'Single Premium',
+    v:{SP:[1.69,0,0,0,0,0,0,0,0,0,0]}
+  },
+  GUARANNUITY:{cat:'annuity',label:'IndiaFirst Life Guaranteed Annuity Plan',uin:'143N050V05',
+    vlabel:()=>'Single Premium',
+    v:{SP:[1.69,0,0,0,0,0,0,0,0,0,0]}
+  },
+};
+
+const CATMAP = {
+  top:    {lbl:'⭐ Top Products',        keys:['LGIP','AIM','SMARTPAY','FORTUNE']},
+  nonpar: {lbl:'Non-Par Plans',          keys:['CASHBACK','GBP','GOLDREAMS','SARALBACHAT','GSPP','SARALJEEVAN']},
+  par:    {lbl:'Par Plans',              keys:['MAHAJEEVAN','LITTLECHAMP','MICROBACHAT','GRPLAN']},
+  ulip:   {lbl:'ULIP Plans',             keys:['MONEYBALANCE','WEALTHMAX','TERMULIP','SMARTRET']},
+  term:   {lbl:'Protection / Term',      keys:['IFLPLAN','ELITETERM','SUPERPROTECT']},
+  annuity:{lbl:'Annuity / Pension',      keys:['GPP','IMMANNUITY','GUARANNUITY']},
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let S = {mdrt:null, cat:null, prod:null, varKey:null};
+// --- merged-app state (product tab results, used by combined summary + PDF report) ---
+let lastProductFyc = 0, lastProductTotal = 0, lastProductLabel = '', lastProductAmt = 0, productCalculated = false;
+
+function inrP(n){
+  n=Math.round(n||0);
+  if(n===0) return '₹0';
+  let s=Math.abs(n).toString();
+  let l3=s.length>3?s.slice(-3):s, oth=s.length>3?s.slice(0,-3):'';
+  if(oth) oth=oth.replace(/\B(?=(\d{2})+(?!\d))/g,',');
+  return (n<0?'-':'')+'₹'+(oth?oth+',':'')+l3;
 }
+function enable(id){document.getElementById(id).classList.remove('off');}
+function disable(id){document.getElementById(id).classList.add('off');}
+function setActive(groupSel, val){
+  document.querySelectorAll(groupSel+' button').forEach(b=>{
+    b.classList.toggle('on', b.dataset.v===val);
+  });
+}
+function resetFrom(step){
+  if(step<=3){
+    disable('c3'); S.prod=null;
+    document.getElementById('selProd').innerHTML='<option value="">— Select category first —</option>';
+  }
+  if(step<=4){
+    disable('c4'); S.varKey=null;
+    document.getElementById('selVar').innerHTML='<option value="">— Select plan first —</option>';
+    document.getElementById('noteSpecial').style.display='none';
+  }
+  if(step<=5){ disable('c5'); document.getElementById('inAmt').value=''; }
+  document.getElementById('btnCalc').disabled=true;
+  document.getElementById('resCard').classList.remove('show');
+}
+
+// STEP 1 — MDRT
+document.querySelectorAll('#tMdrt button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    S.mdrt = b.dataset.v==='yes';
+    setActive('#tMdrt', b.dataset.v);
+    enable('c2');
+    resetFrom(3);
+  });
+});
+
+// STEP 2 — CATEGORY
+document.querySelectorAll('#tCat button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    S.cat=b.dataset.v; S.prod=null;
+    setActive('#tCat', b.dataset.v);
+    enable('c3');
+    resetFrom(4);
+    // Populate products
+    const sel=document.getElementById('selProd');
+    sel.innerHTML='<option value="">— Select a plan —</option>';
+    if(S.cat==='top'){
+      CATMAP.top.keys.forEach(k=>sel.innerHTML+=`<option value="${k}">${TOP[k].label}</option>`);
+    } else {
+      CATMAP[S.cat].keys.forEach(k=>sel.innerHTML+=`<option value="${k}">${OTHER[k].label}</option>`);
+    }
+  });
+});
+
+// STEP 3 — PRODUCT
+document.getElementById('selProd').addEventListener('change',e=>{
+  S.prod=e.target.value; S.varKey=null;
+  if(!S.prod){ resetFrom(4); return; }
+  enable('c4');
+  resetFrom(5);
+  // Populate variants
+  const sel=document.getElementById('selVar');
+  sel.innerHTML='<option value="">— Select PPT / mode —</option>';
+  if(S.cat==='top'){
+    Object.keys(TOP[S.prod].v).forEach(ppt=>
+      sel.innerHTML+=`<option value="${ppt}">PPT ${ppt} years</option>`
+    );
+  } else {
+    const p=OTHER[S.prod];
+    Object.keys(p.v).forEach(k=>sel.innerHTML+=`<option value="${k}">${p.vlabel(k)}</option>`);
+    // show special note if any
+    const ns=document.getElementById('noteSpecial');
+    if(p.note){ ns.textContent=p.note; ns.style.display='block'; }
+    else ns.style.display='none';
+  }
+});
+
+// STEP 4 — VARIANT
+document.getElementById('selVar').addEventListener('change',e=>{
+  S.varKey=e.target.value;
+  if(!S.varKey){ disable('c5'); document.getElementById('btnCalc').disabled=true; return; }
+  enable('c5');
+  checkReady();
+});
+
+// STEP 5 — AMOUNT
+// --- merged-app hook: same Business Amount entered here flows into the BA/Team
+// "Total WRP Achieved" field, so the advisor never has to re-type it. The BA field
+// stays editable at all times — once the user types into it directly, auto-sync
+// stops for that field until the page is refreshed (see wrpAutoFilled below). ---
+let wrpAutoFilled = true;
+document.getElementById('inAmt').addEventListener('input',e=>{
+  let raw=e.target.value.replace(/[^0-9]/g,'');
+  e.target.value=raw?Number(raw).toLocaleString('en-IN'):'';
+  checkReady();
+  if(wrpAutoFilled){
+    const wrpEl = document.getElementById('wrp');
+    wrpEl.value = raw ? raw : '';
+  }
+});
+document.getElementById('wrp').addEventListener('input', ()=>{
+  // Programmatic sync above does not fire this listener (it's only triggered by
+  // real user keystrokes), so this reliably detects a manual override.
+  wrpAutoFilled = false;
+  const hint = document.getElementById('wrpSyncHint');
+  if(hint) hint.textContent = '✏️ Manually overridden — no longer syncing from the Product Commission section above.';
+});
+function checkReady(){
+  const amt=parseFloat(document.getElementById('inAmt').value.replace(/,/g,''))||0;
+  document.getElementById('btnCalc').disabled=!(S.varKey&&amt>0);
+}
+
+// BUILD RATE ARRAY
+function getRates(){
+  if(S.cat==='top'){
+    const ppt=parseInt(S.varKey,10);
+    const vd=TOP[S.prod].v[ppt];
+    const base=S.mdrt?vd.m:vd.nm;
+    const plus=S.mdrt?vd.m6:vd.nm6;
+    const arr=[...base];
+    for(let y=6;y<=ppt;y++) arr.push(plus);
+    return {rates:arr, label:TOP[S.prod].label, sub:`PPT ${ppt} yrs · ${S.mdrt?'MDRT':'Non-MDRT'} rates`};
+  } else {
+    const p=OTHER[S.prod];
+    return {rates:p.v[S.varKey].slice(), label:p.label, sub:`${p.vlabel(S.varKey)} · UIN: ${p.uin||'—'}`};
+  }
+}
+
+// CALCULATE
+document.getElementById('btnCalc').addEventListener('click',()=>{
+  const amt=parseFloat(document.getElementById('inAmt').value.replace(/,/g,''))||0;
+  const {rates,label,sub}=getRates();
+  let total=0, fyc=amt*(rates[0]/100), rows='';
+  rates.forEach((r,i)=>{
+    if(r<=0) return;
+    const yr=amt*(r/100); total+=yr;
+    const isLast=(i===rates.length-1)&&i>=10;
+    rows+=`<tr><td>Year ${i+1}${isLast?'+':''}${i===0?' <em>(FYC)</em>':''}</td><td>${r.toFixed(2)}%</td><td class="amt">${inrP(yr)}</td></tr>`;
+  });
+  rows+=`<tr class="tot-row"><td colspan="2"><strong>Total Earning (Full Term)</strong></td><td class="amt">${inrP(total)}</td></tr>`;
+  document.getElementById('tBody').innerHTML=rows;
+  document.getElementById('rFyc').textContent=inrP(fyc);
+  document.getElementById('rTotal').textContent=inrP(total);
+  document.getElementById('sFyc').textContent=inrP(fyc);
+  document.getElementById('sTotal').textContent=inrP(total);
+  document.getElementById('nbox').textContent=`${label} — ${sub}. Based on ₹${Number(amt).toLocaleString('en-IN')} annual premium, net of GST, per Commission Master (Agency Channel).`;
+  document.getElementById('resCard').classList.add('show');
+  document.getElementById('resCard').scrollIntoView({behavior:'smooth',block:'start'});
+  // --- merged-app hook: expose results for the combined summary + PDF report (no calculation change) ---
+  lastProductFyc = fyc;
+  lastProductTotal = total;
+  lastProductLabel = `${label} — ${sub}`;
+  lastProductAmt = amt;
+  productCalculated = true;
+  if (typeof updateCombinedSummary === 'function') updateCombinedSummary();
+});
+
+</script>
+<script>
+
+// ============ Shared helpers ============
+function inr(n){
+  const r = Math.round(n||0);
+  return (r<0?'-':'') + '₹' + Math.abs(r).toLocaleString('en-IN');
+}
+// --- merged-app state (team tab grand total, used by combined summary + PDF report) ---
+let lastTeamTotal = 0, teamCalculated = false;
+let lastExpenseRatio = 0, lastExpenseAmt = 0, lastExpenseBusinessAmt = 0, lastNetCombined = 0, lastGrossCombined = 0, expenseCalculated = false;
+let lastFycEarning = 0, lastBaMonthlyEarning = 0;
 function setupToggle(groupId, defaultVal, onChange){
   const group = document.getElementById(groupId);
   const buttons = group.querySelectorAll('button');
@@ -1016,6 +1520,8 @@ function getMpbSlab(wrp){
   return wrp <= 0 ? null : mpbSlabs[mpbSlabs.length-1];
 }
 let lastMpbTotal = 0;
+let lastMpbNow = 0; // MPB DT — payable now only (excludes held-back portion); used by the simplified final report
+let lastMpbHold = 0; // MPB DT — held-back portion (13th month), shown as Future Earning in the report
 function calcMpbDt(){
   const wrp = parseFloat(document.getElementById('wrp').value) || 0;
   const commRate = (parseFloat(document.getElementById('commRate').value) || 0)/100;
@@ -1109,6 +1615,8 @@ function calcMpbDt(){
 
   document.getElementById('mpbResults').classList.add('show');
   lastMpbTotal = mpbNow + mpbHold;
+  lastMpbNow = mpbNow; // payable-now only, no held-back — feeds the simplified final report
+  lastMpbHold = mpbHold; // held-back portion — shown separately as Future Earning
   calcGrandTotal();
 }
 
@@ -1153,6 +1661,8 @@ const idtEligibility = {
   'Mng. Partner':{l1:true,  l2:true,  l3:true},
 };
 let lastIdtTotal = 0;
+let lastIdtNow = 0; // MPB IDT — payable now only (excludes held-back portion); used by the simplified final report
+let lastIdtHold = 0; // MPB IDT — held-back portion (13th month), shown as Future Earning in the report
 function calcMpbIdt(){
   const desig = document.getElementById('designation').value;
   const elig = idtEligibility[desig];
@@ -1266,6 +1776,8 @@ function calcMpbIdt(){
 
   document.getElementById('idtResults').classList.add('show');
   lastIdtTotal = idtNow + idtHold;
+  lastIdtNow = idtNow; // payable-now only, no held-back — feeds the simplified final report
+  lastIdtHold = idtHold; // held-back portion — shown separately as Future Earning
   calcGrandTotal();
 }
 
@@ -1518,501 +2030,497 @@ function calcGrandTotal(){
   document.getElementById('st-dbb').textContent = inr(lastDbbTotal);
   document.getElementById('st-cons').textContent = inr(lastConsMonthly);
   document.getElementById('st-bda').textContent = inr(lastBdaTotal);
+
+  // --- merged-app hook: expose team total for the combined summary + PDF report (no calculation change) ---
+  lastTeamTotal = total;
+  teamCalculated = true;
+  if (typeof updateCombinedSummary === 'function') updateCombinedSummary();
 }
 
-/* ================================================================= */
-/* ===============  NEW MODULE: BA BUSINESS / ADVISOR  ============= */
-/* ===============  EARNINGS / REPORTING (added below)  ============ */
-/* ================================================================= */
-/* Everything in this block is namespaced (biz*/adv*/rpt* ids and     */
-/* biz/adv/report-prefixed functions) so it never touches any         */
-/* existing id, variable, or function used by the calculator above.   */
+</script>
+<script>
 
-// ---------- shared validation helper ----------
-function validateInputs(fields){
-  // fields: array of {id, label, allowEmpty}
-  for(const f of fields){
-    const el = document.getElementById(f.id);
-    if(!el) continue;
-    const raw = el.value;
-    if(raw === '' && f.allowEmpty) continue;
-    const num = parseFloat(raw);
-    if(raw !== '' && isNaN(num)){
-      return f.label + ' has an invalid value.';
-    }
-    if(num < 0){
-      return f.label + ' cannot be negative.';
-    }
-    if(f.max !== undefined && num > f.max){
-      return f.label + ' cannot exceed ' + f.max + '%.';
-    }
-  }
-  return null;
-}
-function safeNum(id, fallback){
-  const el = document.getElementById(id);
-  if(!el) return fallback || 0;
-  const v = parseFloat(el.value);
-  return isNaN(v) ? (fallback || 0) : v;
-}
+// ============================================================
+// SHELL LOGIC — tabs, combined summary, master Calculate button,
+// PDF report generation, WhatsApp sharing.
+// This code does NOT recompute any earning figures — it only
+// reads/displays values already produced by the two calculators
+// above (script1 = product commission engine, script2 = team/
+// overwrite engine), per the "screen = PDF" accuracy requirement.
+// ============================================================
 
-// ---------- BA Business & Projected Earnings (card 7) ----------
-setupToggle('bizCommModeGroup','pct', function(){
-  const isPct = getToggleVal('bizCommModeGroup') === 'pct';
-  document.getElementById('bizCommPctWrap').style.display = isPct ? 'block' : 'none';
-  document.getElementById('bizCommAmtWrap').style.display = isPct ? 'none' : 'block';
-});
-
-let bizYearRows = [];          // [{business: number}]
-let bizProjectionRows = [];    // computed rows, used by report/pdf
-let bizTotals = {business:0, commission:0, tds:0, net:0, current:0, held:0};
-
-function generateBizYearRows(){
-  const errMsg = validateInputs([
-    {id:'bizAnnualBusiness', label:'Annual Business'},
-    {id:'bizYears', label:'Number of Years'},
-    {id:'bizCommPct', label:'Advisor Commission %', max:100},
-    {id:'bizCommAmt', label:'Advisor Commission Amount', allowEmpty:true},
-    {id:'bizTds', label:'TDS %', max:100},
-    {id:'bizHeldPct', label:'Held Back %', max:100, allowEmpty:true},
-  ]);
-  const validationEl = document.getElementById('bizValidation');
-  if(errMsg){ validationEl.textContent = errMsg; return; }
-  validationEl.textContent = '';
-
-  let years = Math.round(safeNum('bizYears', 1));
-  if(years < 1) years = 1;
-  if(years > 15) years = 15;
-  document.getElementById('bizYears').value = years;
-
-  const annualBusiness = safeNum('bizAnnualBusiness', 0);
-
-  // Preserve any amounts the user already edited for years that still exist
-  const preserved = bizYearRows.map(r => r.business);
-  bizYearRows = [];
-  for(let i=0;i<years;i++){
-    bizYearRows.push({ business: (preserved[i] !== undefined ? preserved[i] : annualBusiness) });
-  }
-
-  const tbody = document.getElementById('bizTableBody');
-  tbody.innerHTML = '';
-  bizYearRows.forEach((row, idx) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML =
-      '<td>Year ' + (idx+1) + '</td>' +
-      '<td><input type="number" min="0" class="biz-year-input" data-idx="' + idx + '" value="' + row.business + '"></td>' +
-      '<td class="biz-col-comm">—</td>' +
-      '<td class="biz-col-tds">—</td>' +
-      '<td class="biz-col-current">—</td>' +
-      '<td class="biz-col-held">—</td>' +
-      '<td>After 12 months</td>';
-    tbody.appendChild(tr);
+// ---------- QUICK NAV (single scrolling page — both sections always visible) ----------
+// Tapping a nav pill smooth-scrolls to that section instead of hiding/showing content.
+document.querySelectorAll('#quickNav .tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = document.getElementById(btn.dataset.target);
+    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
   });
-  document.getElementById('bizTableWrap').style.display = 'block';
-  document.getElementById('bizCalcBtn').style.display = 'block';
-
-  tbody.querySelectorAll('.biz-year-input').forEach(inp=>{
-    inp.addEventListener('input', function(){
-      const idx = parseInt(this.dataset.idx,10);
-      bizYearRows[idx].business = parseFloat(this.value) || 0;
+});
+// Highlight whichever section's nav pill matches what's currently in view while scrolling.
+(function setupScrollSpy(){
+  const sections = ['tab-product','tab-team'].map(id=>document.getElementById(id)).filter(Boolean);
+  if(!('IntersectionObserver' in window) || !sections.length) return;
+  const spy = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      const btn = document.querySelector('#quickNav .tab-btn[data-target="'+entry.target.id+'"]');
+      if(btn){
+        document.querySelectorAll('#quickNav .tab-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+      }
     });
-  });
+  }, {rootMargin:'-40% 0px -55% 0px'});
+  sections.forEach(sec=>spy.observe(sec));
+})();
+
+// ---------- VALIDATION MESSAGE HELPER ----------
+function showValidationNote(msgHtml){
+  const el = document.getElementById('validationNote');
+  if(!msgHtml){ el.style.display='none'; el.innerHTML=''; return; }
+  el.innerHTML = msgHtml;
+  el.style.display = 'block';
 }
 
-function calcBizProjection(){
-  const errMsg = validateInputs([
-    {id:'bizCommPct', label:'Advisor Commission %', max:100},
-    {id:'bizCommAmt', label:'Advisor Commission Amount', allowEmpty:true},
-    {id:'bizTds', label:'TDS %', max:100},
-    {id:'bizHeldPct', label:'Held Back %', max:100, allowEmpty:true},
-  ]);
-  const validationEl = document.getElementById('bizValidation');
-  if(errMsg){ validationEl.textContent = errMsg; return; }
-  if(!bizYearRows.length){ validationEl.textContent = 'Please generate the year-wise table first.'; return; }
-  validationEl.textContent = '';
+// ---------- COMBINED "PROJECTED EARNINGS" SUMMARY (Section D) ----------
+// Purely a display layer: mirrors lastProductFyc / lastProductTotal (from the
+// product-commission engine) and lastTeamTotal (from the team/overwrite engine).
+// Never invents a blended figure that doesn't already exist in the source apps.
+function updateCombinedSummary(){
+  const gsProdRow   = document.getElementById('gsProdRow');
+  const gsTeamRow   = document.getElementById('gsTeamRow');
+  const gsProdFyc   = document.getElementById('gsProdFyc');
+  const gsProdTotal = document.getElementById('gsProdTotal');
+  const gsTeamMonthly  = document.getElementById('gsTeamMonthly');
+  const gsTeamYearly   = document.getElementById('gsTeamYearly');
 
-  const commMode = getToggleVal('bizCommModeGroup');
-  const commPct = safeNum('bizCommPct', 0) / 100;
-  const commAmtManual = safeNum('bizCommAmt', 0);
-  const tdsPct = safeNum('bizTds', 0) / 100;
-  const heldPct = safeNum('bizHeldPct', 0) / 100;
+  gsProdRow.style.display = productCalculated ? 'flex' : 'none';
+  gsTeamRow.style.display = teamCalculated ? 'flex' : 'none';
 
-  bizProjectionRows = [];
-  bizTotals = {business:0, commission:0, tds:0, net:0, current:0, held:0};
+  if(productCalculated){
+    gsProdFyc.textContent = inrP(lastProductFyc);
+    gsProdTotal.textContent = inrP(lastProductTotal);
+  }
+  if(teamCalculated){
+    gsTeamMonthly.textContent = inr(lastTeamTotal);
+    gsTeamYearly.textContent = inr(lastTeamTotal * 12) + ' (if sustained every month)';
+  }
 
-  const tbody = document.getElementById('bizTableBody');
-  bizYearRows.forEach((row, idx) => {
-    const business = row.business || 0;
-    const commission = (commMode === 'amt') ? commAmtManual : (business * commPct);
-    const tds = commission * tdsPct;
-    const net = commission - tds;
-    const held = net * heldPct;
-    const current = net - held;
+  const gsExpRow = document.getElementById('gsExpRow');
+  gsExpRow.style.display = expenseCalculated ? 'flex' : 'none';
+  if(expenseCalculated){
+    document.getElementById('gsExpGross').textContent = inr(lastGrossCombined);
+    document.getElementById('gsExpAmt').textContent = inr(lastExpenseAmt);
+    document.getElementById('gsExpNet').textContent = inr(lastNetCombined);
+  }
 
-    bizProjectionRows.push({year: idx+1, business, commission, tds, net, current, held});
-    bizTotals.business += business;
-    bizTotals.commission += commission;
-    bizTotals.tds += tds;
-    bizTotals.net += net;
-    bizTotals.current += current;
-    bizTotals.held += held;
+  document.getElementById('grandSummary').style.display =
+    (productCalculated || teamCalculated) ? 'block' : 'none';
+}
 
-    const tr = tbody.children[idx];
-    if(tr){
-      tr.querySelector('.biz-col-comm').textContent = formatINR(commission);
-      tr.querySelector('.biz-col-tds').textContent = formatINR(tds);
-      tr.querySelector('.biz-col-current').textContent = formatINR(current);
-      tr.querySelector('.biz-col-held').textContent = formatINR(held);
+// ---------- TOTAL BUSINESS -> FYC + BA -> COMBINED GROSS -> EXPENSE -> NET TOTAL EARNING ----------
+// Source of truth for every figure below is the existing Advisor/FPA and BA
+// engines above — nothing here re-derives a commission or bonus rate.
+//
+// TOTAL BUSINESS  = the business/premium amount the user entered (Annual
+//                    Premium from the Product Commission wizard; the Team/BA
+//                    "Total WRP Achieved" field is the same figure — it is
+//                    auto-filled from Annual Premium and only diverges if the
+//                    user manually overrides it there — so the two are never
+//                    added together, only the single business figure is used).
+// FYC EARNING     = lastProductFyc, taken as-is from the Advisor/FPA engine
+//                    (Year-1 FYC). Never divided, never re-entered.
+// BA MONTHLY EARNING = lastTeamTotal, taken as-is from the BA/Team engine.
+// COMBINED GROSS EARNING = FYC EARNING + BA MONTHLY EARNING.
+// EXPENSE AMOUNT  = TOTAL BUSINESS x Expense Ratio % (never applied to FYC,
+//                    BA, WRP, or the combined earning).
+// NET TOTAL EARNING = COMBINED GROSS EARNING − EXPENSE AMOUNT.
+function getTotalBusinessAmount(){
+  const inAmtRaw = parseFloat((document.getElementById('inAmt').value||'').replace(/,/g,'')) || 0;
+  if(inAmtRaw > 0) return {amt: inAmtRaw, source: 'Annual Premium (Product Commission section)'};
+  const wrpRaw = parseFloat(document.getElementById('wrp').value) || 0;
+  if(wrpRaw > 0) return {amt: wrpRaw, source: 'Total WRP Achieved (Team/BA section)'};
+  return {amt: 0, source: '—'};
+}
+
+function calcExpenseNet(){
+  const ratio = parseFloat(document.getElementById('expenseRatio').value) || 0;
+  const {amt: businessAmt} = getTotalBusinessAmount();
+
+  const fycEarning = productCalculated ? lastProductFyc : 0;
+  const baEarning = teamCalculated ? lastTeamTotal : 0;
+  const combinedGross = fycEarning + baEarning;
+  const expenseAmt = businessAmt * (ratio/100);
+  const net = combinedGross - expenseAmt;
+
+  document.getElementById('r-exp-business').textContent = inr(businessAmt);
+  document.getElementById('r-exp-prod').textContent = inrP(fycEarning);
+  document.getElementById('r-exp-team').textContent = inr(baEarning);
+  document.getElementById('r-exp-combined').textContent = inr(combinedGross);
+  document.getElementById('r-exp-ratio').textContent = ratio.toFixed(2) + '%';
+  document.getElementById('r-exp-amount').textContent = inr(expenseAmt);
+  document.getElementById('r-exp-net').textContent = inr(net);
+  document.getElementById('netEarningBox').style.display = 'block';
+
+  lastExpenseRatio = ratio;
+  lastExpenseAmt = expenseAmt;
+  lastExpenseBusinessAmt = businessAmt;
+  lastFycEarning = fycEarning;
+  lastBaMonthlyEarning = baEarning;
+  lastGrossCombined = combinedGross;
+  lastNetCombined = net;
+  expenseCalculated = true;
+  if (typeof updateCombinedSummary === 'function') updateCombinedSummary();
+}
+document.getElementById('btnCalcExpense').addEventListener('click', calcExpenseNet);
+
+// ---------- MASTER "CALCULATE EARNINGS" BUTTON ----------
+// Runs whichever of the two engines has enough input to calculate, without
+// altering their internal formulas. Skips a section cleanly (with a note)
+// rather than throwing an error or fabricating a result.
+function calculateAll(){
+  const notes = [];
+
+  // Product / commission engine — only fires if the 5-step wizard is complete
+  const btnCalc = document.getElementById('btnCalc');
+  if(!btnCalc.disabled){
+    btnCalc.click();
+  } else if (S.mdrt !== null || S.cat) {
+    notes.push('Product Commission: complete Steps 1–5 (category, plan, PPT/mode and premium amount) to calculate.');
+  }
+
+  // Team / overwrite engine — run each sub-calculator only if it has meaningful input,
+  // so we never pop the app's own "check eligibility first" alert from a silent bulk-run.
+  try {
+    if((parseFloat(document.getElementById('wrp').value)||0) > 0) calcMpbDt();
+  } catch(e){ /* left blank intentionally on this run */ }
+
+  try {
+    const l1 = parseFloat(document.getElementById('idtL1Wrp').value)||0;
+    const l2 = parseFloat(document.getElementById('idtL2Wrp').value)||0;
+    const l3 = parseFloat(document.getElementById('idtL3Wrp').value)||0;
+    if(l1>0 || l2>0 || l3>0) calcMpbIdt();
+  } catch(e){ /* left blank intentionally on this run */ }
+
+  try {
+    if(distributionUnlocked){
+      const la = parseFloat(document.getElementById('laCount').value)||0;
+      const fpa = parseFloat(document.getElementById('fpaCount').value)||0;
+      const sfpa = parseFloat(document.getElementById('sfpaCount').value)||0;
+      if(la>0 || fpa>0 || sfpa>0) calcDbb();
+    } else {
+      notes.push('Distribution Bonus (DBB): check your Date of Joining eligibility in that section first (only applies within M0–M6).');
     }
+  } catch(e){ /* left blank intentionally on this run */ }
+
+  try {
+    const dt = parseFloat(document.getElementById('consDtWrp').value)||0;
+    const tt = parseFloat(document.getElementById('consTtWrp').value)||0;
+    if(dt>0 || tt>0) calcConsistency();
+  } catch(e){ /* left blank intentionally on this run */ }
+
+  try { calcBda(); } catch(e){ /* Salary & BDA always has a designation default, safe to run */ }
+  try { calcProgression(); } catch(e){ /* Progression always has a designation default, safe to run */ }
+
+  calcGrandTotal();       // refreshes team grand total + sticky mirrors (existing function)
+  updateCombinedSummary(); // refreshes Section D
+
+  try {
+    const expInput = document.getElementById('expenseRatio').value;
+    if(expInput !== '' && (productCalculated || teamCalculated)) calcExpenseNet();
+  } catch(e){ /* left blank intentionally on this run */ }
+
+  if(!productCalculated && !teamCalculated){
+    notes.push('Enter at least one input (Product Commission wizard, or any Team/Overwrite section) to calculate earnings.');
+  }
+  showValidationNote(notes.length ? notes.map(n=>'• '+n).join('<br>') : null);
+
+  document.getElementById('grandSummary').scrollIntoView({behavior:'smooth', block:'start'});
+}
+document.getElementById('btnCalculateAll').addEventListener('click', calculateAll);
+
+// ---------- PDF REPORT GENERATION ----------
+// Reads only what's already displayed on screen (DOM textContent / input values).
+// No values are recalculated here — this guarantees Screen Result = PDF Result.
+let lastReportPdfBlob = null; // kept in memory for the WhatsApp share fallback
+
+function collectProductTableRows(){
+  const rows = [];
+  document.querySelectorAll('#tBody tr').forEach(tr=>{
+    const cells = Array.from(tr.querySelectorAll('td')).map(td=>td.textContent.replace(/\s+/g,' ').trim());
+    if(cells.length) rows.push(cells);
   });
-
-  // Cumulative total row
-  const oldTotalRow = tbody.querySelector('tr.total-row');
-  if(oldTotalRow) oldTotalRow.remove();
-  const totalTr = document.createElement('tr');
-  totalTr.className = 'total-row';
-  totalTr.innerHTML =
-    '<td>Cumulative</td>' +
-    '<td>' + formatINR(bizTotals.business) + '</td>' +
-    '<td>' + formatINR(bizTotals.commission) + '</td>' +
-    '<td>' + formatINR(bizTotals.tds) + '</td>' +
-    '<td>' + formatINR(bizTotals.current) + '</td>' +
-    '<td>' + formatINR(bizTotals.held) + '</td>' +
-    '<td>—</td>';
-  tbody.appendChild(totalTr);
-
-  document.getElementById('kpi-biz-business').textContent = formatINR(bizTotals.business);
-  document.getElementById('kpi-biz-comm').textContent = formatINR(bizTotals.commission);
-  document.getElementById('kpi-biz-tds').textContent = formatINR(bizTotals.tds);
-  document.getElementById('kpi-biz-net').textContent = formatINR(bizTotals.net);
-  document.getElementById('kpi-biz-current').textContent = formatINR(bizTotals.current);
-  document.getElementById('kpi-biz-held').textContent = formatINR(bizTotals.held);
-  document.getElementById('kpi-biz-total').textContent = formatINR(bizTotals.current + bizTotals.held);
-  document.getElementById('bizResults').classList.add('show');
-
-  calcFinalTotal();
+  return rows;
 }
 
-// ---------- BA vs Advisor Earnings (card 8) ----------
-setupToggle('advCommModeGroup','pct', function(){
-  const isPct = getToggleVal('advCommModeGroup') === 'pct';
-  document.getElementById('advCommPctWrap').style.display = isPct ? 'block' : 'none';
-  document.getElementById('advCommAmtWrap').style.display = isPct ? 'none' : 'block';
-});
+// ---------- SIMPLIFIED FINAL REPORT — FIGURES ----------
+// Single source of truth for the final report (screen preview + PDF + WhatsApp text).
+// Deliberately reuses only already-calculated values from the existing engines above —
+// no commission, WRP, slab, or MPB logic is recalculated here.
+//   FYC After TDS          = existing Advisor/FPA FYC (lastProductFyc) × 95% (fixed 5% TDS)
+//   Direct MPB — Payable   = existing MPB DT payable-now value (lastMpbNow), held-back excluded
+//   Indirect MPB — Payable = existing MPB IDT payable-now value (lastIdtNow), held-back excluded
+//   DBB / Consistency / Salary+BDA = existing payable-now totals from those calculators
+//                            (lastDbbTotal, lastConsMonthly, lastBdaTotal) — no hold-back on these
+//   GROSS EARNING          = sum of all components above
+//   EXPENSE AMOUNT         = Total Business × user-entered Expense Ratio % (existing #expenseRatio
+//                            field / getTotalBusinessAmount() — never a fixed/derived rate)
+//   NET EARNING (Payable Now) = Gross Earning − Expense Amount — the report's headline figure
+//   Future Earning (not part of Net Earning, shown separately for information only):
+//     • 5% TDS deducted from FYC (recoverable later via IT Return)
+//     • Direct MPB held back to the 13th month
+//     • Indirect MPB held back to the 13th month
+//   Projected Yearly Earning = Net Earning × 12 (if the same amount is sustained every month) —
+//     a simple projection, shown alongside Future Earning, never added into Net Earning itself.
+const FYC_TDS_RATE = 0.05;
+function getFinalReportFigures(){
+  const fycGross = productCalculated ? lastProductFyc : 0;
+  const tdsAmount = fycGross * FYC_TDS_RATE;
+  const fycAfterTds = fycGross - tdsAmount;
+  const directMpbPayable = lastMpbNow;
+  const indirectMpbPayable = lastIdtNow;
+  const dbbPayable = lastDbbTotal;
+  const consistencyPayable = lastConsMonthly;
+  const salaryBdaPayable = lastBdaTotal;
+  const grossEarning = fycAfterTds + directMpbPayable + indirectMpbPayable
+    + dbbPayable + consistencyPayable + salaryBdaPayable;
 
-let advTotals = {gross:0, tds:0, net:0};
+  const expenseRatio = parseFloat(document.getElementById('expenseRatio').value) || 0;
+  const { amt: totalBusiness } = getTotalBusinessAmount();
+  const expenseAmount = totalBusiness * (expenseRatio/100);
+  const netEarning = grossEarning - expenseAmount;
 
-function calcAdvisorEarnings(){
-  const errMsg = validateInputs([
-    {id:'advBusiness', label:"Advisor's Business", allowEmpty:true},
-    {id:'advCommPct', label:'Advisor Commission %', max:100},
-    {id:'advCommAmt', label:'Advisor Commission Amount', allowEmpty:true},
-    {id:'advTds', label:'TDS %', max:100},
-  ]);
-  const validationEl = document.getElementById('advValidation');
-  if(errMsg){ validationEl.textContent = errMsg; return; }
-  validationEl.textContent = '';
+  const directMpbHold = lastMpbHold;
+  const indirectMpbHold = lastIdtHold;
+  const futureEarning = tdsAmount + directMpbHold + indirectMpbHold;
+  const projectedYearly = netEarning * 12;
 
-  const advBusinessRaw = document.getElementById('advBusiness').value;
-  const business = advBusinessRaw !== '' ? safeNum('advBusiness', 0) : safeNum('bizAnnualBusiness', 0);
-  const commMode = getToggleVal('advCommModeGroup');
-  const commPct = safeNum('advCommPct', 0) / 100;
-  const commAmtManual = safeNum('advCommAmt', 0);
-  const tdsPct = safeNum('advTds', 0) / 100;
-
-  const gross = (commMode === 'amt') ? commAmtManual : (business * commPct);
-  const tds = gross * tdsPct;
-  const net = gross - tds;
-  advTotals = {gross, tds, net};
-
-  document.getElementById('tw-adv-gross').textContent = formatINR(gross);
-  document.getElementById('tw-adv-tds').textContent = formatINR(tds);
-  document.getElementById('tw-adv-net').textContent = formatINR(net);
-
-  // Mirror latest BA business totals (from card 7) into the BA twin card
-  document.getElementById('tw-ba-current').textContent = formatINR(bizTotals.current);
-  document.getElementById('tw-ba-held').textContent = formatINR(bizTotals.held);
-  document.getElementById('tw-ba-total').textContent = formatINR(bizTotals.current + bizTotals.held);
-
-  document.getElementById('twinResults').style.display = 'grid';
-  calcFinalTotal();
-}
-
-// ---------- Total Projected Earning (combines BA + Advisor) ----------
-function calcFinalTotal(){
-  const totalBa = bizTotals.current + bizTotals.held;
-  const totalAdv = advTotals.net;
-  const totalTds = bizTotals.tds + advTotals.tds;
-  const totalHeld = bizTotals.held;
-  const grand = totalBa + totalAdv;
-
-  document.getElementById('ft-ba').textContent = formatINR(totalBa);
-  document.getElementById('ft-adv').textContent = formatINR(totalAdv);
-  document.getElementById('ft-tds').textContent = formatINR(totalTds);
-  document.getElementById('ft-held').textContent = formatINR(totalHeld);
-  document.getElementById('finalGrandTotal').textContent = formatINR(grand);
-}
-
-// ---------- Reset (new module only — does not touch the existing calculator) ----------
-function resetBizModule(){
-  if(!confirm('This will reset all BA Business, Advisor Earnings, and Report fields. Continue?')) return;
-  ['bizAnnualBusiness','bizCommAmt','bizHeldPct','advBusiness','advCommAmt',
-   'rptClientName','rptAdvisorName','rptBaName','rptBranch','rptMobile','rptPeriod'
-  ].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
-  document.getElementById('bizYears').value = 3;
-  document.getElementById('bizCommPct').value = 30;
-  document.getElementById('bizTds').value = 10;
-  document.getElementById('advCommPct').value = 30;
-  document.getElementById('advTds').value = 10;
-  document.getElementById('bizTableWrap').style.display = 'none';
-  document.getElementById('bizTableBody').innerHTML = '';
-  document.getElementById('bizCalcBtn').style.display = 'none';
-  document.getElementById('bizResults').classList.remove('show');
-  document.getElementById('twinResults').style.display = 'none';
-  bizYearRows = []; bizProjectionRows = []; bizTotals = {business:0,commission:0,tds:0,net:0,current:0,held:0};
-  advTotals = {gross:0, tds:0, net:0};
-  calcFinalTotal();
-  document.getElementById('bizValidation').textContent = '';
-  document.getElementById('advValidation').textContent = '';
-  document.getElementById('reportValidation').textContent = '';
-}
-
-// ---------- Report generation (uses live values already on screen — no re-calculation) ----------
-function todayStr(){
-  const d = new Date();
-  return d.toLocaleDateString('en-IN', {day:'2-digit', month:'long', year:'numeric'});
-}
-
-function buildReportData(){
   return {
-    date: todayStr(),
-    client: document.getElementById('rptClientName').value || '—',
-    advisorName: document.getElementById('rptAdvisorName').value || '—',
-    baName: document.getElementById('rptBaName').value || '—',
-    branch: document.getElementById('rptBranch').value || '—',
-    mobile: document.getElementById('rptMobile').value || '—',
-    period: document.getElementById('rptPeriod').value || '—',
-    existingGrandTotal: (typeof lastMpbTotal !== 'undefined')
-      ? (lastMpbTotal + lastIdtTotal + lastDbbTotal + lastConsMonthly + lastBdaTotal) : 0,
-    existing: {
-      mpb: lastMpbTotal, idt: lastIdtTotal, dbb: lastDbbTotal, cons: lastConsMonthly, bda: lastBdaTotal
-    },
-    bizRows: bizProjectionRows,
-    bizTotals: bizTotals,
-    advTotals: advTotals,
-    finalTotal: (bizTotals.current + bizTotals.held) + advTotals.net
+    fycAfterTds, tdsAmount, directMpbPayable, indirectMpbPayable,
+    dbbPayable, consistencyPayable, salaryBdaPayable, grossEarning,
+    expenseRatio, totalBusiness, expenseAmount, netEarning,
+    directMpbHold, indirectMpbHold, futureEarning, projectedYearly
   };
 }
 
-let lastReportData = null;
+// ---------- ON-SCREEN REPORT PREVIEW ----------
+// Professional report in three clear blocks: Earnings, Expense, and Future Earning.
+// Built from the same getFinalReportFigures() the PDF uses, so screen = PDF exactly.
+function renderReportPreview(){
+  const reportDate = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
+  const {
+    fycAfterTds, tdsAmount, directMpbPayable, indirectMpbPayable,
+    dbbPayable, consistencyPayable, salaryBdaPayable, grossEarning,
+    expenseRatio, totalBusiness, expenseAmount, netEarning,
+    directMpbHold, indirectMpbHold, futureEarning, projectedYearly
+  } = getFinalReportFigures();
 
-function generateReport(){
-  const validationEl = document.getElementById('reportValidation');
-  if(!bizProjectionRows.length && advTotals.net === 0){
-    validationEl.textContent = 'Please calculate the BA Business Projection and/or Advisor Earnings above before generating a report.';
-    return;
-  }
-  validationEl.textContent = '';
-  lastReportData = buildReportData();
-  renderReportPreview(lastReportData);
-  document.getElementById('reportModal').classList.add('show');
-}
+  let html = `<p style="color:var(--muted);font-weight:700;margin-bottom:10px;">Report Date: ${reportDate}</p>`;
+  html += '<h3 style="color:var(--navy);margin:10px 0 6px;">Monthly Earning Report</h3>';
 
-function closeReportModal(){
-  document.getElementById('reportModal').classList.remove('show');
-}
+  // ---- Earnings (payable now) ----
+  html += '<table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:2px;">';
+  html += `<tr><td style="padding:8px;">FYC Earning After 5% TDS</td><td style="padding:8px;text-align:right;font-weight:700;">${inr(fycAfterTds)}</td></tr>`;
+  html += `<tr><td style="padding:8px;">Direct MPB — Payable</td><td style="padding:8px;text-align:right;font-weight:700;">${inr(directMpbPayable)}</td></tr>`;
+  html += `<tr><td style="padding:8px;">Indirect MPB — Payable</td><td style="padding:8px;text-align:right;font-weight:700;">${inr(indirectMpbPayable)}</td></tr>`;
+  html += `<tr><td style="padding:8px;">Distribution Building Bonus (DBB)</td><td style="padding:8px;text-align:right;font-weight:700;">${inr(dbbPayable)}</td></tr>`;
+  html += `<tr><td style="padding:8px;">Consistency Bonus</td><td style="padding:8px;text-align:right;font-weight:700;">${inr(consistencyPayable)}</td></tr>`;
+  html += `<tr><td style="padding:8px;">Salary + BDA</td><td style="padding:8px;text-align:right;font-weight:700;">${inr(salaryBdaPayable)}</td></tr>`;
+  html += `<tr><td style="padding:8px;font-weight:800;border-top:1px dashed var(--gold-2);">Gross Earning</td><td style="padding:8px;text-align:right;font-weight:800;border-top:1px dashed var(--gold-2);">${inr(grossEarning)}</td></tr>`;
+  html += '</table>';
 
-function renderReportPreview(data){
-  let yearRowsHtml = data.bizRows.map(r =>
-    '<tr><td>Year ' + r.year + '</td><td>' + formatINR(r.business) + '</td><td>' + formatINR(r.commission) +
-    '</td><td>' + formatINR(r.tds) + '</td><td>' + formatINR(r.net) + '</td><td>' + formatINR(r.held) +
-    '</td><td>After 12 months</td></tr>'
-  ).join('');
-  if(!yearRowsHtml){ yearRowsHtml = '<tr><td colspan="7">No BA business projection calculated.</td></tr>'; }
+  // ---- Expense ----
+  html += '<table style="width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 2px;">';
+  html += `<tr><td style="padding:6px;color:var(--muted);">Total Business</td><td style="padding:6px;text-align:right;color:var(--muted);">${inr(totalBusiness)}</td></tr>`;
+  html += `<tr><td style="padding:6px;color:var(--muted);">Expense Ratio</td><td style="padding:6px;text-align:right;color:var(--muted);">${expenseRatio.toFixed(2)}%</td></tr>`;
+  html += `<tr><td style="padding:6px;color:var(--muted);">Expense Amount</td><td style="padding:6px;text-align:right;color:var(--muted);">− ${inr(expenseAmount)}</td></tr>`;
+  html += '</table>';
 
-  const html =
-    '<h3>BA Variable Agency Business &amp; Earnings Report</h3>' +
-    '<div class="line"><span>Date</span><span class="val">' + data.date + '</span></div>' +
-    '<div class="line"><span>Client / Prospect</span><span class="val">' + data.client + '</span></div>' +
-    '<div class="line"><span>Advisor Name</span><span class="val">' + data.advisorName + '</span></div>' +
-    '<div class="line"><span>BA Name</span><span class="val">' + data.baName + '</span></div>' +
-    '<div class="line"><span>Branch</span><span class="val">' + data.branch + '</span></div>' +
-    '<div class="line"><span>Mobile</span><span class="val">' + data.mobile + '</span></div>' +
-    '<div class="line"><span>Report Period</span><span class="val">' + data.period + '</span></div>' +
+  // ---- Net Earning (headline) ----
+  html += `<table style="width:100%;border-collapse:collapse;font-size:16px;margin-bottom:14px;"><tr><td style="padding:10px;font-weight:900;border-top:2px solid var(--gold-deep);">NET EARNING (Payable Now)</td><td style="padding:10px;text-align:right;font-weight:900;border-top:2px solid var(--gold-deep);color:var(--good);">${inr(netEarning)}</td></tr></table>`;
 
-    '<h3>Executive Summary</h3>' +
-    '<div class="line"><span>Total Annual Business (BA module)</span><span class="val">' + formatINR(data.bizTotals.business) + '</span></div>' +
-    '<div class="line"><span>Advisor Earnings (Net, Advisor module)</span><span class="val">' + formatINR(data.advTotals.net) + '</span></div>' +
-    '<div class="line"><span>Total TDS (BA + Advisor)</span><span class="val">' + formatINR(data.bizTotals.tds + data.advTotals.tds) + '</span></div>' +
-    '<div class="line"><span>Held Back (after 12 months)</span><span class="val">' + formatINR(data.bizTotals.held) + '</span></div>' +
-    '<div class="line"><span>Existing FY27 Modules — Total Monthly Est.</span><span class="val">' + formatINR(data.existingGrandTotal) + '</span></div>' +
+  // ---- Future Earning ----
+  html += '<h3 style="color:var(--navy);margin:10px 0 6px;">Future Earning <span style="font-size:11px;font-weight:700;color:var(--muted);">(not included in Net Earning above)</span></h3>';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:6px;">';
+  html += `<tr><td style="padding:6px;">5% TDS Deducted from FYC <span style="font-size:11px;color:var(--muted);">(recoverable via IT Return)</span></td><td style="padding:6px;text-align:right;font-weight:700;">${inr(tdsAmount)}</td></tr>`;
+  html += `<tr><td style="padding:6px;">Direct MPB — Held Back <span style="font-size:11px;color:var(--muted);">(released in 13th month)</span></td><td style="padding:6px;text-align:right;font-weight:700;">${inr(directMpbHold)}</td></tr>`;
+  html += `<tr><td style="padding:6px;">Indirect MPB — Held Back <span style="font-size:11px;color:var(--muted);">(released in 13th month)</span></td><td style="padding:6px;text-align:right;font-weight:700;">${inr(indirectMpbHold)}</td></tr>`;
+  html += `<tr><td style="padding:8px;font-weight:800;border-top:1px dashed var(--gold-2);">Total Future Earning</td><td style="padding:8px;text-align:right;font-weight:800;border-top:1px dashed var(--gold-2);">${inr(futureEarning)}</td></tr>`;
+  html += `<tr><td style="padding:8px;padding-top:12px;">Projected Yearly Earning <span style="font-size:11px;color:var(--muted);">(Net Earning × 12, if sustained every month)</span></td><td style="padding:8px;padding-top:12px;text-align:right;font-weight:700;">${inr(projectedYearly)}</td></tr>`;
+  html += '</table>';
 
-    '<h3>Business Projection (Year-wise)</h3>' +
-    '<table><thead><tr><th>Year</th><th>Business</th><th>Commission</th><th>TDS</th><th>Net Earnings</th><th>Held Back</th><th>Release</th></tr></thead>' +
-    '<tbody>' + yearRowsHtml + '</tbody></table>' +
-
-    '<h3>Advisor Earnings</h3>' +
-    '<div class="line"><span>Gross Commission</span><span class="val">' + formatINR(data.advTotals.gross) + '</span></div>' +
-    '<div class="line"><span>TDS</span><span class="val">' + formatINR(data.advTotals.tds) + '</span></div>' +
-    '<div class="line"><span>Net Advisor Earnings</span><span class="val">' + formatINR(data.advTotals.net) + '</span></div>' +
-
-    '<h3>BA Earnings</h3>' +
-    '<div class="line"><span>Immediate (Current) Earnings</span><span class="val">' + formatINR(data.bizTotals.current) + '</span></div>' +
-    '<div class="line"><span>Held Back Earnings — after 12 months</span><span class="val">' + formatINR(data.bizTotals.held) + '</span></div>' +
-    '<div class="line"><span><b>Total BA Earnings</b></span><span class="val">' + formatINR(data.bizTotals.current + data.bizTotals.held) + '</span></div>' +
-
-    '<h3>Final Summary</h3>' +
-    '<div class="line rp-total"><span>TOTAL PROJECTED EARNING</span><span class="val">' + formatINR(data.finalTotal) + '</span></div>';
+  html += '<p style="font-size:10.5px;color:var(--muted);margin-top:14px;">Designed by ABH Pradeep · Branch: Rajendra Place — For internal circulation only. Figures are indicative estimates, subject to the official Commission Master and FY27 Q1 BA Proposition documents.</p>';
 
   document.getElementById('reportPreviewBody').innerHTML = html;
+  document.getElementById('reportPreview').style.display = 'block';
 }
 
-// ---------- PDF generation (jsPDF + AutoTable) — uses the same lastReportData, never recalculates ----------
-function buildPdfDoc(data){
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({unit:'pt', format:'a4'});
-  const pageWidth = doc.internal.pageSize.getWidth();
-  let y = 40;
-
-  doc.setFontSize(16); doc.setFont(undefined,'bold');
-  doc.text('BA Variable Agency Business & Earnings Report', pageWidth/2, y, {align:'center'});
-  y += 22;
-  doc.setFontSize(10); doc.setFont(undefined,'normal');
-  doc.text('Generated on: ' + data.date, pageWidth/2, y, {align:'center'});
-  y += 22;
-
-  doc.setFontSize(10);
-  const details = [
-    ['Client / Prospect', data.client], ['Advisor Name', data.advisorName],
-    ['BA Name', data.baName], ['Branch', data.branch],
-    ['Mobile', data.mobile], ['Report Period', data.period]
-  ];
-  doc.autoTable({ startY:y, theme:'plain', styles:{fontSize:9}, margin:{left:40,right:40},
-    body: details });
-  y = doc.lastAutoTable.finalY + 16;
-
-  doc.setFontSize(13); doc.setFont(undefined,'bold');
-  doc.text('Executive Summary', 40, y); y += 8;
-  doc.autoTable({
-    startY:y, margin:{left:40,right:40},
-    head:[['Metric','Amount']],
-    body:[
-      ['Total Annual Business', formatINR(data.bizTotals.business)],
-      ['Advisor Earnings (Net)', formatINR(data.advTotals.net)],
-      ['Total TDS (BA + Advisor)', formatINR(data.bizTotals.tds + data.advTotals.tds)],
-      ['Held Back (after 12 months)', formatINR(data.bizTotals.held)],
-      ['Existing FY27 Modules (Monthly Est.)', formatINR(data.existingGrandTotal)],
-    ],
-    headStyles:{fillColor:[11,36,71]}, styles:{fontSize:9}
-  });
-  y = doc.lastAutoTable.finalY + 16;
-
-  if(y > 650){ doc.addPage(); y = 40; }
-  doc.setFontSize(13); doc.setFont(undefined,'bold');
-  doc.text('Business Projection (Year-wise)', 40, y); y += 8;
-  const yearBody = data.bizRows.length
-    ? data.bizRows.map(r => ['Year '+r.year, formatINR(r.business), formatINR(r.commission), formatINR(r.tds), formatINR(r.net), formatINR(r.held), 'After 12 months'])
-    : [['—','No projection calculated','','','','','']];
-  doc.autoTable({
-    startY:y, margin:{left:40,right:40},
-    head:[['Year','Business','Commission','TDS','Net Earnings','Held Back','Release']],
-    body: yearBody, headStyles:{fillColor:[11,36,71]}, styles:{fontSize:8}
-  });
-  y = doc.lastAutoTable.finalY + 16;
-
-  if(y > 650){ doc.addPage(); y = 40; }
-  doc.setFontSize(13); doc.setFont(undefined,'bold');
-  doc.text('Advisor Earnings', 40, y); y += 8;
-  doc.autoTable({
-    startY:y, margin:{left:40,right:40},
-    body:[
-      ['Gross Commission', formatINR(data.advTotals.gross)],
-      ['TDS', formatINR(data.advTotals.tds)],
-      ['Net Advisor Earnings', formatINR(data.advTotals.net)],
-    ], theme:'grid', styles:{fontSize:9}
-  });
-  y = doc.lastAutoTable.finalY + 16;
-
-  if(y > 650){ doc.addPage(); y = 40; }
-  doc.setFontSize(13); doc.setFont(undefined,'bold');
-  doc.text('BA Earnings', 40, y); y += 8;
-  doc.autoTable({
-    startY:y, margin:{left:40,right:40},
-    body:[
-      ['Immediate (Current) Earnings', formatINR(data.bizTotals.current)],
-      ['Held Back Earnings — after 12 months', formatINR(data.bizTotals.held)],
-      ['Total BA Earnings', formatINR(data.bizTotals.current + data.bizTotals.held)],
-    ], theme:'grid', styles:{fontSize:9}
-  });
-  y = doc.lastAutoTable.finalY + 24;
-
-  if(y > 700){ doc.addPage(); y = 60; }
-  doc.setFillColor(139,26,26);
-  doc.rect(40, y-20, pageWidth-80, 46, 'F');
-  doc.setTextColor(255,255,255); doc.setFontSize(12); doc.setFont(undefined,'bold');
-  doc.text('TOTAL PROJECTED EARNING', 52, y-2);
-  doc.setFontSize(16);
-  doc.text(formatINR(data.finalTotal), 52, y+18);
-  doc.setTextColor(0,0,0);
-
-  // page numbers
-  const pageCount = doc.internal.getNumberOfPages();
-  for(let i=1;i<=pageCount;i++){
-    doc.setPage(i);
-    doc.setFontSize(8); doc.setTextColor(120,120,120);
-    doc.text('Page ' + i + ' of ' + pageCount, pageWidth - 60, doc.internal.pageSize.getHeight() - 20);
+function generateReportPDF(){
+  if(!productCalculated && !teamCalculated){
+    showValidationNote('• Please calculate earnings (product commission and/or team overwrite) before generating a report.');
+    document.getElementById('validationNote').scrollIntoView({behavior:'smooth', block:'center'});
+    return;
   }
-  return doc;
-}
 
-function downloadReportPdf(){
-  if(!lastReportData){ alert('Please generate the report first.'); return; }
-  try{
-    const doc = buildPdfDoc(lastReportData);
-    doc.save('BA_Business_Report_' + Date.now() + '.pdf');
-  }catch(e){
-    console.error(e);
-    alert('Could not generate the PDF in this browser. Please try again or use a different browser.');
-  }
-}
+  renderReportPreview();
+  document.getElementById('reportPreview').scrollIntoView({behavior:'smooth', block:'start'});
 
-function sharePdfNative(){
-  if(!lastReportData){ alert('Please generate the report first.'); return; }
-  try{
-    const doc = buildPdfDoc(lastReportData);
-    const blob = doc.output('blob');
-    const file = new File([blob], 'BA_Business_Report.pdf', {type:'application/pdf'});
-    if(navigator.canShare && navigator.canShare({files:[file]})){
-      navigator.share({
-        files:[file],
-        title:'BA Business Projection Report',
-        text:'Please find attached the BA Business Projection Report.'
-      }).catch(()=>{ /* user cancelled — no action needed */ });
-    } else {
-      alert('Direct file sharing is not supported on this browser/device. Please use Download PDF, then attach it manually, or use the WhatsApp button to send a text summary.');
+  const statusEl = document.getElementById('reportStatus');
+  statusEl.textContent = 'Generating PDF…';
+  statusEl.style.display = 'block';
+
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:'pt', format:'a4' });
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 40;
+    let y = 50;
+
+    const reportDate = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
+    const {
+      fycAfterTds, tdsAmount, directMpbPayable, indirectMpbPayable,
+      dbbPayable, consistencyPayable, salaryBdaPayable, grossEarning,
+      expenseRatio, totalBusiness, expenseAmount, netEarning,
+      directMpbHold, indirectMpbHold, futureEarning, projectedYearly
+    } = getFinalReportFigures();
+
+    // ---- Title ----
+    doc.setFont('helvetica','bold'); doc.setFontSize(18); doc.setTextColor(11,36,71);
+    doc.text('Monthly Earning Report', margin, y); y += 18;
+    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(107,90,48);
+    doc.text('IndiaFirst Life x Bank of Baroda', margin, y); y += 14;
+    doc.text('Report Date: ' + reportDate, margin, y); y += 22;
+    doc.setDrawColor(200,149,47); doc.setLineWidth(1); doc.line(margin, y, pageWidth-margin, y); y += 24;
+
+    // ---- EARNINGS (payable now) ----
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(11,36,71);
+    doc.text('Earnings', margin, y); y += 8;
+    doc.autoTable({
+      startY: y, margin:{left:margin,right:margin}, theme:'grid',
+      body: [
+        ['FYC Earning After 5% TDS', inr(fycAfterTds)],
+        ['Direct MPB — Payable', inr(directMpbPayable)],
+        ['Indirect MPB — Payable', inr(indirectMpbPayable)],
+        ['Distribution Building Bonus (DBB)', inr(dbbPayable)],
+        ['Consistency Bonus', inr(consistencyPayable)],
+        ['Salary + BDA', inr(salaryBdaPayable)],
+        [{content:'Gross Earning', styles:{fontStyle:'bold'}}, {content: inr(grossEarning), styles:{fontStyle:'bold'}}],
+      ],
+      styles:{ fontSize:10.5, cellPadding:8 },
+      columnStyles:{ 1:{ halign:'right', fontStyle:'bold' } },
+    });
+    y = doc.lastAutoTable.finalY + 18;
+
+    // ---- EXPENSE ----
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(11,36,71);
+    doc.text('Expense', margin, y); y += 8;
+    doc.autoTable({
+      startY: y, margin:{left:margin,right:margin}, theme:'plain',
+      body: [
+        ['Total Business', inr(totalBusiness)],
+        ['Expense Ratio', expenseRatio.toFixed(2) + '%'],
+        ['Expense Amount', '− ' + inr(expenseAmount)],
+      ],
+      styles:{ fontSize:10, cellPadding:6, textColor:[107,90,48] },
+      columnStyles:{ 1:{ halign:'right' } },
+    });
+    y = doc.lastAutoTable.finalY + 6;
+
+    // ---- NET EARNING (headline) ----
+    doc.autoTable({
+      startY: y, margin:{left:margin,right:margin}, theme:'grid',
+      body: [
+        [{content:'NET EARNING (Payable Now)', styles:{fontStyle:'bold', fontSize:13}}, {content: inr(netEarning), styles:{fontStyle:'bold', fontSize:13, textColor:[16,110,60]}}],
+      ],
+      styles:{ fontSize:13, cellPadding:10 },
+      columnStyles:{ 1:{ halign:'right' } },
+    });
+    y = doc.lastAutoTable.finalY + 24;
+
+    // ---- FUTURE EARNING (informational — not part of Net Earning) ----
+    if(y > 650){ doc.addPage(); y = 50; }
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(11,36,71);
+    doc.text('Future Earning', margin, y); y += 4;
+    doc.setFont('helvetica','italic'); doc.setFontSize(8.5); doc.setTextColor(107,90,48);
+    doc.text('(Not included in Net Earning above)', margin + 68, y - 0.5);
+    y += 10;
+    doc.autoTable({
+      startY: y, margin:{left:margin,right:margin}, theme:'grid',
+      body: [
+        ['5% TDS Deducted from FYC (recoverable via IT Return)', inr(tdsAmount)],
+        ['Direct MPB — Held Back (released in 13th month)', inr(directMpbHold)],
+        ['Indirect MPB — Held Back (released in 13th month)', inr(indirectMpbHold)],
+        [{content:'Total Future Earning', styles:{fontStyle:'bold'}}, {content: inr(futureEarning), styles:{fontStyle:'bold'}}],
+      ],
+      styles:{ fontSize:10, cellPadding:7 },
+      columnStyles:{ 1:{ halign:'right', fontStyle:'bold' } },
+    });
+    y = doc.lastAutoTable.finalY + 14;
+
+    doc.autoTable({
+      startY: y, margin:{left:margin,right:margin}, theme:'plain',
+      body: [
+        ['Projected Yearly Earning (Net Earning × 12, if sustained every month)', inr(projectedYearly)],
+      ],
+      styles:{ fontSize:10, cellPadding:6, textColor:[107,90,48] },
+      columnStyles:{ 1:{ halign:'right', fontStyle:'bold' } },
+    });
+    y = doc.lastAutoTable.finalY + 24;
+
+    // ---- Footer note + page numbers ----
+    const pageCount = doc.internal.getNumberOfPages();
+    for(let p=1; p<=pageCount; p++){
+      doc.setPage(p);
+      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(140,120,70);
+      doc.text('Designed by ABH Pradeep · Branch: Rajendra Place — For internal circulation only. Figures are indicative estimates, subject to the official Commission Master and FY27 Q1 BA Proposition documents.',
+        margin, doc.internal.pageSize.getHeight()-28, { maxWidth: pageWidth-margin*2 });
+      doc.text('Page ' + p + ' of ' + pageCount, pageWidth-margin-60, doc.internal.pageSize.getHeight()-14);
     }
-  }catch(e){
-    console.error(e);
-    alert('Could not prepare the file for sharing on this browser.');
+
+    lastReportPdfBlob = doc.output('blob');
+    doc.save('Monthly-Earning-Report.pdf');
+    statusEl.textContent = 'PDF generated and downloaded. You can now share it on WhatsApp below.';
+    document.getElementById('btnWhatsapp').disabled = false;
+  } catch(err){
+    console.error('Report generation failed:', err && err.message ? err.message : err);
+    statusEl.textContent = 'Sorry, the report could not be generated. Please try again.';
   }
 }
+document.getElementById('btnFetchReport').addEventListener('click', generateReportPDF);
 
-function shareOnWhatsapp(){
-  if(!lastReportData){ alert('Please generate the report first.'); return; }
-  const d = lastReportData;
-  const msg =
-    'BA Business Projection Report\n\n' +
-    'Annual Business: ' + formatINR(d.bizTotals.business) + '\n' +
-    'Advisor Earnings: ' + formatINR(d.advTotals.net) + '\n' +
-    'TDS: ' + formatINR(d.bizTotals.tds + d.advTotals.tds) + '\n' +
-    'Held Back Amount: ' + formatINR(d.bizTotals.held) + '\n' +
-    'Held Back Release: After 12 Months\n' +
-    'Total Projected Earnings: ' + formatINR(d.finalTotal) + '\n\n' +
-    '(Note: the full PDF report has not been auto-attached here — please download it separately and attach it in WhatsApp if needed.)';
-  const url = 'https://wa.me/?text=' + encodeURIComponent(msg);
-  window.open(url, '_blank');
+// ---------- WHATSAPP SHARING ----------
+async function shareOnWhatsApp(){
+  const statusEl = document.getElementById('reportStatus');
+  if(!lastReportPdfBlob){
+    statusEl.textContent = 'Please generate the PDF report first (Fetch Report), then share it.';
+    statusEl.style.display = 'block';
+    return;
+  }
+  const { netEarning, futureEarning, projectedYearly } = getFinalReportFigures();
+  const shareText = 'Monthly Earning Report — NET EARNING (Payable Now): ' + inr(netEarning) + '. ' +
+    'Future Earning (TDS + Held-Back MPB, recoverable later): ' + inr(futureEarning) + '. ' +
+    'Projected Yearly Earning (if sustained): ' + inr(projectedYearly) + '.';
+
+  const file = new File([lastReportPdfBlob], 'Monthly-Earning-Report.pdf', { type:'application/pdf' });
+
+  if(navigator.canShare && navigator.canShare({ files:[file] })){
+    try {
+      await navigator.share({ files:[file], title:'Insurance Earning Simulator Report', text: shareText });
+      return;
+    } catch(err){
+      // user cancelled or share failed — fall through to link fallback below
+    }
+  }
+  // Fallback: browser cannot attach the PDF directly to WhatsApp. Open WhatsApp with the
+  // summary text only, and tell the user honestly that the file itself was NOT attached.
+  const waUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText + ' (PDF downloaded separately — please attach it manually in WhatsApp.)');
+  window.open(waUrl, '_blank');
+  statusEl.textContent = 'Your browser can\'t attach the PDF to WhatsApp directly, so we opened WhatsApp with a text summary — please attach the downloaded PDF manually from your device.';
+  statusEl.style.display = 'block';
 }
-</script>
+document.getElementById('btnWhatsapp').addEventListener('click', shareOnWhatsApp);
 
+
+</script>
 </body>
 </html>
