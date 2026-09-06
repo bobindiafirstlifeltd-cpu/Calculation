@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BA Earning Simulator | IndiaFirst Life x Bank of Baroda</title>
+<style>
+  :root{
+    --gold-1:#fdf3d8;
+    --gold-2:#f6e2a4;
+    --gold-3:#e8c568;
+    --gold-deep:#c8952f;
+    --gold-dark:#8a611c;
+    --navy:#0b2447;
+    --blue:#1565c0;
+    --maroon:#8b1a1a;
+    --bob-orange:#f47820;
+    --text:#241c08;
+    --muted:#6b5a30;
+    --card:#fffdf5;
+    --good:#1b7d4d;
+    --bad:#a01818;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(255,255,255,.35), transparent 40%),
+      radial-gradient(circle at 85% 10%, rgba(255,255,255,.25), transparent 45%),
+      linear-gradient(160deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 100%);
+    color:var(--text);
+    padding-bottom:70px;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:0 16px;}
+
+  /* ===== BRAND HEADER ===== */
+  .brandbar{
+    background:linear-gradient(90deg,var(--navy),#123a6b 60%,var(--navy));
+    padding:10px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+    border-bottom:3px solid var(--gold-deep);
+  }
+  .logo-chip{
+    background:#fff;
+    border-radius:8px;
+    padding:6px 14px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-weight:800;
+    font-size:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,.25);
+  }
+  .logo-chip.bob{color:var(--bob-orange);}
+  .logo-chip.bob span{color:var(--maroon);}
+  .logo-chip.ifl{color:var(--blue);}
+  .logo-chip.ifl span{color:var(--bob-orange);}
+  .brand-x{color:var(--gold-2);font-weight:400;font-size:16px;}
+
+  header.hero{
+    text-align:center;
+    padding:26px 16px 22px;
+    background:linear-gradient(180deg,var(--navy) 0%, #163e73 100%);
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(232,197,104,.18), transparent 35%),
+      radial-gradient(circle at 80% 80%, rgba(232,197,104,.14), transparent 40%);
+  }
+  header.hero h1{
+    margin:0 0 6px;
+    font-size:28px;
+    letter-spacing:.4px;
+    position:relative;
+    background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  header.hero p{
+    margin:0;
+    font-size:13px;
+    color:var(--gold-2);
+    position:relative;
+  }
+
+  /* ===== CARD ===== */
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:22px;
+    margin-top:22px;
+    border:1.5px solid var(--gold-3);
+    box-shadow:0 10px 26px rgba(138,97,28,.18);
+    position:relative;
+  }
+  .card::before{
+    content:"";
+    position:absolute;top:0;left:0;right:0;height:5px;
+    border-radius:var(--radius) var(--radius) 0 0;
+    background:linear-gradient(90deg,var(--gold-deep),var(--gold-3),var(--gold-deep));
+  }
+  .card h2{
+    font-size:18px;
+    margin:6px 0 4px;
+    color:var(--navy);
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+  .card h2 .num{
+    background:linear-gradient(135deg,var(--gold-deep),var(--gold-3));
+    color:#fff;
+    width:26px;height:26px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:800;
+    box-shadow:0 2px 6px rgba(138,97,28,.4);
+  }
+  .card .sub{
+    font-size:12.5px;
+    color:var(--muted);
+    margin:0 0 16px;
+  }
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+  .row.single{grid-template-columns:1fr;}
+  label{font-size:12.5px;font-weight:700;color:var(--gold-dark);display:block;margin-bottom:5px;}
+  input[type=number], input[type=date], select{
+    width:100%;padding:10px 11px;border:1.5px solid var(--gold-3);
+    border-radius:9px;font-size:14.5px;background:#fffef9;color:var(--text);
+  }
+  input:focus, select:focus{outline:none;border-color:var(--gold-deep);background:#fff;}
+  .toggle-group{display:flex;gap:8px;flex-wrap:wrap;}
+  .toggle-group button{
+    flex:1;min-width:70px;padding:9px 6px;border-radius:9px;
+    border:1.5px solid var(--gold-3);background:#fffef9;font-size:12.5px;font-weight:700;
+    color:var(--muted);cursor:pointer;transition:.15s;
+  }
+  .toggle-group button.active{border-color:var(--gold-deep);background:var(--gold-1);color:var(--gold-dark);}
+  .checkbox-row{display:flex;align-items:center;gap:8px;margin:10px 0 4px;font-size:13px;}
+  .checkbox-row input{width:16px;height:16px;}
+  .calc-btn{
+    width:100%;margin-top:16px;padding:14px;border:none;border-radius:12px;
+    background:linear-gradient(135deg,var(--gold-deep),var(--gold-dark));
+    color:#fff;font-size:15px;font-weight:800;letter-spacing:.3px;cursor:pointer;
+    box-shadow:0 6px 16px rgba(138,97,28,.35);
+  }
+  .calc-btn:active{transform:translateY(1px);}
+  .results{margin-top:18px;display:none;}
+  .results.show{display:block;}
+  .line{display:flex;justify-content:space-between;font-size:13.5px;padding:7px 0;border-bottom:1px dashed var(--gold-2);}
+  .line:last-child{border-bottom:none;}
+  .line .val{font-weight:800;color:var(--navy);}
+  .line.muted{color:var(--muted);font-size:12px;}
+  .banner{
+    padding:12px 14px;border-radius:10px;font-size:13px;font-weight:700;margin-top:14px;
+  }
+  .banner.ok{background:#e6f5ec;color:var(--good);border:1px solid #b3e0c4;}
+  .banner.no{background:#fbe9e9;color:var(--bad);border:1px solid #f0c2c2;}
+  .banner.warn{background:#fff7e0;color:var(--gold-dark);border:1px solid var(--gold-3);}
+
+  .gate-locked{opacity:.4;pointer-events:none;filter:grayscale(60%);}
+
+  .total-card{
+    background:linear-gradient(135deg,var(--navy),#0a1b33);
+    color:#fff;border-radius:var(--radius);padding:26px 20px;text-align:center;
+    margin-top:26px;
+    box-shadow:0 14px 34px rgba(11,36,71,.35);
+    border:1.5px solid var(--gold-3);
+  }
+  .total-card .label{font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--gold-2);margin-bottom:6px;}
+  .total-card .amount{font-size:36px;font-weight:900;
+    background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .total-card .breakdown{margin-top:12px;font-size:12px;color:#dbe6f5;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+  .note{font-size:11.3px;color:var(--muted);margin-top:14px;line-height:1.55;background:#fffaf0;border:1px solid var(--gold-2);padding:10px 12px;border-radius:9px;}
+
+  .designation-banner{
+    background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
+    border:1.5px solid var(--gold-deep);
+    border-radius:var(--radius);
+    padding:16px 20px;
+    margin-top:22px;
+    text-align:center;
+  }
+  .designation-banner label{color:var(--gold-dark);font-size:13px;}
+  .designation-banner select{max-width:320px;margin:6px auto 0;font-weight:700;}
+
+  .footer-credit{
+    text-align:center;
+    margin-top:30px;
+    padding:18px 16px;
+    color:var(--gold-dark);
+  }
+  .footer-credit .name{font-weight:800;font-size:14px;color:var(--navy);}
+  .footer-credit .role{font-size:12px;}
+
+  /* ===== STICKY TOTAL (pinned at top, never scrolls away) ===== */
+  .sticky-total{
+    position:sticky;
+    top:0;
+    z-index:200;
+    background:linear-gradient(135deg,var(--navy),#0a1b33);
+    color:#fff;
+    padding:9px 16px;
+    box-shadow:0 4px 14px rgba(11,36,71,.4);
+    border-bottom:2px solid var(--gold-3);
+  }
+  .st-inner{
+    max-width:820px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  }
+  .st-label{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--gold-2);}
+  .st-amount{
+    font-size:21px;font-weight:900;
+    background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .st-breakdown{font-size:10.5px;color:#c9d7ea;display:flex;gap:10px;flex-wrap:wrap;}
+  .shortfall-line{color:var(--gold-dark);font-weight:700;}
+  .projected{
+    display:block;
+    margin-top:3px;
+    color:var(--good);
+    font-weight:800;
+    font-size:12px;
+  }
+
+  /* ===================================================== */
+  /* ============ BA BUSINESS / ADVISOR MODULE ============ */
+  /* ===================================================== */
+  .section-divider{
+    max-width:820px;margin:38px auto 0;padding:0 16px;
+  }
+  .section-divider .divider-line{
+    display:flex;align-items:center;gap:12px;color:var(--gold-dark);
+    font-weight:800;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    margin-bottom:2px;
+  }
+  .section-divider .divider-line::before,
+  .section-divider .divider-line::after{
+    content:"";flex:1;height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold-3),transparent);
+  }
+  .biz-card{ background:linear-gradient(180deg,var(--card),#fffef8); }
+  .biz-card h2{ color:var(--maroon); }
+  .biz-card h2 .num{ background:linear-gradient(135deg,var(--maroon),#b23a3a); }
+
+  .mode-toggle{display:flex;gap:8px;margin-bottom:10px;}
+  .mode-toggle button{
+    flex:1;padding:8px 6px;border-radius:9px;border:1.5px solid var(--gold-3);
+    background:#fffef9;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;
+  }
+  .mode-toggle button.active{border-color:var(--maroon);background:#fbeaea;color:var(--maroon);}
+
+  .biz-table-wrap{overflow-x:auto;margin-top:10px;border-radius:12px;border:1.5px solid var(--gold-3);}
+  table.biz-table{width:100%;border-collapse:collapse;min-width:640px;font-size:12.5px;}
+  table.biz-table th{
+    background:var(--navy);color:#fff;padding:9px 8px;text-align:left;font-size:11.5px;
+    letter-spacing:.2px;position:sticky;top:0;
+  }
+  table.biz-table td{padding:7px 8px;border-bottom:1px solid var(--gold-1);white-space:nowrap;}
+  table.biz-table tr:nth-child(even){background:#fffaf0;}
+  table.biz-table tr.total-row{background:var(--gold-1);font-weight:800;}
+  table.biz-table input[type=number]{width:100px;padding:6px 7px;font-size:12.5px;}
+
+  .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+  .kpi{
+    background:#fffef9;border:1.5px solid var(--gold-3);border-radius:12px;
+    padding:12px 14px;text-align:center;
+  }
+  .kpi .kpi-label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+  .kpi .kpi-val{font-size:19px;font-weight:900;color:var(--navy);margin-top:4px;}
+  .kpi.highlight{background:linear-gradient(135deg,var(--gold-1),var(--gold-2));border-color:var(--gold-deep);}
+  .kpi.heldback .kpi-val{color:var(--gold-dark);}
+  .kpi.heldback .kpi-tag{
+    display:inline-block;margin-top:4px;font-size:10px;font-weight:700;color:#fff;
+    background:var(--gold-deep);padding:2px 8px;border-radius:10px;
+  }
+
+  .twin-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+  .twin-card{border-radius:14px;padding:16px;border:1.5px solid var(--gold-3);}
+  .twin-card.ba{background:linear-gradient(160deg,#eef6ff,#e2eefc);border-color:var(--blue);}
+  .twin-card.advisor{background:linear-gradient(160deg,#fdeef0,#fbe2e6);border-color:var(--maroon);}
+  .twin-card h3{margin:0 0 10px;font-size:14px;}
+  .twin-card.ba h3{color:var(--blue);}
+  .twin-card.advisor h3{color:var(--maroon);}
+
+  .grand-total-final{
+    background:linear-gradient(135deg,var(--maroon),#5c1010);
+    color:#fff;border-radius:var(--radius);padding:26px 20px;text-align:center;
+    margin-top:26px;box-shadow:0 14px 34px rgba(139,26,26,.35);border:1.5px solid var(--gold-3);
+  }
+  .grand-total-final .label{font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--gold-2);margin-bottom:6px;}
+  .grand-total-final .amount{font-size:38px;font-weight:900;
+    background:linear-gradient(90deg,#fff8e0,var(--gold-3),#fff8e0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .grand-total-final .breakdown{margin-top:14px;font-size:12px;color:#f7dede;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+
+  .field-hint{font-size:10.8px;color:var(--muted);margin:-6px 0 10px;}
+  .report-btn{
+    width:100%;margin-top:18px;padding:16px;border:none;border-radius:12px;
+    background:linear-gradient(135deg,var(--navy),#123a6b);color:#fff;font-size:16px;font-weight:800;
+    cursor:pointer;box-shadow:0 8px 20px rgba(11,36,71,.4);
+  }
+  .action-row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+  .action-row button{
+    flex:1;min-width:140px;padding:12px 10px;border-radius:10px;border:none;
+    font-size:13px;font-weight:800;cursor:pointer;color:#fff;
+  }
+  .btn-download{background:linear-gradient(135deg,#1b7d4d,#155e39);}
+  .btn-whatsapp{background:linear-gradient(135deg,#25D366,#1aa851);}
+  .btn-share{background:linear-gradient(135deg,var(--blue),#0d47a1);}
+  .btn-close{background:linear-gradient(135deg,#6b5a30,#4a3d1f);}
+  .validation-msg{
+    font-size:12px;font-weight:700;color:var(--bad);margin-top:6px;min-height:14px;
+  }
+
+  /* ===== Report Modal ===== */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;background:rgba(11,36,71,.55);
+    z-index:500;align-items:flex-start;justify-content:center;padding:20px 12px;overflow-y:auto;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal-box{
+    background:#fffef9;border-radius:16px;max-width:720px;width:100%;
+    padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.4);margin-top:10px;
+  }
+  .modal-box h2{color:var(--navy);margin-top:0;font-size:18px;}
+  #reportPreviewBody{
+    background:#fff;border:1px solid #ddd;border-radius:10px;padding:16px;
+    max-height:60vh;overflow-y:auto;font-size:12.5px;color:var(--text);
+  }
+  #reportPreviewBody h3{color:var(--navy);border-bottom:2px solid var(--gold-3);padding-bottom:4px;margin-top:18px;}
+  #reportPreviewBody table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:8px;}
+  #reportPreviewBody table th{background:var(--navy);color:#fff;padding:6px;text-align:left;}
+  #reportPreviewBody table td{padding:6px;border-bottom:1px solid #eee;}
+  #reportPreviewBody .rp-total{font-size:16px;font-weight:900;color:var(--maroon);}
+
+  @media (max-width:600px){
+    .kpi-grid{grid-template-columns:1fr 1fr;}
+    .twin-cards{grid-template-columns:1fr;}
+    .row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="brandbar">
+  <div class="logo-chip bob">Bank <span>of Baroda</span></div>
+  <div class="brand-x">×</div>
+  <div class="logo-chip ifl">India<span>First</span> Life</div>
+</div>
+
+<div class="sticky-total">
+  <div class="st-inner">
+    <span class="st-label">Total Est. Monthly Earnings</span>
+    <span class="st-amount" id="stickyAmount">₹0</span>
+    <span class="st-breakdown">
+      <span>MPB DT: <b id="st-mpb">₹0</b></span>
+      <span>MPB IDT: <b id="st-idt">₹0</b></span>
+      <span>DBB: <b id="st-dbb">₹0</b></span>
+      <span>Consistency: <b id="st-cons">₹0</b></span>
+      <span>Salary+BDA: <b id="st-bda">₹0</b></span>
+    </span>
+  </div>
+</div>
+
+<header class="hero">
+  <h1>BA Earning Simulator</h1>
+  <p>FY27 Q1 Construct · Effective 1 May 2026 · Individual BAs</p>
+</header>
+
+<div class="wrap">
+
+  <!-- ================= DESIGNATION SELECTOR (used by BDA & Progression) ================= -->
+  <div class="designation-banner">
+    <label for="designation">Select your current designation (needed for Salary/BDA and Progression)</label>
+    <select id="designation">
+      <option value="BA">BA</option>
+      <option value="SBA">SBA</option>
+      <option value="CBA">CBA</option>
+      <option value="Partner">Partner</option>
+      <option value="Sr. Partner">Sr. Partner</option>
+      <option value="Ex. Partner">Ex. Partner</option>
+      <option value="Mng. Partner">Mng. Partner</option>
+    </select>
+  </div>
+
+  <!-- ================= 1. MPB DT (page 15) ================= -->
+  <div class="card">
+    <h2><span class="num">1</span>Monthly Production Bonus – Direct Team</h2>
+    <p class="sub">Page 15 · Based on Direct WRP achieved this month and active Direct Team advisor count</p>
+
+    <div class="row">
+      <div>
+        <label>Direct Team Active Advisors</label>
+        <div class="toggle-group" id="activeGroup">
+          <button type="button" data-val="01">0 – 1</button>
+          <button type="button" data-val="2">2</button>
+          <button type="button" data-val="3">≥ 3</button>
+        </div>
+      </div>
+      <div id="vintageWrap">
+        <label>BA Vintage (only if 0–1 active)</label>
+        <div class="toggle-group" id="vintageGroup">
+          <button type="button" data-val="m0m6">M0 – M6</button>
+          <button type="button" data-val="m7">≥ M7</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Total WRP Achieved Within Month (₹)</label>
+        <input type="number" id="wrp" placeholder="e.g. 1000000" min="0">
+      </div>
+      <div>
+        <label>Assumed Commission Rate on FYC (%)</label>
+        <input type="number" id="commRate" value="38.14" step="0.01" min="0">
+      </div>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="has13m">
+      <label for="has13m" style="margin:0;">BA has a 13-month persistency bucket</label>
+    </div>
+    <div class="row single" id="persistWrap" style="display:none;">
+      <div>
+        <label>13th Month DT Persistency (%)</label>
+        <select id="persist">
+          <option value="0.70">&lt; 70%</option>
+          <option value="0.80">70% to &lt;75%</option>
+          <option value="0.90">75% to &lt;80%</option>
+          <option value="1.00" selected>80% to &lt;90%</option>
+          <option value="1.10">≥ 90%</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calcMpbDt()">Calculate MPB DT</button>
+    <div class="results" id="mpbResults">
+      <div class="line"><span>WRP Slab</span><span class="val" id="r-slab">-</span></div>
+      <div class="line"><span>Payout % applied</span><span class="val" id="r-pct">-</span></div>
+      <div class="line"><span>Est. Commission (FYC)</span><span class="val" id="r-comm">-</span></div>
+      <div class="line"><span>MPB DT before persistency multiplier</span><span class="val" id="r-base">-</span></div>
+      <div class="line"><span>Persistency multiplier</span><span class="val" id="r-mult">-</span></div>
+      <div class="line"><span>MPB DT payable now</span><span class="val" id="r-now">-</span></div>
+      <div class="line muted" id="r-hold-row"><span>Held back to 13th month</span><span class="val" id="r-hold">-</span></div>
+      <div class="line" id="r-mpb-shortfall-row"><span>Shortfall to next WRP slab</span><span class="val" id="r-mpb-shortfall">-</span></div>
+      <div class="line" id="r-mpb-advisor-row"><span>Next active-advisor tier opportunity</span><span class="val" id="r-mpb-advisor">-</span></div>
+    </div>
+  </div>
+
+  <!-- ================= 2. MPB IDT (page 18) ================= -->
+  <div class="card">
+    <h2><span class="num">2</span>Monthly Production Bonus – Indirect Team</h2>
+    <p class="sub">Page 18 · Level-wise WRP from your L1/L2/L3 team. Eligibility depends on the designation selected above — BA: not eligible · SBA: L1 only · CBA: L1+L2 · Partner &amp; above: L1+L2+L3</p>
+
+    <div class="row">
+      <div>
+        <label>L1 Indirect WRP (₹)</label>
+        <input type="number" id="idtL1Wrp" placeholder="e.g. 1000000" min="0">
+      </div>
+      <div>
+        <label>L2 Indirect WRP (₹)</label>
+        <input type="number" id="idtL2Wrp" placeholder="e.g. 500000" min="0">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>L3 Indirect WRP (₹)</label>
+        <input type="number" id="idtL3Wrp" placeholder="e.g. 250000" min="0">
+      </div>
+      <div>
+        <label>Assumed Commission Rate on FYC (%)</label>
+        <input type="number" id="idtCommRate" value="38.14" step="0.01" min="0">
+      </div>
+    </div>
+
+    <div class="row single">
+      <div>
+        <label>L1 BA Active Count</label>
+        <div class="toggle-group" id="idtActiveGroup">
+          <button type="button" data-val="0">0 Active</button>
+          <button type="button" data-val="1">1 Active</button>
+          <button type="button" data-val="2">≥ 2 Active</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="idtHas13m">
+      <label for="idtHas13m" style="margin:0;">BA has a 13-month persistency bucket</label>
+    </div>
+    <div class="row single" id="idtPersistWrap" style="display:none;">
+      <div>
+        <label>13th Month DT Persistency (%)</label>
+        <select id="idtPersist">
+          <option value="0.70">&lt; 70%</option>
+          <option value="0.80">70% to &lt;75%</option>
+          <option value="0.90">75% to &lt;80%</option>
+          <option value="1.00" selected>80% to &lt;90%</option>
+          <option value="1.10">≥ 90%</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calcMpbIdt()">Calculate MPB IDT</button>
+    <div class="results" id="idtResults">
+      <div class="line"><span>L1 Payout</span><span class="val" id="r-idt-l1">-</span></div>
+      <div class="line"><span>L2 Payout</span><span class="val" id="r-idt-l2">-</span></div>
+      <div class="line"><span>L3 Payout</span><span class="val" id="r-idt-l3">-</span></div>
+      <div class="line"><span>Total (L1+L2+L3) before multiplier</span><span class="val" id="r-idt-subtotal">-</span></div>
+      <div class="line"><span>L1 BA Active multiplier</span><span class="val" id="r-idt-actmult">-</span></div>
+      <div class="line"><span>Persistency multiplier</span><span class="val" id="r-idt-mult">-</span></div>
+      <div class="line"><span><b>MPB IDT payable now</b></span><span class="val" id="r-idt-now">-</span></div>
+      <div class="line muted" id="r-idt-hold-row"><span>Held back to 13th month</span><span class="val" id="r-idt-hold">-</span></div>
+      <div class="line" id="r-idt-shortfall-l1-row"><span>L1: shortfall to next WRP slab</span><span class="val" id="r-idt-shortfall-l1">-</span></div>
+      <div class="line" id="r-idt-shortfall-l2-row"><span>L2: shortfall to next WRP slab</span><span class="val" id="r-idt-shortfall-l2">-</span></div>
+      <div class="line" id="r-idt-shortfall-l3-row"><span>L3: shortfall to next WRP slab</span><span class="val" id="r-idt-shortfall-l3">-</span></div>
+      <div class="line" id="r-idt-active-row"><span>Next L1-active-BA multiplier opportunity</span><span class="val" id="r-idt-active-tip">-</span></div>
+    </div>
+  </div>
+
+  <!-- ================= JOINING DATE GATE ================= -->
+  <div class="card" style="border-color:var(--navy);">
+    <h2><span class="num">✓</span>Eligibility Check — Date of Joining</h2>
+    <p class="sub">The Distribution Building Bonus (License Active + FPA/SFPA creation) applies only to BAs within their first 6 months (M0–M6 vintage). Enter your date of joining to unlock that section.</p>
+    <div class="row single">
+      <div>
+        <label>Date of Joining</label>
+        <input type="date" id="doj">
+      </div>
+    </div>
+    <button class="calc-btn" onclick="checkJoining()">Check Eligibility</button>
+    <div id="jointBanner"></div>
+  </div>
+
+  <!-- ================= 2. DISTRIBUTION PART (DBB) ================= -->
+  <div class="card" id="distCard">
+    <h2><span class="num">3</span>Distribution Part <span style="font-size:11px;background:var(--gold-3);color:#3a2a05;padding:2px 8px;border-radius:12px;">DBB</span></h2>
+    <p class="sub">License Active &amp; FPA/SFPA creation bonus, By M6 — only unlocked for BAs within 6 months of joining</p>
+
+    <div class="row single">
+      <div>
+        <label>New License Active (LA) So Far in M6</label>
+        <input type="number" id="laCount" placeholder="e.g. 8" min="0">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>FPA Created (in 6 months)</label>
+        <input type="number" id="fpaCount" placeholder="e.g. 5" min="0">
+      </div>
+      <div>
+        <label>SFPA &amp; Above Created (by M6)</label>
+        <input type="number" id="sfpaCount" placeholder="e.g. 2" min="0">
+      </div>
+    </div>
+    <label>Advisor Vintage in DT at time of FPA creation</label>
+    <div class="toggle-group" id="fpaVintageGroup">
+      <button type="button" data-val="le3">≤ M3 Advisor</button>
+      <button type="button" data-val="gt3">&gt; M3 Advisor</button>
+    </div>
+    <p class="sub" style="margin-top:8px;">≤M3: ₹7,500/FPA, ₹10,000/SFPA+. &gt;M3: ₹5,000/FPA.</p>
+
+    <button class="calc-btn" onclick="calcDbb()">Calculate Distribution Bonus</button>
+    <div class="results" id="dbbResults">
+      <div class="line"><span>License Active Bonus (slab reached: <span id="r-la-slab">-</span> LA)</span><span class="val" id="r-la">-</span></div>
+      <div class="line"><span>FPA Creation Bonus</span><span class="val" id="r-fpa">-</span></div>
+      <div class="line"><span>SFPA &amp; Above Creation Bonus</span><span class="val" id="r-sfpa">-</span></div>
+      <div class="line"><span>Total DBB</span><span class="val" id="r-dbb">-</span></div>
+    </div>
+  </div>
+
+  <!-- ================= 3. CONSISTENCY BONUS (page 20) ================= -->
+  <div class="card">
+    <h2><span class="num">4</span>Consistency Bonus</h2>
+    <p class="sub">Page 20 · Rolling 12-month DT/Total Team WRP determines your monthly slab</p>
+
+    <div class="row">
+      <div>
+        <label>Rolling 12M Direct Team (DT) WRP (₹)</label>
+        <input type="number" id="consDtWrp" placeholder="e.g. 3000000" min="0">
+      </div>
+      <div>
+        <label>Rolling 12M Total Team WRP (₹) <span style="font-weight:400;">(SBA+ only)</span></label>
+        <input type="number" id="consTtWrp" placeholder="e.g. 6000000" min="0">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>This Month's DT WRP (for gate check) (₹)</label>
+        <input type="number" id="consMonthDt" placeholder="e.g. 60000" min="0">
+      </div>
+      <div>
+        <label>Agents in DT / FPA in DT this period</label>
+        <input type="number" id="consAgents" placeholder="Agents in DT" min="0" style="margin-bottom:6px;">
+        <input type="number" id="consFpa" placeholder="FPA in DT" min="0">
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calcConsistency()">Calculate Consistency Bonus</button>
+    <div class="results" id="consResults">
+      <div class="line"><span>Highest slab unlocked</span><span class="val" id="r-cons-slab">-</span></div>
+      <div class="line"><span>Monthly gate criteria</span><span class="val" id="r-cons-gate">-</span></div>
+      <div class="line"><span>Monthly gate met?</span><span class="val" id="r-cons-gate-status">-</span></div>
+      <div class="line"><span>Distribution gate (3 agents + 1 FPA in DT)</span><span class="val" id="r-cons-dist">-</span></div>
+      <div class="line"><span><b>Monthly Consistency Bonus</b></span><span class="val" id="r-cons-monthly">-</span></div>
+      <div class="line"><span><b>Projected Yearly Consistency Bonus</b> (×12)</span><span class="val" id="r-cons-yearly">-</span></div>
+    </div>
+  </div>
+
+  <!-- ================= 4. SALARY & BDA (page 12) ================= -->
+  <div class="card">
+    <h2><span class="num">5</span>Salary &amp; BDA</h2>
+    <p class="sub">Page 12 · Uses the designation selected at the top of the page</p>
+
+    <div class="row">
+      <div>
+        <label>BA Vintage</label>
+        <div class="toggle-group" id="bdaVintageGroup">
+          <button type="button" data-val="m0m1">M0 – M1</button>
+          <button type="button" data-val="m2plus">M2 &amp; Above</button>
+        </div>
+      </div>
+      <div>
+        <label>This Month's DT WRP (₹) <span style="font-weight:400;">(for M2+ productivity gate)</span></label>
+        <input type="number" id="bdaWrp" placeholder="e.g. 60000" min="0">
+      </div>
+    </div>
+
+    <div class="row" id="m0m1Inputs" style="display:none;">
+      <div>
+        <label>DT ARF Candidates (by M3)</label>
+        <input type="number" id="bdaArf" placeholder="e.g. 3" min="0">
+      </div>
+      <div>
+        <label>DT License Count (by M3)</label>
+        <input type="number" id="bdaLic" placeholder="e.g. 2" min="0">
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calcBda()">Calculate Salary &amp; BDA</button>
+    <div class="results" id="bdaResults">
+      <div class="line"><span>Designation</span><span class="val" id="r-bda-desig">-</span></div>
+      <div class="line"><span>Fixed Salary</span><span class="val" id="r-bda-salary">-</span></div>
+      <div class="line"><span>Productivity Gate (DT WRP)</span><span class="val" id="r-bda-gate">-</span></div>
+      <div class="line"><span>BDA (if gate met)</span><span class="val" id="r-bda-amount">-</span></div>
+      <div class="line"><span><b>Total Monthly Income</b></span><span class="val" id="r-bda-total">-</span></div>
+    </div>
+  </div>
+
+  <!-- ================= 5. PROGRESSION / ELEVATION (page 10) ================= -->
+  <div class="card">
+    <h2><span class="num">6</span>BA Elevation / Progression</h2>
+    <p class="sub">Page 10 · Progress toward your next designation, rolling 12 months</p>
+
+    <div class="row single">
+      <div>
+        <label>Route</label>
+        <div class="toggle-group" id="progRouteGroup">
+          <button type="button" data-val="dist">Distribution Route</button>
+          <button type="button" data-val="lead">Leadership Route</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="distRouteInputs">
+      <div>
+        <label>Incremental Advisors Recruited (Total Team)</label>
+        <input type="number" id="progAdv" placeholder="e.g. 10" min="0">
+      </div>
+      <div>
+        <label>Of which, FPA Created</label>
+        <input type="number" id="progAdvFpa" placeholder="e.g. 3" min="0">
+      </div>
+    </div>
+
+    <div class="row" id="leadRouteInputs" style="display:none;">
+      <div>
+        <label>FPA Created in DT</label>
+        <input type="number" id="progLeadFpa" placeholder="e.g. 2" min="0">
+      </div>
+      <div>
+        <label>L1 Team Leader Confirmed/Promoted?</label>
+        <div class="toggle-group" id="progL1Group">
+          <button type="button" data-val="yes">Yes</button>
+          <button type="button" data-val="no">No</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Total Team WRP achieved (₹) <span style="font-weight:400;">(Partner+ only)</span></label>
+        <input type="number" id="progWrp" placeholder="e.g. 2500000" min="0">
+      </div>
+      <div>
+        <label>DT Persistency (%)</label>
+        <input type="number" id="progPersist" placeholder="e.g. 82" min="0" max="100">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Training Points Earned (rolling 12m)</label>
+        <input type="number" id="progPoints" placeholder="e.g. 60" min="0">
+      </div>
+      <div>
+        <label>LEAP-1 &amp; LEAP-2 Induction Completed?</label>
+        <div class="toggle-group" id="progInductionGroup">
+          <button type="button" data-val="yes">Yes</button>
+          <button type="button" data-val="no">No</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calcProgression()">Check Promotion Eligibility</button>
+    <div class="results" id="progResults">
+      <div class="line"><span>Next Designation</span><span class="val" id="r-prog-next">-</span></div>
+      <div class="line"><span>Requirement (this route)</span><span class="val" id="r-prog-req">-</span></div>
+      <div class="line"><span>Training Points Needed</span><span class="val" id="r-prog-points">-</span></div>
+    </div>
+    <div id="progBanner"></div>
+  </div>
+
+  <!-- ================= GRAND TOTAL ================= -->
+  <div class="total-card">
+    <div class="label">Total Estimated Monthly Earnings</div>
+    <div class="amount" id="grandTotal">₹0</div>
+    <div class="breakdown">
+      <span>MPB DT: <b id="gt-mpb">₹0</b></span>
+      <span>MPB IDT: <b id="gt-idt">₹0</b></span>
+      <span>DBB: <b id="gt-dbb">₹0</b></span>
+      <span>Consistency: <b id="gt-cons">₹0</b></span>
+      <span>Salary+BDA: <b id="gt-bda">₹0</b></span>
+    </div>
+    <button class="calc-btn" style="margin-top:16px;max-width:320px;margin-left:auto;margin-right:auto;" onclick="calcGrandTotal()">Recalculate Total</button>
+  </div>
+
+  <div class="note">
+    Figures are indicative estimates based on the FY27 Q1 BA Proposition construct (effective 1 May 2026). Actual payouts also depend on gate criteria (LEAP induction completion, no net recovery/negative premium at payout, etc.), payout cycle timing (Green/Non-Green channel), and management discretion as per the plan document.
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- ===============  NEW: BA VARIABLE AGENCY BUSINESS  =============== -->
+  <!-- ===============  & ADVISOR EARNINGS MODULE (added) =============== -->
+  <!-- ================================================================= -->
+  <div class="section-divider">
+    <div class="divider-line">BA Variable Agency · Business &amp; Earnings Projection</div>
+  </div>
+
+  <!-- ============ BA BUSINESS & PROJECTED EARNINGS ============ -->
+  <div class="card biz-card">
+    <h2><span class="num">7</span>BA Business &amp; Projected Earnings</h2>
+    <p class="sub">Manual business inputs — independent of the FY27 modules above. Used to project multi-year BA commission earnings, TDS, and held-back amounts.</p>
+
+    <div class="row">
+      <div>
+        <label>Annual Business / Premium (₹)</label>
+        <input type="number" id="bizAnnualBusiness" placeholder="e.g. 1000000" min="0">
+      </div>
+      <div>
+        <label>Number of Years to Project</label>
+        <input type="number" id="bizYears" value="3" min="1" max="15" step="1">
+      </div>
+    </div>
+
+    <label>Advisor Commission — choose entry mode</label>
+    <div class="mode-toggle" id="bizCommModeGroup">
+      <button type="button" data-val="pct" class="active">Use Commission %</button>
+      <button type="button" data-val="amt">Use Commission Amount (₹)</button>
+    </div>
+    <div class="row">
+      <div id="bizCommPctWrap">
+        <label>Advisor Commission (%)</label>
+        <input type="number" id="bizCommPct" value="30" min="0" max="100" step="0.01">
+      </div>
+      <div id="bizCommAmtWrap" style="display:none;">
+        <label>Advisor Commission Amount (₹, per year)</label>
+        <input type="number" id="bizCommAmt" placeholder="e.g. 300000" min="0">
+      </div>
+      <div>
+        <label>TDS (%)</label>
+        <input type="number" id="bizTds" value="10" min="0" max="100" step="0.01">
+      </div>
+    </div>
+    <div class="row single">
+      <div>
+        <label>Held Back (%)</label>
+        <input type="number" id="bizHeldPct" placeholder="e.g. 20" min="0" max="100" step="0.01">
+        <p class="field-hint">Manual entry — enter the held-back percentage applicable to your business model. Held Back Amount is always released <b>after 12 months</b>.</p>
+      </div>
+    </div>
+
+    <button class="calc-btn" style="background:linear-gradient(135deg,var(--maroon),#5c1010);" onclick="generateBizYearRows()">Generate Year-wise Table</button>
+    <div class="validation-msg" id="bizValidation"></div>
+
+    <div class="biz-table-wrap" style="display:none;" id="bizTableWrap">
+      <table class="biz-table" id="bizTable">
+        <thead>
+          <tr>
+            <th>Year</th><th>Business (₹)</th><th>Commission</th><th>TDS</th>
+            <th>Current Earnings</th><th>Held Back</th><th>Held Back Release</th>
+          </tr>
+        </thead>
+        <tbody id="bizTableBody"></tbody>
+      </table>
+    </div>
+
+    <button class="calc-btn" id="bizCalcBtn" style="display:none;" onclick="calcBizProjection()">Calculate Projection</button>
+
+    <div class="results" id="bizResults">
+      <h3 style="font-size:14px;color:var(--navy);margin:18px 0 4px;">Projected Earnings (Total across selected years)</h3>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-label">Total Annual Business</div><div class="kpi-val" id="kpi-biz-business">₹0</div></div>
+        <div class="kpi"><div class="kpi-label">Advisor Commission</div><div class="kpi-val" id="kpi-biz-comm">₹0</div></div>
+        <div class="kpi"><div class="kpi-label">TDS Deduction</div><div class="kpi-val" id="kpi-biz-tds">₹0</div></div>
+        <div class="kpi"><div class="kpi-label">Net Advisor Earnings</div><div class="kpi-val" id="kpi-biz-net">₹0</div></div>
+        <div class="kpi highlight"><div class="kpi-label">Current / Immediate Earnings</div><div class="kpi-val" id="kpi-biz-current">₹0</div></div>
+        <div class="kpi heldback">
+          <div class="kpi-label">Held Back Amount</div>
+          <div class="kpi-val" id="kpi-biz-held">₹0</div>
+          <div class="kpi-tag">After 12 Months</div>
+        </div>
+      </div>
+      <div class="kpi highlight" style="margin-top:12px;">
+        <div class="kpi-label">Total Projected Earnings (Current + Held Back)</div>
+        <div class="kpi-val" id="kpi-biz-total" style="font-size:24px;">₹0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BA EARNINGS vs ADVISOR EARNINGS ============ -->
+  <div class="card biz-card">
+    <h2><span class="num">8</span>BA Earnings vs Advisor Earnings</h2>
+    <p class="sub">Kept as two clearly separate cards so BA/Agency earnings are never confused with Advisor earnings.</p>
+
+    <div class="row single">
+      <div>
+        <label>Advisor's Own Business Figure (₹) <span style="font-weight:400;">(defaults to Annual Business above if left blank)</span></label>
+        <input type="number" id="advBusiness" placeholder="defaults to Annual Business above" min="0">
+      </div>
+    </div>
+    <label>Advisor Commission — choose entry mode</label>
+    <div class="mode-toggle" id="advCommModeGroup">
+      <button type="button" data-val="pct" class="active">Use Commission %</button>
+      <button type="button" data-val="amt">Use Commission Amount (₹)</button>
+    </div>
+    <div class="row">
+      <div id="advCommPctWrap">
+        <label>Advisor Commission (%)</label>
+        <input type="number" id="advCommPct" value="30" min="0" max="100" step="0.01">
+      </div>
+      <div id="advCommAmtWrap" style="display:none;">
+        <label>Advisor Commission Amount (₹)</label>
+        <input type="number" id="advCommAmt" placeholder="e.g. 300000" min="0">
+      </div>
+      <div>
+        <label>TDS (%)</label>
+        <input type="number" id="advTds" value="10" min="0" max="100" step="0.01">
+      </div>
+    </div>
+    <button class="calc-btn" style="background:linear-gradient(135deg,var(--maroon),#5c1010);" onclick="calcAdvisorEarnings()">Calculate Advisor Earnings</button>
+    <div class="validation-msg" id="advValidation"></div>
+
+    <div class="twin-cards" id="twinResults" style="display:none;">
+      <div class="twin-card ba">
+        <h3>BA / Agency Projected Earnings</h3>
+        <div class="line"><span>Current Earnings</span><span class="val" id="tw-ba-current">₹0</span></div>
+        <div class="line"><span>Held Back Earnings <span style="font-weight:400;">(after 12 months)</span></span><span class="val" id="tw-ba-held">₹0</span></div>
+        <div class="line"><span><b>Total BA Earnings</b></span><span class="val" id="tw-ba-total">₹0</span></div>
+      </div>
+      <div class="twin-card advisor">
+        <h3>Advisor Earnings</h3>
+        <div class="line"><span>Gross Commission</span><span class="val" id="tw-adv-gross">₹0</span></div>
+        <div class="line"><span>TDS</span><span class="val" id="tw-adv-tds">₹0</span></div>
+        <div class="line"><span><b>Net Advisor Earnings</b></span><span class="val" id="tw-adv-net">₹0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOTAL PROJECTED EARNING ============ -->
+  <div class="grand-total-final">
+    <div class="label">Total Projected Earning (BA Business Module)</div>
+    <div class="amount" id="finalGrandTotal">₹0</div>
+    <div class="breakdown">
+      <span>Total BA: <b id="ft-ba">₹0</b></span>
+      <span>Total Advisor: <b id="ft-adv">₹0</b></span>
+      <span>Total TDS: <b id="ft-tds">₹0</b></span>
+      <span>Total Held Back: <b id="ft-held">₹0</b></span>
+    </div>
+    <button class="calc-btn" style="margin-top:16px;max-width:320px;margin-left:auto;margin-right:auto;background:linear-gradient(135deg,var(--gold-deep),var(--gold-dark));" onclick="calcFinalTotal()">Recalculate Total</button>
+  </div>
+
+  <!-- ============ REPORT GENERATION ============ -->
+  <div class="card biz-card">
+    <h2><span class="num">9</span>Generate Professional Report</h2>
+    <p class="sub">Optional details for the report header (not used in any calculation).</p>
+    <div class="row">
+      <div><label>Client / Prospect Name</label><input type="text" id="rptClientName" placeholder="Optional"></div>
+      <div><label>Advisor Name</label><input type="text" id="rptAdvisorName" placeholder="Optional"></div>
+    </div>
+    <div class="row">
+      <div><label>BA Name</label><input type="text" id="rptBaName" placeholder="Optional"></div>
+      <div><label>Branch</label><input type="text" id="rptBranch" placeholder="Optional"></div>
+    </div>
+    <div class="row">
+      <div><label>Mobile Number</label><input type="text" id="rptMobile" placeholder="Optional"></div>
+      <div><label>Report Period</label><input type="text" id="rptPeriod" placeholder="e.g. FY27"></div>
+    </div>
+
+    <button class="report-btn" onclick="generateReport()">📊 GENERATE REPORT</button>
+    <div class="validation-msg" id="reportValidation"></div>
+    <button class="calc-btn" style="background:#6b5a30;margin-top:10px;" onclick="resetBizModule()">↺ Reset BA / Advisor / Report Module</button>
+  </div>
+
+  <div class="footer-credit">
+    <div class="name">Designed by ABH Pradeep</div>
+    <div class="role">Branch: Rajendra Place</div>
+  </div>
+
+</div>
+
+<!-- ============ REPORT PREVIEW MODAL ============ -->
+<div class="modal-overlay" id="reportModal">
+  <div class="modal-box">
+    <h2>📄 Report Preview</h2>
+    <div id="reportPreviewBody"></div>
+    <div class="action-row">
+      <button class="btn-download" onclick="downloadReportPdf()">⬇️ Download PDF</button>
+      <button class="btn-share" onclick="sharePdfNative()">📤 Share</button>
+      <button class="btn-whatsapp" onclick="shareOnWhatsapp()">📱 WhatsApp</button>
+      <button class="btn-close" onclick="closeReportModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
+// ============ Shared helpers ============
+function inr(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); }
+// Reusable Indian currency formatter for the new BA Business / Advisor / Report module.
+// Kept separate from inr() so the original calculator's behaviour is never touched.
+function formatINR(value){
+  value = Number(value);
+  if(!isFinite(value)) value = 0;
+  return '₹' + Math.round(value).toLocaleString('en-IN');
+}
+function setupToggle(groupId, defaultVal, onChange){
+  const group = document.getElementById(groupId);
+  const buttons = group.querySelectorAll('button');
+  buttons.forEach(b=>{
+    if(b.dataset.val === defaultVal) b.classList.add('active');
+    b.addEventListener('click', ()=>{
+      buttons.forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      if(onChange) onChange();
+    });
+  });
+}
+function getToggleVal(groupId){
+  const active = document.querySelector('#'+groupId+' button.active');
+  return active ? active.dataset.val : null;
+}
+// Generic slab-shortfall helper — works for any slab array with {min,label} entries
+function shortfallToNextSlab(slabsArr, wrp, currentSlab){
+  if(!currentSlab){
+    if(wrp <= 0) return '—';
+    return inr(slabsArr[0].min - wrp) + ' more WRP to reach the first slab (' + slabsArr[0].label + ')';
+  }
+  const idx = slabsArr.findIndex(s => s.min === currentSlab.min);
+  if(idx > -1 && idx < slabsArr.length - 1){
+    const next = slabsArr[idx+1];
+    return inr(next.min - wrp) + ' more WRP to reach the ' + next.label + ' slab';
+  }
+  return 'Already in the highest WRP slab';
+}
+
+// ============ 1. MPB DT ============
+setupToggle('activeGroup','01', toggleVintageVisibility);
+setupToggle('vintageGroup','m0m6');
+function toggleVintageVisibility(){
+  document.getElementById('vintageWrap').style.display = (getToggleVal('activeGroup') === '01') ? 'block' : 'none';
+}
+toggleVintageVisibility();
+document.getElementById('has13m').addEventListener('change', function(){
+  document.getElementById('persistWrap').style.display = this.checked ? 'grid' : 'none';
+});
+
+const mpbSlabs = [
+  {min:30000,   max:100000,  label:"30k to <1L",   m0m6:0.25, m7:0.25, two:0.30, three:0.35},
+  {min:100000,  max:250000,  label:"1L to <2.5L",  m0m6:0.35, m7:0.35, two:0.40, three:0.45},
+  {min:250000,  max:500000,  label:"2.5L to <5L",  m0m6:0.40, m7:0.35, two:0.50, three:0.55},
+  {min:500000,  max:750000,  label:"5L to <7.5L",  m0m6:0.50, m7:0.40, two:0.60, three:0.65},
+  {min:750000,  max:1000000, label:"7.5L to <10L", m0m6:0.55, m7:0.45, two:0.65, three:0.70},
+  {min:1000000, max:Infinity,label:">=10L",        m0m6:0.70, m7:0.60, two:0.85, three:0.90},
+];
+function getMpbSlab(wrp){
+  for(const s of mpbSlabs){ if(wrp >= s.min && wrp < s.max) return s; }
+  return wrp <= 0 ? null : mpbSlabs[mpbSlabs.length-1];
+}
+let lastMpbTotal = 0;
+function calcMpbDt(){
+  const wrp = parseFloat(document.getElementById('wrp').value) || 0;
+  const commRate = (parseFloat(document.getElementById('commRate').value) || 0)/100;
+  const activeVal = getToggleVal('activeGroup');
+  const vintageVal = getToggleVal('vintageGroup');
+  const has13m = document.getElementById('has13m').checked;
+  const persistMult = parseFloat(document.getElementById('persist').value) || 1.0;
+
+  const slab = getMpbSlab(wrp);
+  let pct = 0, slabLabel = 'Below 30k — not eligible';
+  if(slab){
+    slabLabel = slab.label;
+    if(activeVal === '01'){ pct = (vintageVal === 'm7') ? slab.m7 : slab.m0m6; }
+    else if(activeVal === '2'){ pct = slab.two; }
+    else { pct = slab.three; }
+  }
+  const commission = wrp * commRate;
+  const mpbBase = commission * pct;
+  let mpbNow, mpbHold = 0, multLabel;
+  if(has13m){
+    mpbNow = mpbBase * persistMult;
+    multLabel = (persistMult*100).toFixed(0) + '% (13m persistency bucket)';
+  } else {
+    mpbNow = mpbBase * 0.90;
+    mpbHold = mpbBase * 0.10;
+    multLabel = 'Not applied — no 13m persistency bucket yet';
+  }
+  document.getElementById('r-slab').textContent = slabLabel;
+  document.getElementById('r-pct').textContent = (pct*100).toFixed(0) + '%';
+  document.getElementById('r-comm').textContent = inr(commission);
+  document.getElementById('r-base').textContent = inr(mpbBase);
+  document.getElementById('r-mult').textContent = multLabel;
+  document.getElementById('r-now').textContent = inr(mpbNow);
+  document.getElementById('r-hold').textContent = mpbHold > 0 ? inr(mpbHold) : '—';
+  document.getElementById('r-hold-row').style.display = mpbHold > 0 ? 'flex' : 'none';
+
+  // Shortfall to next WRP slab + projected earning if that slab is reached
+  let mpbShortfallHtml = '—';
+  if(slab){
+    const idx = mpbSlabs.findIndex(s => s.min === slab.min);
+    if(idx < mpbSlabs.length - 1){
+      const next = mpbSlabs[idx+1];
+      const need = next.min - wrp;
+      const projPct = (activeVal === '01') ? (vintageVal === 'm7' ? next.m7 : next.m0m6) : (activeVal === '2' ? next.two : next.three);
+      const projBase = (next.min * commRate) * projPct;
+      const projNow = has13m ? (projBase * persistMult) : (projBase * 0.90);
+      const extra = projNow - mpbNow;
+      const pctLine = mpbNow > 0
+        ? '<span class="projected">+' + inr(extra) + ' extra (+' + ((extra/mpbNow)*100).toFixed(0) + '% over your current MPB DT) — worth pushing for!</span>'
+        : '<span class="projected">A brand-new ' + inr(projNow) + '/month income stream — worth pushing for!</span>';
+      mpbShortfallHtml = inr(need) + ' more WRP to reach the ' + next.label + ' slab'
+        + '<span class="projected">→ Projected MPB DT at that slab: ' + inr(projNow) + '/month</span>'
+        + pctLine;
+    } else {
+      mpbShortfallHtml = 'Already in the highest WRP slab (≥10L)';
+    }
+  } else if(wrp > 0){
+    mpbShortfallHtml = inr(30000 - wrp) + ' more WRP to reach the first slab (30k)';
+  }
+  document.getElementById('r-mpb-shortfall').innerHTML = mpbShortfallHtml;
+
+  // Next active-advisor tier opportunity + projected earning
+  let advisorHtml = '—';
+  if(slab){
+    if(activeVal === '01'){
+      const curPct = (vintageVal === 'm7') ? slab.m7 : slab.m0m6;
+      const projBase2 = commission * slab.two;
+      const projNow2 = has13m ? (projBase2 * persistMult) : (projBase2 * 0.90);
+      const extra2 = projNow2 - mpbNow;
+      const pctLine2 = mpbNow > 0
+        ? '<span class="projected">+' + inr(extra2) + ' extra (+' + ((extra2/mpbNow)*100).toFixed(0) + '% over your current MPB DT)</span>'
+        : '<span class="projected">A brand-new ' + inr(projNow2) + '/month income stream</span>';
+      advisorHtml = 'Reaching 2 active advisors would add ~' + inr(commission * (slab.two - curPct)) + '/month at this WRP level'
+        + '<span class="projected">→ Projected MPB DT with 2 active: ' + inr(projNow2) + '/month</span>'
+        + pctLine2;
+    } else if(activeVal === '2'){
+      const projBase3 = commission * slab.three;
+      const projNow3 = has13m ? (projBase3 * persistMult) : (projBase3 * 0.90);
+      const extra3 = projNow3 - mpbNow;
+      const pctLine3 = mpbNow > 0
+        ? '<span class="projected">+' + inr(extra3) + ' extra (+' + ((extra3/mpbNow)*100).toFixed(0) + '% over your current MPB DT)</span>'
+        : '<span class="projected">A brand-new ' + inr(projNow3) + '/month income stream</span>';
+      advisorHtml = 'Reaching ≥3 active advisors would add ~' + inr(commission * (slab.three - slab.two)) + '/month at this WRP level'
+        + '<span class="projected">→ Projected MPB DT with ≥3 active: ' + inr(projNow3) + '/month</span>'
+        + pctLine3;
+    } else {
+      advisorHtml = 'Already at the top advisor-count tier (≥3 active)';
+    }
+  }
+  document.getElementById('r-mpb-advisor').innerHTML = advisorHtml;
+
+  document.getElementById('mpbResults').classList.add('show');
+  lastMpbTotal = mpbNow + mpbHold;
+  calcGrandTotal();
+}
+
+// ============ 2. MPB IDT (page 18) ============
+setupToggle('idtActiveGroup','0');
+document.getElementById('idtHas13m').addEventListener('change', function(){
+  document.getElementById('idtPersistWrap').style.display = this.checked ? 'grid' : 'none';
+});
+
+const idtSlabs = [
+  {min:30000,   max:100000,  label:"30k to <1L",   l1:0.06, l2:0.03, l3:0.02},
+  {min:100000,  max:250000,  label:"1L to <2.5L",  l1:0.08, l2:0.04, l3:0.02},
+  {min:250000,  max:500000,  label:"2.5L to <5L",  l1:0.10, l2:0.05, l3:0.03},
+  {min:500000,  max:750000,  label:"5L to <7.5L",  l1:0.13, l2:0.07, l3:0.03},
+  {min:750000,  max:1000000, label:"7.5L to <10L", l1:0.15, l2:0.08, l3:0.04},
+  {min:1000000, max:Infinity,label:">=10L",        l1:0.20, l2:0.10, l3:0.06},
+];
+function getIdtSlab(wrp){
+  for(const s of idtSlabs){ if(wrp >= s.min && wrp < s.max) return s; }
+  return wrp <= 0 ? null : idtSlabs[idtSlabs.length-1];
+}
+function idtLevelPayout(wrp, key, eligible, commRate){
+  if(!eligible) return 0;
+  const slab = getIdtSlab(wrp);
+  if(!slab) return 0;
+  return (wrp * commRate) * slab[key];
+}
+// Projects total MPB IDT payout for a given L1/L2/L3 WRP combination, applying the
+// currently-selected active multiplier and persistency multiplier
+function idtProjectedTotal(l1,l2,l3, elig, commRate, actMult, has13m, persistMult){
+  const sub = idtLevelPayout(l1,'l1',elig.l1,commRate) + idtLevelPayout(l2,'l2',elig.l2,commRate) + idtLevelPayout(l3,'l3',elig.l3,commRate);
+  const afterActive = sub * actMult;
+  return has13m ? (afterActive * persistMult) : (afterActive * 0.90);
+}
+const idtEligibility = {
+  'BA':          {l1:false, l2:false, l3:false},
+  'SBA':         {l1:true,  l2:false, l3:false},
+  'CBA':         {l1:true,  l2:true,  l3:false},
+  'Partner':     {l1:true,  l2:true,  l3:true},
+  'Sr. Partner': {l1:true,  l2:true,  l3:true},
+  'Ex. Partner': {l1:true,  l2:true,  l3:true},
+  'Mng. Partner':{l1:true,  l2:true,  l3:true},
+};
+let lastIdtTotal = 0;
+function calcMpbIdt(){
+  const desig = document.getElementById('designation').value;
+  const elig = idtEligibility[desig];
+  const commRate = (parseFloat(document.getElementById('idtCommRate').value) || 0)/100;
+  const l1Wrp = parseFloat(document.getElementById('idtL1Wrp').value) || 0;
+  const l2Wrp = parseFloat(document.getElementById('idtL2Wrp').value) || 0;
+  const l3Wrp = parseFloat(document.getElementById('idtL3Wrp').value) || 0;
+  const activeVal = getToggleVal('idtActiveGroup');
+  const has13m = document.getElementById('idtHas13m').checked;
+  const persistMult = parseFloat(document.getElementById('idtPersist').value) || 1.0;
+
+  function levelPayout(wrp, key, eligible){
+    if(!eligible) return 0;
+    const slab = getIdtSlab(wrp);
+    if(!slab) return 0;
+    const commission = wrp * commRate;
+    return commission * slab[key];
+  }
+  const l1Payout = levelPayout(l1Wrp, 'l1', elig.l1);
+  const l2Payout = levelPayout(l2Wrp, 'l2', elig.l2);
+  const l3Payout = levelPayout(l3Wrp, 'l3', elig.l3);
+  const subtotal = l1Payout + l2Payout + l3Payout;
+
+  let actMult = 0.90;
+  if(activeVal === '1') actMult = 1.00;
+  if(activeVal === '2') actMult = 1.10;
+  const afterActive = subtotal * actMult;
+
+  let idtNow, idtHold = 0, multLabel;
+  if(has13m){
+    idtNow = afterActive * persistMult;
+    multLabel = (persistMult*100).toFixed(0) + '% (13m persistency bucket)';
+  } else {
+    idtNow = afterActive * 0.90;
+    idtHold = afterActive * 0.10;
+    multLabel = 'Not applied — no 13m persistency bucket yet';
+  }
+
+  document.getElementById('r-idt-l1').textContent = elig.l1 ? inr(l1Payout) : '₹0 — not eligible for ' + desig;
+  document.getElementById('r-idt-l2').textContent = elig.l2 ? inr(l2Payout) : '₹0 — not eligible for ' + desig;
+  document.getElementById('r-idt-l3').textContent = elig.l3 ? inr(l3Payout) : '₹0 — not eligible for ' + desig;
+  document.getElementById('r-idt-subtotal').textContent = inr(subtotal);
+  document.getElementById('r-idt-actmult').textContent = (actMult*100).toFixed(0) + '%';
+  document.getElementById('r-idt-mult').textContent = multLabel;
+  document.getElementById('r-idt-now').textContent = inr(idtNow);
+  document.getElementById('r-idt-hold').textContent = idtHold > 0 ? inr(idtHold) : '—';
+  document.getElementById('r-idt-hold-row').style.display = idtHold > 0 ? 'flex' : 'none';
+
+  // Shortfall to next WRP slab per level + projected total payout if that slab is reached
+  const l1Slab = getIdtSlab(l1Wrp), l2Slab = getIdtSlab(l2Wrp), l3Slab = getIdtSlab(l3Wrp);
+
+  function levelShortfallHtml(wrp, curSlab, key, eligible){
+    if(!eligible) return 'Not eligible for ' + key.toUpperCase() + ' payout at ' + desig;
+    function extraLine(projTotal){
+      const extra = projTotal - idtNow;
+      return idtNow > 0
+        ? '<span class="projected">+' + inr(extra) + ' extra (+' + ((extra/idtNow)*100).toFixed(0) + '% over your current MPB IDT)</span>'
+        : '<span class="projected">A brand-new ' + inr(projTotal) + '/month income stream</span>';
+    }
+    if(!curSlab){
+      if(wrp <= 0) return '—';
+      const first = idtSlabs[0];
+      const need = first.min - wrp;
+      const l1v = key==='l1' ? first.min : l1Wrp, l2v = key==='l2' ? first.min : l2Wrp, l3v = key==='l3' ? first.min : l3Wrp;
+      const projTotal = idtProjectedTotal(l1v, l2v, l3v, elig, commRate, actMult, has13m, persistMult);
+      return inr(need) + ' more WRP to reach the ' + first.label + ' slab'
+        + '<span class="projected">→ Projected MPB IDT total then: ' + inr(projTotal) + '/month</span>'
+        + extraLine(projTotal);
+    }
+    const idx = idtSlabs.findIndex(s => s.min === curSlab.min);
+    if(idx > -1 && idx < idtSlabs.length - 1){
+      const next = idtSlabs[idx+1];
+      const need = next.min - wrp;
+      const l1v = key==='l1' ? next.min : l1Wrp, l2v = key==='l2' ? next.min : l2Wrp, l3v = key==='l3' ? next.min : l3Wrp;
+      const projTotal = idtProjectedTotal(l1v, l2v, l3v, elig, commRate, actMult, has13m, persistMult);
+      return inr(need) + ' more WRP to reach the ' + next.label + ' slab'
+        + '<span class="projected">→ Projected MPB IDT total then: ' + inr(projTotal) + '/month</span>'
+        + extraLine(projTotal);
+    }
+    return 'Already in the highest WRP slab';
+  }
+
+  document.getElementById('r-idt-shortfall-l1').innerHTML = levelShortfallHtml(l1Wrp, l1Slab, 'l1', elig.l1);
+  document.getElementById('r-idt-shortfall-l2').innerHTML = levelShortfallHtml(l2Wrp, l2Slab, 'l2', elig.l2);
+  document.getElementById('r-idt-shortfall-l3').innerHTML = levelShortfallHtml(l3Wrp, l3Slab, 'l3', elig.l3);
+
+  // Next L1-active-BA multiplier opportunity + projected total payout
+  let idtActiveHtml = '—';
+  if(activeVal === '0'){
+    const projTotal1 = has13m ? (subtotal * 1.00 * persistMult) : (subtotal * 1.00 * 0.90);
+    const extra1 = projTotal1 - idtNow;
+    const pctLine1 = idtNow > 0
+      ? '<span class="projected">+' + inr(extra1) + ' extra (+' + ((extra1/idtNow)*100).toFixed(0) + '% over your current MPB IDT)</span>'
+      : '<span class="projected">A brand-new ' + inr(projTotal1) + '/month income stream</span>';
+    idtActiveHtml = 'Getting 1 L1 BA active would add ~' + inr(subtotal * (1.00 - 0.90)) + '/month at this WRP level'
+      + '<span class="projected">→ Projected MPB IDT total with 1 active: ' + inr(projTotal1) + '/month</span>'
+      + pctLine1;
+  } else if(activeVal === '1'){
+    const projTotal2 = has13m ? (subtotal * 1.10 * persistMult) : (subtotal * 1.10 * 0.90);
+    const extra2 = projTotal2 - idtNow;
+    const pctLine2 = idtNow > 0
+      ? '<span class="projected">+' + inr(extra2) + ' extra (+' + ((extra2/idtNow)*100).toFixed(0) + '% over your current MPB IDT)</span>'
+      : '<span class="projected">A brand-new ' + inr(projTotal2) + '/month income stream</span>';
+    idtActiveHtml = 'Getting ≥2 L1 BAs active would add ~' + inr(subtotal * (1.10 - 1.00)) + '/month at this WRP level'
+      + '<span class="projected">→ Projected MPB IDT total with ≥2 active: ' + inr(projTotal2) + '/month</span>'
+      + pctLine2;
+  } else {
+    idtActiveHtml = 'Already at the top L1-active-BA tier (≥2 active)';
+  }
+  document.getElementById('r-idt-active-tip').innerHTML = idtActiveHtml;
+
+  document.getElementById('idtResults').classList.add('show');
+  lastIdtTotal = idtNow + idtHold;
+  calcGrandTotal();
+}
+
+// ============ Joining Date Gate ============
+let distributionUnlocked = false;
+function checkJoining(){
+  const dojStr = document.getElementById('doj').value;
+  const banner = document.getElementById('jointBanner');
+  const distCard = document.getElementById('distCard');
+  if(!dojStr){
+    banner.innerHTML = '<div class="banner warn">Please enter your date of joining.</div>';
+    return;
+  }
+  const doj = new Date(dojStr);
+  const now = new Date();
+  const monthsSince = (now.getFullYear()-doj.getFullYear())*12 + (now.getMonth()-doj.getMonth());
+  if(monthsSince <= 6 && monthsSince >= 0){
+    distributionUnlocked = true;
+    distCard.classList.remove('gate-locked');
+    banner.innerHTML = '<div class="banner ok">✓ You joined ' + monthsSince + ' month(s) ago — within M0–M6. Distribution Part is unlocked below.</div>';
+  } else {
+    distributionUnlocked = false;
+    distCard.classList.add('gate-locked');
+    banner.innerHTML = '<div class="banner no">✕ You joined ' + (monthsSince<0?'in the future':monthsSince+' months ago') + ' — outside the M0–M6 window. Distribution Building Bonus (License Active/FPA/SFPA) does not apply; the section below is locked.</div>';
+  }
+}
+
+// ============ 2. Distribution Part (DBB) ============
+setupToggle('fpaVintageGroup','le3');
+const laSlabs = [
+  {threshold:10, payout:75000},
+  {threshold:8,  payout:50000},
+  {threshold:5,  payout:25000},
+  {threshold:3,  payout:10000},
+];
+let lastDbbTotal = 0;
+function calcDbb(){
+  if(!distributionUnlocked){
+    alert('Please check your Date of Joining eligibility first — this section only applies to BAs within M0–M6.');
+    return;
+  }
+  const laCount = parseFloat(document.getElementById('laCount').value) || 0;
+  const fpaCount = parseFloat(document.getElementById('fpaCount').value) || 0;
+  const sfpaCount = parseFloat(document.getElementById('sfpaCount').value) || 0;
+  const fpaVintage = getToggleVal('fpaVintageGroup');
+
+  let laPayout = 0, laSlabHit = 0;
+  for(const s of laSlabs){ if(laCount >= s.threshold){ laPayout = s.payout; laSlabHit = s.threshold; break; } }
+
+  let fpaRate, sfpaRate;
+  if(fpaVintage === 'le3'){ fpaRate = 7500; sfpaRate = 10000; }
+  else { fpaRate = 5000; sfpaRate = 0; }
+  const fpaBonus = fpaCount * fpaRate;
+  const sfpaBonus = sfpaCount * sfpaRate;
+  const dbbTotal = laPayout + fpaBonus + sfpaBonus;
+
+  document.getElementById('r-la-slab').textContent = laSlabHit || '0';
+  document.getElementById('r-la').textContent = inr(laPayout);
+  document.getElementById('r-fpa').textContent = inr(fpaBonus);
+  document.getElementById('r-sfpa').textContent = (sfpaRate === 0 && sfpaCount > 0) ? '₹0 (not applicable for >M3 advisors)' : inr(sfpaBonus);
+  document.getElementById('r-dbb').textContent = inr(dbbTotal);
+  document.getElementById('dbbResults').classList.add('show');
+  lastDbbTotal = dbbTotal;
+  calcGrandTotal();
+}
+
+// ============ 3. Consistency Bonus (page 20) ============
+const consistencySlabs = [
+  {dt:1000000,  tt:2000000,  amt:10000,  gate:50000},
+  {dt:2000000,  tt:4000000,  amt:20000,  gate:50000},
+  {dt:3000000,  tt:6000000,  amt:40000,  gate:50000},
+  {dt:4000000,  tt:8000000,  amt:50000,  gate:50000},
+  {dt:5000000,  tt:10000000, amt:60000,  gate:50000},
+  {dt:7500000,  tt:15000000, amt:80000,  gate:100000},
+  {dt:10000000, tt:20000000, amt:100000, gate:100000},
+  {dt:15000000, tt:30000000, amt:150000, gate:100000},
+  {dt:20000000, tt:40000000, amt:200000, gate:100000},
+];
+let lastConsMonthly = 0;
+function calcConsistency(){
+  const desig = document.getElementById('designation').value;
+  const dtWrp = parseFloat(document.getElementById('consDtWrp').value) || 0;
+  const ttWrp = parseFloat(document.getElementById('consTtWrp').value) || 0;
+  const monthDt = parseFloat(document.getElementById('consMonthDt').value) || 0;
+  const agents = parseFloat(document.getElementById('consAgents').value) || 0;
+  const fpaDt = parseFloat(document.getElementById('consFpa').value) || 0;
+
+  const isSbaPlus = desig !== 'BA';
+  let hit = null;
+  for(let i = consistencySlabs.length-1; i>=0; i--){
+    const s = consistencySlabs[i];
+    const dtMet = dtWrp >= s.dt;
+    const ttMet = isSbaPlus && ttWrp >= s.tt;
+    if(dtMet || ttMet){ hit = s; break; }
+  }
+
+  const gateMet = hit ? (monthDt >= hit.gate) : false;
+  const distGateMet = (agents >= 3 && fpaDt >= 1);
+  const monthly = (hit && gateMet && distGateMet) ? hit.amt : 0;
+
+  document.getElementById('r-cons-slab').textContent = hit ? inr(hit.amt)+'/month tier' : 'No slab reached';
+  document.getElementById('r-cons-gate').textContent = hit ? ('Min ' + inr(hit.gate) + ' from DT in a month') : '-';
+  document.getElementById('r-cons-gate-status').innerHTML = hit ? (gateMet ? '<span style="color:#1b7d4d;">Met</span>' : '<span style="color:#a01818;">Not met — accrues until met</span>') : '-';
+  document.getElementById('r-cons-dist').innerHTML = distGateMet ? '<span style="color:#1b7d4d;">Met</span>' : '<span style="color:#a01818;">Not met — accrues until FY27 end</span>';
+  document.getElementById('r-cons-monthly').textContent = inr(monthly);
+  document.getElementById('r-cons-yearly').textContent = inr(monthly * 12) + ' (if sustained)';
+  document.getElementById('consResults').classList.add('show');
+  lastConsMonthly = monthly;
+  calcGrandTotal();
+}
+
+// ============ 4. Salary & BDA (page 12) ============
+const bdaTable = {
+  'BA':          {salary:1626, bda:2425,  gate:40000},
+  'SBA':         {salary:1626, bda:4874,  gate:60000},
+  'CBA':         {salary:1626, bda:7374,  gate:70000},
+  'Partner':     {salary:1626, bda:10874, gate:125000},
+  'Sr. Partner': {salary:1626, bda:13374, gate:125000},
+  'Ex. Partner': {salary:1626, bda:14874, gate:150000},
+  'Mng. Partner':{salary:1626, bda:15874, gate:150000},
+};
+setupToggle('bdaVintageGroup','m2plus', function(){
+  document.getElementById('m0m1Inputs').style.display = (getToggleVal('bdaVintageGroup')==='m0m1') ? 'grid' : 'none';
+});
+let lastBdaTotal = 0;
+function calcBda(){
+  const desig = document.getElementById('designation').value;
+  const row = bdaTable[desig];
+  const vintage = getToggleVal('bdaVintageGroup');
+  const wrp = parseFloat(document.getElementById('bdaWrp').value) || 0;
+
+  let bdaAmount = 0, note = '';
+  if(vintage === 'm0m1'){
+    const arf = parseFloat(document.getElementById('bdaArf').value) || 0;
+    const lic = parseFloat(document.getElementById('bdaLic').value) || 0;
+    if(arf >= 3 && lic >= 2){
+      bdaAmount = row.bda;
+      note = 'M0–M1 criteria (3 ARF + 2 License by M3) met — BDA accrued.';
+    } else {
+      note = 'M0–M1 criteria not yet met (need 3 ARF + 2 License by M3).';
+    }
+  } else {
+    if(wrp >= row.gate){
+      bdaAmount = row.bda;
+      note = 'Productivity gate met — full BDA payable this month.';
+    } else {
+      note = 'Productivity gate not met — BDA forfeited this month (QTD catch-up available for SBA and above).';
+    }
+  }
+  const total = row.salary + bdaAmount;
+  document.getElementById('r-bda-desig').textContent = desig;
+  document.getElementById('r-bda-salary').textContent = inr(row.salary);
+  document.getElementById('r-bda-gate').textContent = vintage==='m0m1' ? '3 ARF + 2 License (by M3)' : inr(row.gate);
+  document.getElementById('r-bda-amount').textContent = inr(bdaAmount) + ' — ' + note;
+  document.getElementById('r-bda-total').textContent = inr(total);
+  document.getElementById('bdaResults').classList.add('show');
+  lastBdaTotal = total;
+  calcGrandTotal();
+}
+
+// ============ 5. Progression (page 10) ============
+setupToggle('progRouteGroup','dist', function(){
+  const isLead = getToggleVal('progRouteGroup') === 'lead';
+  document.getElementById('distRouteInputs').style.display = isLead ? 'none' : 'grid';
+  document.getElementById('leadRouteInputs').style.display = isLead ? 'grid' : 'none';
+});
+setupToggle('progL1Group','no');
+setupToggle('progInductionGroup','no');
+
+const progressionSteps = {
+  'BA':          {to:'SBA',          distAdv:6,  distFPA:2,  leadFPA:1, wrp:null,    persist:80, points:80},
+  'SBA':         {to:'CBA',          distAdv:9,  distFPA:3,  leadFPA:1, wrp:null,    persist:80, points:60},
+  'CBA':         {to:'Partner',      distAdv:10, distFPA:5,  leadFPA:2, wrp:null,    persist:80, points:50},
+  'Partner':     {to:'Sr. Partner',  distAdv:15, distFPA:10, leadFPA:2, wrp:2000000, persist:80, points:40},
+  'Sr. Partner': {to:'Ex. Partner',  distAdv:20, distFPA:10, leadFPA:2, wrp:3000000, persist:80, points:25},
+  'Ex. Partner': {to:'Mng. Partner', distAdv:20, distFPA:10, leadFPA:2, wrp:5000000, persist:80, points:25},
+  'Mng. Partner':null
+};
+function calcProgression(){
+  const desig = document.getElementById('designation').value;
+  const step = progressionSteps[desig];
+  const banner = document.getElementById('progBanner');
+  if(!step){
+    document.getElementById('r-prog-next').textContent = '—';
+    document.getElementById('r-prog-req').textContent = 'You are already at the highest designation (Mng. Partner).';
+    document.getElementById('r-prog-points').textContent = '—';
+    document.getElementById('progResults').classList.add('show');
+    banner.innerHTML = '';
+    return;
+  }
+  const route = getToggleVal('progRouteGroup');
+  const induction = getToggleVal('progInductionGroup') === 'yes';
+  const persist = parseFloat(document.getElementById('progPersist').value) || 0;
+  const points = parseFloat(document.getElementById('progPoints').value) || 0;
+  const wrp = parseFloat(document.getElementById('progWrp').value) || 0;
+
+  let routeMet = false, reqText = '';
+  if(route === 'dist'){
+    const adv = parseFloat(document.getElementById('progAdv').value) || 0;
+    const advFpa = parseFloat(document.getElementById('progAdvFpa').value) || 0;
+    routeMet = (adv >= step.distAdv && advFpa >= step.distFPA);
+    reqText = 'Distribution: need ' + step.distAdv + ' adv (incl. ' + step.distFPA + ' FPA) — you have ' + adv + ' adv (' + advFpa + ' FPA)';
+  } else {
+    const leadFpa = parseFloat(document.getElementById('progLeadFpa').value) || 0;
+    const l1 = getToggleVal('progL1Group') === 'yes';
+    routeMet = (leadFpa >= step.leadFPA && l1);
+    reqText = 'Leadership: need ' + step.leadFPA + ' FPA in DT + 1 L1 leader confirmed — you have ' + leadFpa + ' FPA, L1 confirmed: ' + (l1?'Yes':'No');
+  }
+
+  const wrpMet = step.wrp ? (wrp >= step.wrp) : true;
+  const persistMet = persist >= step.persist;
+  const pointsMet = points >= step.points;
+
+  const allMet = routeMet && wrpMet && persistMet && pointsMet && induction;
+
+  document.getElementById('r-prog-next').textContent = step.to;
+  document.getElementById('r-prog-req').textContent = reqText;
+  document.getElementById('r-prog-points').textContent = points + ' / ' + step.points + ' points';
+  document.getElementById('progResults').classList.add('show');
+
+  let msg = '';
+  if(allMet){
+    msg = '<div class="banner ok">✓ All criteria met — eligible for promotion to ' + step.to + '!</div>';
+  } else {
+    let missing = [];
+    if(!routeMet) missing.push('route target');
+    if(step.wrp && !wrpMet) missing.push('WRP target (' + inr(step.wrp) + ')');
+    if(!persistMet) missing.push('80% DT persistency');
+    if(!pointsMet) missing.push('training points (' + step.points + ')');
+    if(!induction) missing.push('LEAP-1 & LEAP-2 induction');
+    msg = '<div class="banner no">✕ Not yet eligible for ' + step.to + '. Missing: ' + missing.join(', ') + '.</div>';
+  }
+  banner.innerHTML = msg;
+}
+
+// ============ Grand Total ============
+function calcGrandTotal(){
+  const total = lastMpbTotal + lastIdtTotal + lastDbbTotal + lastConsMonthly + lastBdaTotal;
+  document.getElementById('gt-mpb').textContent = inr(lastMpbTotal);
+  document.getElementById('gt-idt').textContent = inr(lastIdtTotal);
+  document.getElementById('gt-dbb').textContent = inr(lastDbbTotal);
+  document.getElementById('gt-cons').textContent = inr(lastConsMonthly);
+  document.getElementById('gt-bda').textContent = inr(lastBdaTotal);
+  document.getElementById('grandTotal').textContent = inr(total);
+
+  // Mirror into the sticky top bar so the total is always visible while scrolling
+  document.getElementById('stickyAmount').textContent = inr(total);
+  document.getElementById('st-mpb').textContent = inr(lastMpbTotal);
+  document.getElementById('st-idt').textContent = inr(lastIdtTotal);
+  document.getElementById('st-dbb').textContent = inr(lastDbbTotal);
+  document.getElementById('st-cons').textContent = inr(lastConsMonthly);
+  document.getElementById('st-bda').textContent = inr(lastBdaTotal);
+}
+
+/* ================================================================= */
+/* ===============  NEW MODULE: BA BUSINESS / ADVISOR  ============= */
+/* ===============  EARNINGS / REPORTING (added below)  ============ */
+/* ================================================================= */
+/* Everything in this block is namespaced (biz*/adv*/rpt* ids and     */
+/* biz/adv/report-prefixed functions) so it never touches any         */
+/* existing id, variable, or function used by the calculator above.   */
+
+// ---------- shared validation helper ----------
+function validateInputs(fields){
+  // fields: array of {id, label, allowEmpty}
+  for(const f of fields){
+    const el = document.getElementById(f.id);
+    if(!el) continue;
+    const raw = el.value;
+    if(raw === '' && f.allowEmpty) continue;
+    const num = parseFloat(raw);
+    if(raw !== '' && isNaN(num)){
+      return f.label + ' has an invalid value.';
+    }
+    if(num < 0){
+      return f.label + ' cannot be negative.';
+    }
+    if(f.max !== undefined && num > f.max){
+      return f.label + ' cannot exceed ' + f.max + '%.';
+    }
+  }
+  return null;
+}
+function safeNum(id, fallback){
+  const el = document.getElementById(id);
+  if(!el) return fallback || 0;
+  const v = parseFloat(el.value);
+  return isNaN(v) ? (fallback || 0) : v;
+}
+
+// ---------- BA Business & Projected Earnings (card 7) ----------
+setupToggle('bizCommModeGroup','pct', function(){
+  const isPct = getToggleVal('bizCommModeGroup') === 'pct';
+  document.getElementById('bizCommPctWrap').style.display = isPct ? 'block' : 'none';
+  document.getElementById('bizCommAmtWrap').style.display = isPct ? 'none' : 'block';
+});
+
+let bizYearRows = [];          // [{business: number}]
+let bizProjectionRows = [];    // computed rows, used by report/pdf
+let bizTotals = {business:0, commission:0, tds:0, net:0, current:0, held:0};
+
+function generateBizYearRows(){
+  const errMsg = validateInputs([
+    {id:'bizAnnualBusiness', label:'Annual Business'},
+    {id:'bizYears', label:'Number of Years'},
+    {id:'bizCommPct', label:'Advisor Commission %', max:100},
+    {id:'bizCommAmt', label:'Advisor Commission Amount', allowEmpty:true},
+    {id:'bizTds', label:'TDS %', max:100},
+    {id:'bizHeldPct', label:'Held Back %', max:100, allowEmpty:true},
+  ]);
+  const validationEl = document.getElementById('bizValidation');
+  if(errMsg){ validationEl.textContent = errMsg; return; }
+  validationEl.textContent = '';
+
+  let years = Math.round(safeNum('bizYears', 1));
+  if(years < 1) years = 1;
+  if(years > 15) years = 15;
+  document.getElementById('bizYears').value = years;
+
+  const annualBusiness = safeNum('bizAnnualBusiness', 0);
+
+  // Preserve any amounts the user already edited for years that still exist
+  const preserved = bizYearRows.map(r => r.business);
+  bizYearRows = [];
+  for(let i=0;i<years;i++){
+    bizYearRows.push({ business: (preserved[i] !== undefined ? preserved[i] : annualBusiness) });
+  }
+
+  const tbody = document.getElementById('bizTableBody');
+  tbody.innerHTML = '';
+  bizYearRows.forEach((row, idx) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>Year ' + (idx+1) + '</td>' +
+      '<td><input type="number" min="0" class="biz-year-input" data-idx="' + idx + '" value="' + row.business + '"></td>' +
+      '<td class="biz-col-comm">—</td>' +
+      '<td class="biz-col-tds">—</td>' +
+      '<td class="biz-col-current">—</td>' +
+      '<td class="biz-col-held">—</td>' +
+      '<td>After 12 months</td>';
+    tbody.appendChild(tr);
+  });
+  document.getElementById('bizTableWrap').style.display = 'block';
+  document.getElementById('bizCalcBtn').style.display = 'block';
+
+  tbody.querySelectorAll('.biz-year-input').forEach(inp=>{
+    inp.addEventListener('input', function(){
+      const idx = parseInt(this.dataset.idx,10);
+      bizYearRows[idx].business = parseFloat(this.value) || 0;
+    });
+  });
+}
+
+function calcBizProjection(){
+  const errMsg = validateInputs([
+    {id:'bizCommPct', label:'Advisor Commission %', max:100},
+    {id:'bizCommAmt', label:'Advisor Commission Amount', allowEmpty:true},
+    {id:'bizTds', label:'TDS %', max:100},
+    {id:'bizHeldPct', label:'Held Back %', max:100, allowEmpty:true},
+  ]);
+  const validationEl = document.getElementById('bizValidation');
+  if(errMsg){ validationEl.textContent = errMsg; return; }
+  if(!bizYearRows.length){ validationEl.textContent = 'Please generate the year-wise table first.'; return; }
+  validationEl.textContent = '';
+
+  const commMode = getToggleVal('bizCommModeGroup');
+  const commPct = safeNum('bizCommPct', 0) / 100;
+  const commAmtManual = safeNum('bizCommAmt', 0);
+  const tdsPct = safeNum('bizTds', 0) / 100;
+  const heldPct = safeNum('bizHeldPct', 0) / 100;
+
+  bizProjectionRows = [];
+  bizTotals = {business:0, commission:0, tds:0, net:0, current:0, held:0};
+
+  const tbody = document.getElementById('bizTableBody');
+  bizYearRows.forEach((row, idx) => {
+    const business = row.business || 0;
+    const commission = (commMode === 'amt') ? commAmtManual : (business * commPct);
+    const tds = commission * tdsPct;
+    const net = commission - tds;
+    const held = net * heldPct;
+    const current = net - held;
+
+    bizProjectionRows.push({year: idx+1, business, commission, tds, net, current, held});
+    bizTotals.business += business;
+    bizTotals.commission += commission;
+    bizTotals.tds += tds;
+    bizTotals.net += net;
+    bizTotals.current += current;
+    bizTotals.held += held;
+
+    const tr = tbody.children[idx];
+    if(tr){
+      tr.querySelector('.biz-col-comm').textContent = formatINR(commission);
+      tr.querySelector('.biz-col-tds').textContent = formatINR(tds);
+      tr.querySelector('.biz-col-current').textContent = formatINR(current);
+      tr.querySelector('.biz-col-held').textContent = formatINR(held);
+    }
+  });
+
+  // Cumulative total row
+  const oldTotalRow = tbody.querySelector('tr.total-row');
+  if(oldTotalRow) oldTotalRow.remove();
+  const totalTr = document.createElement('tr');
+  totalTr.className = 'total-row';
+  totalTr.innerHTML =
+    '<td>Cumulative</td>' +
+    '<td>' + formatINR(bizTotals.business) + '</td>' +
+    '<td>' + formatINR(bizTotals.commission) + '</td>' +
+    '<td>' + formatINR(bizTotals.tds) + '</td>' +
+    '<td>' + formatINR(bizTotals.current) + '</td>' +
+    '<td>' + formatINR(bizTotals.held) + '</td>' +
+    '<td>—</td>';
+  tbody.appendChild(totalTr);
+
+  document.getElementById('kpi-biz-business').textContent = formatINR(bizTotals.business);
+  document.getElementById('kpi-biz-comm').textContent = formatINR(bizTotals.commission);
+  document.getElementById('kpi-biz-tds').textContent = formatINR(bizTotals.tds);
+  document.getElementById('kpi-biz-net').textContent = formatINR(bizTotals.net);
+  document.getElementById('kpi-biz-current').textContent = formatINR(bizTotals.current);
+  document.getElementById('kpi-biz-held').textContent = formatINR(bizTotals.held);
+  document.getElementById('kpi-biz-total').textContent = formatINR(bizTotals.current + bizTotals.held);
+  document.getElementById('bizResults').classList.add('show');
+
+  calcFinalTotal();
+}
+
+// ---------- BA vs Advisor Earnings (card 8) ----------
+setupToggle('advCommModeGroup','pct', function(){
+  const isPct = getToggleVal('advCommModeGroup') === 'pct';
+  document.getElementById('advCommPctWrap').style.display = isPct ? 'block' : 'none';
+  document.getElementById('advCommAmtWrap').style.display = isPct ? 'none' : 'block';
+});
+
+let advTotals = {gross:0, tds:0, net:0};
+
+function calcAdvisorEarnings(){
+  const errMsg = validateInputs([
+    {id:'advBusiness', label:"Advisor's Business", allowEmpty:true},
+    {id:'advCommPct', label:'Advisor Commission %', max:100},
+    {id:'advCommAmt', label:'Advisor Commission Amount', allowEmpty:true},
+    {id:'advTds', label:'TDS %', max:100},
+  ]);
+  const validationEl = document.getElementById('advValidation');
+  if(errMsg){ validationEl.textContent = errMsg; return; }
+  validationEl.textContent = '';
+
+  const advBusinessRaw = document.getElementById('advBusiness').value;
+  const business = advBusinessRaw !== '' ? safeNum('advBusiness', 0) : safeNum('bizAnnualBusiness', 0);
+  const commMode = getToggleVal('advCommModeGroup');
+  const commPct = safeNum('advCommPct', 0) / 100;
+  const commAmtManual = safeNum('advCommAmt', 0);
+  const tdsPct = safeNum('advTds', 0) / 100;
+
+  const gross = (commMode === 'amt') ? commAmtManual : (business * commPct);
+  const tds = gross * tdsPct;
+  const net = gross - tds;
+  advTotals = {gross, tds, net};
+
+  document.getElementById('tw-adv-gross').textContent = formatINR(gross);
+  document.getElementById('tw-adv-tds').textContent = formatINR(tds);
+  document.getElementById('tw-adv-net').textContent = formatINR(net);
+
+  // Mirror latest BA business totals (from card 7) into the BA twin card
+  document.getElementById('tw-ba-current').textContent = formatINR(bizTotals.current);
+  document.getElementById('tw-ba-held').textContent = formatINR(bizTotals.held);
+  document.getElementById('tw-ba-total').textContent = formatINR(bizTotals.current + bizTotals.held);
+
+  document.getElementById('twinResults').style.display = 'grid';
+  calcFinalTotal();
+}
+
+// ---------- Total Projected Earning (combines BA + Advisor) ----------
+function calcFinalTotal(){
+  const totalBa = bizTotals.current + bizTotals.held;
+  const totalAdv = advTotals.net;
+  const totalTds = bizTotals.tds + advTotals.tds;
+  const totalHeld = bizTotals.held;
+  const grand = totalBa + totalAdv;
+
+  document.getElementById('ft-ba').textContent = formatINR(totalBa);
+  document.getElementById('ft-adv').textContent = formatINR(totalAdv);
+  document.getElementById('ft-tds').textContent = formatINR(totalTds);
+  document.getElementById('ft-held').textContent = formatINR(totalHeld);
+  document.getElementById('finalGrandTotal').textContent = formatINR(grand);
+}
+
+// ---------- Reset (new module only — does not touch the existing calculator) ----------
+function resetBizModule(){
+  if(!confirm('This will reset all BA Business, Advisor Earnings, and Report fields. Continue?')) return;
+  ['bizAnnualBusiness','bizCommAmt','bizHeldPct','advBusiness','advCommAmt',
+   'rptClientName','rptAdvisorName','rptBaName','rptBranch','rptMobile','rptPeriod'
+  ].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  document.getElementById('bizYears').value = 3;
+  document.getElementById('bizCommPct').value = 30;
+  document.getElementById('bizTds').value = 10;
+  document.getElementById('advCommPct').value = 30;
+  document.getElementById('advTds').value = 10;
+  document.getElementById('bizTableWrap').style.display = 'none';
+  document.getElementById('bizTableBody').innerHTML = '';
+  document.getElementById('bizCalcBtn').style.display = 'none';
+  document.getElementById('bizResults').classList.remove('show');
+  document.getElementById('twinResults').style.display = 'none';
+  bizYearRows = []; bizProjectionRows = []; bizTotals = {business:0,commission:0,tds:0,net:0,current:0,held:0};
+  advTotals = {gross:0, tds:0, net:0};
+  calcFinalTotal();
+  document.getElementById('bizValidation').textContent = '';
+  document.getElementById('advValidation').textContent = '';
+  document.getElementById('reportValidation').textContent = '';
+}
+
+// ---------- Report generation (uses live values already on screen — no re-calculation) ----------
+function todayStr(){
+  const d = new Date();
+  return d.toLocaleDateString('en-IN', {day:'2-digit', month:'long', year:'numeric'});
+}
+
+function buildReportData(){
+  return {
+    date: todayStr(),
+    client: document.getElementById('rptClientName').value || '—',
+    advisorName: document.getElementById('rptAdvisorName').value || '—',
+    baName: document.getElementById('rptBaName').value || '—',
+    branch: document.getElementById('rptBranch').value || '—',
+    mobile: document.getElementById('rptMobile').value || '—',
+    period: document.getElementById('rptPeriod').value || '—',
+    existingGrandTotal: (typeof lastMpbTotal !== 'undefined')
+      ? (lastMpbTotal + lastIdtTotal + lastDbbTotal + lastConsMonthly + lastBdaTotal) : 0,
+    existing: {
+      mpb: lastMpbTotal, idt: lastIdtTotal, dbb: lastDbbTotal, cons: lastConsMonthly, bda: lastBdaTotal
+    },
+    bizRows: bizProjectionRows,
+    bizTotals: bizTotals,
+    advTotals: advTotals,
+    finalTotal: (bizTotals.current + bizTotals.held) + advTotals.net
+  };
+}
+
+let lastReportData = null;
+
+function generateReport(){
+  const validationEl = document.getElementById('reportValidation');
+  if(!bizProjectionRows.length && advTotals.net === 0){
+    validationEl.textContent = 'Please calculate the BA Business Projection and/or Advisor Earnings above before generating a report.';
+    return;
+  }
+  validationEl.textContent = '';
+  lastReportData = buildReportData();
+  renderReportPreview(lastReportData);
+  document.getElementById('reportModal').classList.add('show');
+}
+
+function closeReportModal(){
+  document.getElementById('reportModal').classList.remove('show');
+}
+
+function renderReportPreview(data){
+  let yearRowsHtml = data.bizRows.map(r =>
+    '<tr><td>Year ' + r.year + '</td><td>' + formatINR(r.business) + '</td><td>' + formatINR(r.commission) +
+    '</td><td>' + formatINR(r.tds) + '</td><td>' + formatINR(r.net) + '</td><td>' + formatINR(r.held) +
+    '</td><td>After 12 months</td></tr>'
+  ).join('');
+  if(!yearRowsHtml){ yearRowsHtml = '<tr><td colspan="7">No BA business projection calculated.</td></tr>'; }
+
+  const html =
+    '<h3>BA Variable Agency Business &amp; Earnings Report</h3>' +
+    '<div class="line"><span>Date</span><span class="val">' + data.date + '</span></div>' +
+    '<div class="line"><span>Client / Prospect</span><span class="val">' + data.client + '</span></div>' +
+    '<div class="line"><span>Advisor Name</span><span class="val">' + data.advisorName + '</span></div>' +
+    '<div class="line"><span>BA Name</span><span class="val">' + data.baName + '</span></div>' +
+    '<div class="line"><span>Branch</span><span class="val">' + data.branch + '</span></div>' +
+    '<div class="line"><span>Mobile</span><span class="val">' + data.mobile + '</span></div>' +
+    '<div class="line"><span>Report Period</span><span class="val">' + data.period + '</span></div>' +
+
+    '<h3>Executive Summary</h3>' +
+    '<div class="line"><span>Total Annual Business (BA module)</span><span class="val">' + formatINR(data.bizTotals.business) + '</span></div>' +
+    '<div class="line"><span>Advisor Earnings (Net, Advisor module)</span><span class="val">' + formatINR(data.advTotals.net) + '</span></div>' +
+    '<div class="line"><span>Total TDS (BA + Advisor)</span><span class="val">' + formatINR(data.bizTotals.tds + data.advTotals.tds) + '</span></div>' +
+    '<div class="line"><span>Held Back (after 12 months)</span><span class="val">' + formatINR(data.bizTotals.held) + '</span></div>' +
+    '<div class="line"><span>Existing FY27 Modules — Total Monthly Est.</span><span class="val">' + formatINR(data.existingGrandTotal) + '</span></div>' +
+
+    '<h3>Business Projection (Year-wise)</h3>' +
+    '<table><thead><tr><th>Year</th><th>Business</th><th>Commission</th><th>TDS</th><th>Net Earnings</th><th>Held Back</th><th>Release</th></tr></thead>' +
+    '<tbody>' + yearRowsHtml + '</tbody></table>' +
+
+    '<h3>Advisor Earnings</h3>' +
+    '<div class="line"><span>Gross Commission</span><span class="val">' + formatINR(data.advTotals.gross) + '</span></div>' +
+    '<div class="line"><span>TDS</span><span class="val">' + formatINR(data.advTotals.tds) + '</span></div>' +
+    '<div class="line"><span>Net Advisor Earnings</span><span class="val">' + formatINR(data.advTotals.net) + '</span></div>' +
+
+    '<h3>BA Earnings</h3>' +
+    '<div class="line"><span>Immediate (Current) Earnings</span><span class="val">' + formatINR(data.bizTotals.current) + '</span></div>' +
+    '<div class="line"><span>Held Back Earnings — after 12 months</span><span class="val">' + formatINR(data.bizTotals.held) + '</span></div>' +
+    '<div class="line"><span><b>Total BA Earnings</b></span><span class="val">' + formatINR(data.bizTotals.current + data.bizTotals.held) + '</span></div>' +
+
+    '<h3>Final Summary</h3>' +
+    '<div class="line rp-total"><span>TOTAL PROJECTED EARNING</span><span class="val">' + formatINR(data.finalTotal) + '</span></div>';
+
+  document.getElementById('reportPreviewBody').innerHTML = html;
+}
+
+// ---------- PDF generation (jsPDF + AutoTable) — uses the same lastReportData, never recalculates ----------
+function buildPdfDoc(data){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:'pt', format:'a4'});
+  const pageWidth = doc.internal.pageSize.getWidth();
+  let y = 40;
+
+  doc.setFontSize(16); doc.setFont(undefined,'bold');
+  doc.text('BA Variable Agency Business & Earnings Report', pageWidth/2, y, {align:'center'});
+  y += 22;
+  doc.setFontSize(10); doc.setFont(undefined,'normal');
+  doc.text('Generated on: ' + data.date, pageWidth/2, y, {align:'center'});
+  y += 22;
+
+  doc.setFontSize(10);
+  const details = [
+    ['Client / Prospect', data.client], ['Advisor Name', data.advisorName],
+    ['BA Name', data.baName], ['Branch', data.branch],
+    ['Mobile', data.mobile], ['Report Period', data.period]
+  ];
+  doc.autoTable({ startY:y, theme:'plain', styles:{fontSize:9}, margin:{left:40,right:40},
+    body: details });
+  y = doc.lastAutoTable.finalY + 16;
+
+  doc.setFontSize(13); doc.setFont(undefined,'bold');
+  doc.text('Executive Summary', 40, y); y += 8;
+  doc.autoTable({
+    startY:y, margin:{left:40,right:40},
+    head:[['Metric','Amount']],
+    body:[
+      ['Total Annual Business', formatINR(data.bizTotals.business)],
+      ['Advisor Earnings (Net)', formatINR(data.advTotals.net)],
+      ['Total TDS (BA + Advisor)', formatINR(data.bizTotals.tds + data.advTotals.tds)],
+      ['Held Back (after 12 months)', formatINR(data.bizTotals.held)],
+      ['Existing FY27 Modules (Monthly Est.)', formatINR(data.existingGrandTotal)],
+    ],
+    headStyles:{fillColor:[11,36,71]}, styles:{fontSize:9}
+  });
+  y = doc.lastAutoTable.finalY + 16;
+
+  if(y > 650){ doc.addPage(); y = 40; }
+  doc.setFontSize(13); doc.setFont(undefined,'bold');
+  doc.text('Business Projection (Year-wise)', 40, y); y += 8;
+  const yearBody = data.bizRows.length
+    ? data.bizRows.map(r => ['Year '+r.year, formatINR(r.business), formatINR(r.commission), formatINR(r.tds), formatINR(r.net), formatINR(r.held), 'After 12 months'])
+    : [['—','No projection calculated','','','','','']];
+  doc.autoTable({
+    startY:y, margin:{left:40,right:40},
+    head:[['Year','Business','Commission','TDS','Net Earnings','Held Back','Release']],
+    body: yearBody, headStyles:{fillColor:[11,36,71]}, styles:{fontSize:8}
+  });
+  y = doc.lastAutoTable.finalY + 16;
+
+  if(y > 650){ doc.addPage(); y = 40; }
+  doc.setFontSize(13); doc.setFont(undefined,'bold');
+  doc.text('Advisor Earnings', 40, y); y += 8;
+  doc.autoTable({
+    startY:y, margin:{left:40,right:40},
+    body:[
+      ['Gross Commission', formatINR(data.advTotals.gross)],
+      ['TDS', formatINR(data.advTotals.tds)],
+      ['Net Advisor Earnings', formatINR(data.advTotals.net)],
+    ], theme:'grid', styles:{fontSize:9}
+  });
+  y = doc.lastAutoTable.finalY + 16;
+
+  if(y > 650){ doc.addPage(); y = 40; }
+  doc.setFontSize(13); doc.setFont(undefined,'bold');
+  doc.text('BA Earnings', 40, y); y += 8;
+  doc.autoTable({
+    startY:y, margin:{left:40,right:40},
+    body:[
+      ['Immediate (Current) Earnings', formatINR(data.bizTotals.current)],
+      ['Held Back Earnings — after 12 months', formatINR(data.bizTotals.held)],
+      ['Total BA Earnings', formatINR(data.bizTotals.current + data.bizTotals.held)],
+    ], theme:'grid', styles:{fontSize:9}
+  });
+  y = doc.lastAutoTable.finalY + 24;
+
+  if(y > 700){ doc.addPage(); y = 60; }
+  doc.setFillColor(139,26,26);
+  doc.rect(40, y-20, pageWidth-80, 46, 'F');
+  doc.setTextColor(255,255,255); doc.setFontSize(12); doc.setFont(undefined,'bold');
+  doc.text('TOTAL PROJECTED EARNING', 52, y-2);
+  doc.setFontSize(16);
+  doc.text(formatINR(data.finalTotal), 52, y+18);
+  doc.setTextColor(0,0,0);
+
+  // page numbers
+  const pageCount = doc.internal.getNumberOfPages();
+  for(let i=1;i<=pageCount;i++){
+    doc.setPage(i);
+    doc.setFontSize(8); doc.setTextColor(120,120,120);
+    doc.text('Page ' + i + ' of ' + pageCount, pageWidth - 60, doc.internal.pageSize.getHeight() - 20);
+  }
+  return doc;
+}
+
+function downloadReportPdf(){
+  if(!lastReportData){ alert('Please generate the report first.'); return; }
+  try{
+    const doc = buildPdfDoc(lastReportData);
+    doc.save('BA_Business_Report_' + Date.now() + '.pdf');
+  }catch(e){
+    console.error(e);
+    alert('Could not generate the PDF in this browser. Please try again or use a different browser.');
+  }
+}
+
+function sharePdfNative(){
+  if(!lastReportData){ alert('Please generate the report first.'); return; }
+  try{
+    const doc = buildPdfDoc(lastReportData);
+    const blob = doc.output('blob');
+    const file = new File([blob], 'BA_Business_Report.pdf', {type:'application/pdf'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      navigator.share({
+        files:[file],
+        title:'BA Business Projection Report',
+        text:'Please find attached the BA Business Projection Report.'
+      }).catch(()=>{ /* user cancelled — no action needed */ });
+    } else {
+      alert('Direct file sharing is not supported on this browser/device. Please use Download PDF, then attach it manually, or use the WhatsApp button to send a text summary.');
+    }
+  }catch(e){
+    console.error(e);
+    alert('Could not prepare the file for sharing on this browser.');
+  }
+}
+
+function shareOnWhatsapp(){
+  if(!lastReportData){ alert('Please generate the report first.'); return; }
+  const d = lastReportData;
+  const msg =
+    'BA Business Projection Report\n\n' +
+    'Annual Business: ' + formatINR(d.bizTotals.business) + '\n' +
+    'Advisor Earnings: ' + formatINR(d.advTotals.net) + '\n' +
+    'TDS: ' + formatINR(d.bizTotals.tds + d.advTotals.tds) + '\n' +
+    'Held Back Amount: ' + formatINR(d.bizTotals.held) + '\n' +
+    'Held Back Release: After 12 Months\n' +
+    'Total Projected Earnings: ' + formatINR(d.finalTotal) + '\n\n' +
+    '(Note: the full PDF report has not been auto-attached here — please download it separately and attach it in WhatsApp if needed.)';
+  const url = 'https://wa.me/?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
+}
+</script>
+
+</body>
+</html>
